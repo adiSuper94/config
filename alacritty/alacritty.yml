@@ -16,6 +16,9 @@ font:
     style: Bold Italic
 
   size: 12.0
+env:
+  WINIT_X11_SCALE_FACTOR: "1"
+
 ## theme config from npx alacritty-themes ##
 colors:
   # Default colors

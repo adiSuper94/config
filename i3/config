@@ -141,7 +141,7 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
 # assign default workspaces to applications
-assign [class="firefox"] $ws2
+assign [class="Brave-browser"] $ws2
 assign [class="Google-chrome"] $ws3
 assign [class="Code"] $ws4
 for_window [class="Spotify"] move to workspace $ws10
@@ -185,6 +185,7 @@ bar {
         status_command i3blocks
 }
 ## Custom bindings and settings
+exec_always "sh /home/adisuper/.screenlayout/dual-screen-setup.sh"
 bindsym Shift+space exec "rofi -show drun"
 bindsym $mod+x exec i3lock -f -i /home/adisuper/Pictures/starlord.png
 exec "/usr/libexec/gsd-xsettings&"
@@ -192,15 +193,14 @@ exec "xinput set-prop 12 350 1"
 exec "xinput set-prop 12 371 1"
 exec "nitrogen --restore&"
 exec "compton -f&"
-exec --no-startup-id i3-msg 'workspace $ws1; exec alacritty -vv'
-exec_always "sh /home/adisuper/.screenlayout/dual-screen-setup.sh"
 exec setxkbmap -option "ctrl:swapcaps"
+exec --no-startup-id i3-msg 'workspace $ws1; exec alacritty'
 set $mode_power [l]ogoff | [s]hutdown
-
+bindsym $mod+Shift+e mode "$mode_power"
 mode "$mode_power" {
         bindsym l exec i3-msg exit
         bindsym s exec systemctl poweroff
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-bindsym $mod+Shift+e mode "$mode_power"
+
