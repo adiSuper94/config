@@ -106,10 +106,10 @@ bindsym $mod+a focus parent
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1: "
-set $ws2 "2: "
-set $ws3 "3: "
-set $ws4 "4: "
-set $ws5 "5"
+set $ws2 "2: "
+set $ws3 "3: "
+set $ws4 "4: "
+set $ws5 "5: "
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
@@ -121,7 +121,7 @@ bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace $ws2
 bindsym $mod+3 workspace $ws3
 bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace number $ws5
+bindsym $mod+5 workspace $ws5
 bindsym $mod+6 workspace number $ws6
 bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
@@ -141,9 +141,9 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
 # assign default workspaces to applications
+assign [class="firefox"] $ws5
 assign [class="Brave-browser"] $ws2
-assign [class="Google-chrome"] $ws3
-assign [class="Code"] $ws4
+assign [class="Code"] $ws3
 for_window [class="Spotify"] move to workspace $ws10
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -189,8 +189,11 @@ exec_always "sh /home/adisuper/.screenlayout/dual-screen-setup.sh"
 bindsym Shift+space exec "rofi -show drun"
 bindsym $mod+x exec i3lock -f -i /home/adisuper/Pictures/starlord.png
 exec "/usr/libexec/gsd-xsettings&"
-exec "xinput set-prop 12 360 1"
+# xinput props might need change on each OS installation
+exec "xinput set-prop 12 350 1"
+exec "xinput set-prop 12 371 1"
 exec "xinput set-prop 12 339 1"
+exec "xinput set-prop 12 351 1"
 exec "nitrogen --restore&"
 exec "compton -f&"
 exec setxkbmap -option "ctrl:swapcaps"

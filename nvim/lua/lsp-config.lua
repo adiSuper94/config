@@ -3,12 +3,13 @@
 -- See https://github.com/simrat39/rust-tools.nvim#configuration
 local nvim_lsp = require'lspconfig'
 
-local opts = {
+local rt = require('rust-tools')
+rt.setup({
     tools = { -- rust-tools options
         autoSetHints = true,
-        hover_with_actions = true,
+        hover_with_actions = false,
         inlay_hints = {
-            show_parameter_hints = false,
+            show_parameter_hints = true,
             parameter_hints_prefix = "",
             other_hints_prefix = "",
         },
@@ -32,10 +33,13 @@ local opts = {
                     autoReload = true
                 }
             }
-        }
+        },
+        on_attach = function(_, bufnr)
+          vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+          vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+        end,
     },
-}
-require('rust-tools').setup(opts)
+})
 require("mason").setup()
 
 -- Setup Completion
@@ -72,4 +76,9 @@ cmp.setup({
     { name = 'buffer' },
   },
 })
-require'lspconfig'.clangd.setup{}
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+require'lspconfig'.clangd.setup{capabilities = capabilities}
+require'lspconfig'.gopls.setup{capabilities = capabilities}
+--sig_cfg = { bind = true}  -- add you config here
+--require "lsp_signature".setup(sig_cfg)
