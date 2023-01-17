@@ -188,14 +188,16 @@ bar {
 exec_always "sh /home/adisuper/.screenlayout/dual-screen-setup.sh"
 bindsym Shift+space exec "rofi -show drun"
 bindsym $mod+x exec i3lock -f -i /home/adisuper/Pictures/starlord.png
+bindsym $mod+v exec copyq toggle
 exec "/usr/libexec/gsd-xsettings&"
 # xinput props might need change on each OS installation
+exec "xinput set-prop 12 370 1" #  Tap
+exec "xinput set-prop 12 371 1" # Tap Default
+exec "xinput set-prop 12 349 1"
 exec "xinput set-prop 12 350 1"
-exec "xinput set-prop 12 371 1"
-exec "xinput set-prop 12 339 1"
-exec "xinput set-prop 12 351 1"
 exec "nitrogen --restore&"
 exec "compton -f&"
+exec "copyq &"
 exec setxkbmap -option "ctrl:swapcaps"
 exec --no-startup-id i3-msg 'workspace $ws1; exec alacritty'
 set $mode_power [l]ogoff | [s]hutdown

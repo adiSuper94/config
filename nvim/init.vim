@@ -1,14 +1,21 @@
 " This file can be symlinked to ~/.vimrc
 
 call plug#begin()
+
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" Syntax highlighting
+"Plug 'octol/vim-cpp-enhanced-highlight'
+"Plug 'uiiaoo/java-syntax.vim'
+Plug 'sheerun/vim-polyglot'
+
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'octol/vim-cpp-enhanced-highlight'
+
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'dense-analysis/ale'
 Plug 'christoomey/vim-tmux-navigator'
@@ -16,7 +23,8 @@ Plug 'kyazdani42/nvim-tree.lua' " file explorer util
 Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 Plug 'base16-project/base16-vim'
 
-Plug 'neovim/nvim-lspconfig' " Completion framework
+" Completion framework
+Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -31,9 +39,13 @@ Plug 'rust-lang/rust.vim'
 
 Plug 'williamboman/mason.nvim'
 Plug 'KabbAmine/zeavim.vim'
-Plug 'fatih/vim-go'
+"Plug 'fatih/vim-go'
 "Plug 'sunaku/vim-dasht'
 
+" Debug
+Plug 'mfussenegger/nvim-jdtls'
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
 call plug#end()
 
 "let g:ale_completion_enabled = 0 
@@ -83,6 +95,7 @@ vnoremap <leader>z <Plug>ZVVisSelection
 nnoremap <leader>z <Plug>Zeavim
 
 luafile /home/adisuper/.config/nvim/lua/lsp-config.lua
+"luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
 " Set completeopt to have a better completion experience
 " :help completeopt
 " menuone: popup even when there's only one match
@@ -93,15 +106,21 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 set updatetime=300
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-autocmd CursorHoldI * lua vim.lsp.buf.signature_help()
+autocmd CursorHoldI *.go,*rs,*.c,*.h lua vim.lsp.buf.signature_help()
 nnoremap gd <cmd> lua vim.lsp.buf.definition() <CR>
 nnoremap gD <cmd> lua vim.lsp.buf.declaration() <CR>
 nnoremap ga <cmd> lua vim.lsp.buf.code_action() <CR>
 nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
 nnoremap gi <cmd> vim.lsp.buf.implementation() <CR>
 nnoremap gn <cmd>lua vim.lsp.buf.rename()<CR> 
-autocmd BufWritePre *.go,*.rs lua vim.lsp.buf.formatting()
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_extra_types = 1
-let g:go_gopls_enabled = 0
+autocmd BufWritePre *.go,*.rs,*.c,*.h lua vim.lsp.buf.formatting()
+"let g:go_highlight_functions = 1
+"let g:go_highlight_function_calls = 1
+"let g:go_highlight_extra_types = 1
+"let g:go_gopls_enabled = 0
+" Debug shortcuts
+nnoremap <leader>b <cmd>:lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <leader>o <cmd>:lua require'dap'.step_over()<CR>
+nnoremap <leader>i <cmd>:lua require'dap'.step_into()<CR>
+nnoremap <leader>c <cmd>:lua require'dap'.continue()<CR>
+nnoremap // :noh<return> " clear highlighting
