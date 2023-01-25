@@ -2,55 +2,46 @@
 
 call plug#begin()
 
+" Theme
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'base16-project/base16-vim'
 
 " Syntax highlighting
-"Plug 'octol/vim-cpp-enhanced-highlight'
-"Plug 'uiiaoo/java-syntax.vim'
 Plug 'sheerun/vim-polyglot'
 
+" Bells and whistles
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'dense-analysis/ale'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'kyazdani42/nvim-tree.lua' " file explorer util
 Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
-Plug 'base16-project/base16-vim'
 
 " Completion framework
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
-"Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
-"Plug 'ray-x/lsp_signature.nvim'
+Plug 'neovim/nvim-lspconfig' " neovim lsp configs
+Plug 'hrsh7th/cmp-nvim-lsp' " auto completion source for nvim built in lsp
+Plug 'hrsh7th/cmp-buffer' " auto completion source for buffer
+Plug 'hrsh7th/cmp-path' " auto completion source for filesystem paths
+Plug 'hrsh7th/cmp-vsnip' " auto completion source for vim-vsnip
+Plug 'hrsh7th/vim-vsnip' 
+Plug 'hrsh7th/nvim-cmp' " auto completion sink 
+Plug 'ray-x/lsp_signature.nvim'
+
+" Rust easy config from https://github.com/sharksforarms/neovim-rust 
 Plug 'simrat39/rust-tools.nvim'
 Plug 'rust-lang/rust.vim'
 
-Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason.nvim' " tool to install LSPs and related shiz
 Plug 'KabbAmine/zeavim.vim'
-"Plug 'fatih/vim-go'
-"Plug 'sunaku/vim-dasht'
 
 " Debug
-Plug 'mfussenegger/nvim-jdtls'
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
-call plug#end()
 
-"let g:ale_completion_enabled = 0 
-"let g:ale_lint_delay = 1000
-"let g:ale_disable_lsp = 1 
+call plug#end()
 
 " Custom visuals
 let g:airline#extensions#tabline#enabled = 1
@@ -80,8 +71,10 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <tab> :bnext<CR>
 nnoremap <C-p> :GFiles<CR>
+nnoremap <leader>, <C-w><
+nnoremap <leader>. <C-w>>
 nnoremap <leader>t :NvimTreeToggle<CR>
-nnoremap F :Rg<CR>
+nnoremap <leader>g :Rg<CR>
 
 " vim pane resize bindings
 autocmd VimResized * :wincmd =
@@ -111,16 +104,37 @@ nnoremap gd <cmd> lua vim.lsp.buf.definition() <CR>
 nnoremap gD <cmd> lua vim.lsp.buf.declaration() <CR>
 nnoremap ga <cmd> lua vim.lsp.buf.code_action() <CR>
 nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
-nnoremap gi <cmd> vim.lsp.buf.implementation() <CR>
-nnoremap gn <cmd>lua vim.lsp.buf.rename()<CR> 
+nnoremap gi <cmd> lua vim.lsp.buf.implementation() <CR>
+nnoremap gn <cmd> lua vim.lsp.buf.rename()<CR>
 autocmd BufWritePre *.go,*.rs,*.c,*.h lua vim.lsp.buf.formatting()
-"let g:go_highlight_functions = 1
-"let g:go_highlight_function_calls = 1
-"let g:go_highlight_extra_types = 1
-"let g:go_gopls_enabled = 0
+
+
 " Debug shortcuts
 nnoremap <leader>b <cmd>:lua require'dap'.toggle_breakpoint()<CR>
 nnoremap <leader>o <cmd>:lua require'dap'.step_over()<CR>
 nnoremap <leader>i <cmd>:lua require'dap'.step_into()<CR>
 nnoremap <leader>c <cmd>:lua require'dap'.continue()<CR>
 nnoremap // :noh<return> " clear highlighting
+
+
+"Plugins not being used but might be helpful
+
+"Plug 'octol/vim-cpp-enhanced-highlight'
+"Plug 'uiiaoo/java-syntax.vim'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'dense-analysis/ale'
+"Plug 'hrsh7th/cmp-cmdline'
+"Plug 'fatih/vim-go'
+"Plug 'sunaku/vim-dasht'
+"Plug 'mfussenegger/nvim-jdtls' " Debug
+
+" Configs for those unused plugins (I guess I am a hoarder) 
+"let g:ale_completion_enabled = 0 
+"let g:ale_lint_delay = 1000
+"let g:ale_disable_lsp = 1 
+"let g:go_highlight_functions = 1
+"let g:go_highlight_function_calls = 1
+"let g:go_highlight_extra_types = 1
+"let g:go_gopls_enabled = 0
+
+

@@ -130,5 +130,5 @@ require'lspconfig'.clangd.setup{capabilities = capabilities}
 require'lspconfig'.gopls.setup{capabilities = capabilities}
 --require'lspconfig'.erlangls.setup{capabilities = capabilities}
 --require'lspconfig'.jdtls.setup{}
---sig_cfg = { bind = true}  -- add you config here
---require "lsp_signature".setup(sig_cfg)
+sig_cfg = { bind = true}  -- add you config here
+require "lsp_signature".setup(sig_cfg)
