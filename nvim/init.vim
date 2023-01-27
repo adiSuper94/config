@@ -59,8 +59,8 @@ set number
 set ignorecase
 set cursorline
 set relativenumber
-set autoindent expandtab tabstop=2 shiftwidth=2
-
+set autoindent expandtab tabstop=2 shiftwidth=2 textwidth=100
+set autoread
 luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
 
 " Key Bindings
@@ -99,14 +99,14 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 set updatetime=300
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-autocmd CursorHoldI *.go,*rs,*.c,*.h lua vim.lsp.buf.signature_help()
+autocmd CursorHoldI *rs,*.c,*.h lua vim.lsp.buf.signature_help()
 nnoremap gd <cmd> lua vim.lsp.buf.definition() <CR>
 nnoremap gD <cmd> lua vim.lsp.buf.declaration() <CR>
 nnoremap ga <cmd> lua vim.lsp.buf.code_action() <CR>
 nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
 nnoremap gi <cmd> lua vim.lsp.buf.implementation() <CR>
 nnoremap gn <cmd> lua vim.lsp.buf.rename()<CR>
-autocmd BufWritePre *.go,*.rs,*.c,*.h lua vim.lsp.buf.formatting()
+autocmd BufWritePre *.rs,*.c,*.h lua vim.lsp.buf.format()
 
 
 " Debug shortcuts
