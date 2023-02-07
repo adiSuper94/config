@@ -3,7 +3,7 @@ configuration {
   display-window: "Windows:";
   drun-display-format: "{name}";
   font: "MesloLGF NF Medium 10";
-  modi: "window,run,drun,emoji";
+  modi: "window,run,drun,emoji,filebrowser";
   show-icons: true;
 }
 
