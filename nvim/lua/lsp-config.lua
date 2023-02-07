@@ -71,11 +71,13 @@ cmp.setup({
   -- Installed sources
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'vsnip' },
+    --{ name = 'vsnip' },
     { name = 'path' },
     { name = 'buffer' },
   },
 })
+sig_cfg = { bind = true}  -- add you config here
+require "lsp_signature".setup(sig_cfg)
 
 local dap, dapui = require("dap"), require("dapui")
 dap.adapters.lldb = {
@@ -106,7 +108,7 @@ dap.configurations.cpp = {
     --
     -- But you should be aware of the implications:
     -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-    -- runInTerminal = false,
+    --runInTerminal = true,
   },
 }
 
@@ -128,7 +130,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 require'lspconfig'.clangd.setup{capabilities = capabilities}
 require'lspconfig'.gopls.setup{capabilities = capabilities}
+--require'lspconfig'.pyright.setup{capabilities = capabilities}
 --require'lspconfig'.erlangls.setup{capabilities = capabilities}
 --require'lspconfig'.jdtls.setup{}
-sig_cfg = { bind = true}  -- add you config here
-require "lsp_signature".setup(sig_cfg)
+

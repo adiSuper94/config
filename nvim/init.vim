@@ -59,7 +59,11 @@ set number
 set ignorecase
 set cursorline
 set relativenumber
-set autoindent expandtab tabstop=2 shiftwidth=2 textwidth=100
+set autoindent
+set expandtab softtabstop=2 " use space instead of tabs, and backspace deletes 2 chars instead of 1
+set tabstop=2 " width of tab char
+set shiftwidth=2 " witdth used for indetation commands (<<, >>)
+set textwidth=100 " line width/ column width before line wraps
 set autoread
 luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
 
@@ -89,6 +93,7 @@ nnoremap <leader>z <Plug>Zeavim
 
 luafile /home/adisuper/.config/nvim/lua/lsp-config.lua
 "luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
+
 " Set completeopt to have a better completion experience
 " :help completeopt
 " menuone: popup even when there's only one match
@@ -106,7 +111,7 @@ nnoremap ga <cmd> lua vim.lsp.buf.code_action() <CR>
 nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
 nnoremap gi <cmd> lua vim.lsp.buf.implementation() <CR>
 nnoremap gn <cmd> lua vim.lsp.buf.rename()<CR>
-autocmd BufWritePre *.rs,*.c,*.h lua vim.lsp.buf.format()
+autocmd BufWritePre *.rs,*.c,*.h lua vim.lsp.buf.format({async = true})
 
 
 " Debug shortcuts
@@ -116,6 +121,10 @@ nnoremap <leader>i <cmd>:lua require'dap'.step_into()<CR>
 nnoremap <leader>c <cmd>:lua require'dap'.continue()<CR>
 nnoremap // :noh<return> " clear highlighting
 
+" Trying Shiz out from vim cast
+
+nnoremap <leader>l :set list! <CR> " Shortcut to rapidly toggle `set list`
+set listchars=tab:▸\ ,eol:¬ 
 
 "Plugins not being used but might be helpful
 

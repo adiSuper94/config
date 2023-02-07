@@ -19,14 +19,14 @@ local config = {
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
 
     -- 💀
-    '-jar', '/home/adisuper/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
+    '-jar', '~/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar',
          -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
          -- Must point to the                                                     Change this to
          -- eclipse.jdt.ls installation                                           the actual version
 
 
     -- 💀
-    '-configuration', '/home/adisuper/.local/share/nvim/mason/packages/jdtls/config_linux',
+    '-configuration', '~/.local/share/nvim/mason/packages/jdtls/config_linux',
                     -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
                     -- Must point to the                      Change to one of `linux`, `win` or `mac`
                     -- eclipse.jdt.ls installation            Depending on your system.
@@ -34,7 +34,7 @@ local config = {
 
     -- 💀
     -- See `data directory configuration` section in the README
-    '-data', '/home/adisuper/.local/share/nvim/java-debug-metedata'
+    '-data', '~/.local/share/nvim/java-debug-metedata'
   },
 
   -- 💀
