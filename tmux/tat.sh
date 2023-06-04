@@ -8,12 +8,13 @@ session_exists(){
 
 # switch to existing session
 switch_or_create_session(){
-  selected_session=$( (tmux list-sessions | sed "s/:.*//"; echo "--new-session--") | fzf)
+  selected_session=$( (tmux list-sessions | sed "s/:.*//"; echo "--new-session--"; echo "no tmux ;(") | fzf)
   if [ "$selected_session" = "--new-session--" ]; then
     echo "enter name of new session: "
     read selected_session
+  elif [ "$selected_session" = "no tmux ;(" ]; then
+    exit 0
   fi
-  
   if not_in_tmux; then
     #echo "attach n  -d -t "
     tmux new-session -As "$selected_session"
