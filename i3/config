@@ -32,9 +32,9 @@ exec --no-startup-id nm-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+ && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%- && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -183,26 +183,27 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-#bar {
-#        status_command i3blocks
-#}
+# Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
+bar {
+        status_command i3blocks
+}
 ## Custom bindings and settings
 exec_always $HOME/.screenlayout/dual-screen-setup.sh
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 bindsym Shift+space exec "rofi -show drun"
-bindsym $mod+x exec i3lock -f -i /home/adisuper/Pictures/starlord.png
+bindsym $mod+x exec i3lock -f -i /home/adisuper/Pictures/Wallpapers/startlord2.png
 bindsym $mod+v exec copyq toggle
 exec "/usr/libexec/gsd-xsettings&"
 # xinput props might need change on each OS installation
-exec "xinput set-prop 12 370 1" #  Tap
-exec "xinput set-prop 12 371 1" # Tap Default
-exec "xinput set-prop 12 349 1"
-exec "xinput set-prop 12 350 1"
+exec "xinput set-prop 12 361 1" #  Tap
+exec "xinput set-prop 12 372 1" # Tap Default
+exec "xinput set-prop 12 340 1"
+exec "xinput set-prop 12 341 1"
 exec "nitrogen --restore&"
 exec "compton -f&"
 exec "copyq &"
+exec "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &"
+exec "bluetoothctl power off"
 exec setxkbmap -option "ctrl:swapcaps"
 exec --no-startup-id i3-msg 'workspace $ws1; exec alacritty'
 set $mode_power [l]ogoff | [s]hutdown
