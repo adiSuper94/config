@@ -3,6 +3,12 @@
 -- See https://github.com/simrat39/rust-tools.nvim#configuration
 local nvim_lsp = require'lspconfig'
 
+vim.g.node_host_prog = "/home/adisuper/.nvm/versions/node/v18.7.0/bin/node"
+-- for mason.nvim
+-- prereq - install lsp server in that node/bin npm i -g typescript-language-server 
+-- (handled by :Mason currently)
+vim.cmd("let $PATH = '/home/adisuper/.nvm/versions/node/v18.7.0/bin:' . $PATH")
+
 local rt = require('rust-tools')
 rt.setup({
     tools = { -- rust-tools options
@@ -71,9 +77,9 @@ cmp.setup({
   -- Installed sources
   sources = {
     { name = 'nvim_lsp' },
-    --{ name = 'vsnip' },
+    { name = 'vsnip' },
     { name = 'path' },
-    { name = 'buffer' },
+--    { name = 'buffer' },
   },
 })
 sig_cfg = { bind = true}  -- add you config here
@@ -108,7 +114,7 @@ dap.configurations.cpp = {
     --
     -- But you should be aware of the implications:
     -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-    --runInTerminal = true,
+    runInTerminal = true,
   },
 }
 
@@ -130,6 +136,12 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 require'lspconfig'.clangd.setup{capabilities = capabilities}
 require'lspconfig'.gopls.setup{capabilities = capabilities}
+local servers = {'tsserver', 'jsonls'}
+for _, lsp in pairs(servers) do
+  nvim_lsp[lsp].setup {
+    capabilites = capabilities,
+  }
+end
 --require'lspconfig'.pyright.setup{capabilities = capabilities}
 --require'lspconfig'.erlangls.setup{capabilities = capabilities}
 --require'lspconfig'.jdtls.setup{}

@@ -29,6 +29,7 @@ Plug 'hrsh7th/cmp-vsnip' " auto completion source for vim-vsnip
 Plug 'hrsh7th/vim-vsnip' 
 Plug 'hrsh7th/nvim-cmp' " auto completion sink 
 Plug 'ray-x/lsp_signature.nvim'
+"Plug 'lewis6991/gitsigns.nvim'
 
 " Rust easy config from https://github.com/sharksforarms/neovim-rust 
 Plug 'simrat39/rust-tools.nvim'
@@ -73,12 +74,23 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-nnoremap <tab> :bnext<CR>
+nnoremap <Tab> :Files<CR>
 nnoremap <C-p> :GFiles<CR>
+nnoremap <C-x> :bd<CR>
+nnoremap <C-w> :w<CR>
 nnoremap <leader>, <C-w><
 nnoremap <leader>. <C-w>>
 nnoremap <leader>t :NvimTreeToggle<CR>
 nnoremap <leader>g :Rg<CR>
+
+"I'm gonna regret this
+nnoremap <Up> <Nop>
+nnoremap <Down> <Nop>
+nnoremap <Right> :bn<CR>
+nnoremap <Left> :bp<CR>
+
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
 
 " vim pane resize bindings
 autocmd VimResized * :wincmd =
@@ -112,20 +124,22 @@ nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
 nnoremap gi <cmd> lua vim.lsp.buf.implementation() <CR>
 nnoremap gn <cmd> lua vim.lsp.buf.rename()<CR>
 autocmd BufWritePre *.rs,*.c,*.h lua vim.lsp.buf.format({async = true})
-
+autocmd CursorHold * GitGutter
 
 " Debug shortcuts
 nnoremap <leader>b <cmd>:lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <leader>o <cmd>:lua require'dap'.step_over()<CR>
-nnoremap <leader>i <cmd>:lua require'dap'.step_into()<CR>
-nnoremap <leader>c <cmd>:lua require'dap'.continue()<CR>
+nnoremap <leader>j <cmd>:lua require'dap'.step_over()<CR>
+nnoremap <leader>l <cmd>:lua require'dap'.step_into()<CR>
+nnoremap <leader>p <cmd>:lua require'dap'.continue()<CR>
 nnoremap // :noh<return> " clear highlighting
 
+nnoremap <leader>c <cmd>:edit /home/adisuper/.config/nvim/init.vim<CR>
 " Trying Shiz out from vim cast
 
-nnoremap <leader>l :set list! <CR> " Shortcut to rapidly toggle `set list`
-set listchars=tab:▸\ ,eol:¬ 
+" Shortcut to rapidly toggle `set list`
+nnoremap <leader>l :set list! <CR>
 
+set listchars=tab:▸\ ,eol:¬ 
 "Plugins not being used but might be helpful
 
 "Plug 'octol/vim-cpp-enhanced-highlight'
@@ -139,11 +153,10 @@ set listchars=tab:▸\ ,eol:¬
 
 " Configs for those unused plugins (I guess I am a hoarder) 
 "let g:ale_completion_enabled = 0 
+"let g:ale_lint_on_text_changed = 1
 "let g:ale_lint_delay = 1000
 "let g:ale_disable_lsp = 1 
 "let g:go_highlight_functions = 1
 "let g:go_highlight_function_calls = 1
 "let g:go_highlight_extra_types = 1
 "let g:go_gopls_enabled = 0
-
-
