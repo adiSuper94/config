@@ -5,13 +5,12 @@ call plug#begin()
 " Theme
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'base16-project/base16-vim'
+Plug 'base16-project/base16-vim' ",  { 'commit': '88a1e73e5358fefe0288538e6866f99d5487c5a0' }
 
 " Syntax highlighting
 Plug 'sheerun/vim-polyglot'
 
 " Bells and whistles
-Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-rooter'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf'
@@ -19,6 +18,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'kyazdani42/nvim-tree.lua' " file explorer util
 Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
+Plug 'luochen1990/rainbow'
+Plug 'tpope/vim-commentary'
+Plug 'adiSuper94/hallebarde.vim'
 
 " Completion framework
 Plug 'neovim/nvim-lspconfig' " neovim lsp configs
@@ -48,25 +50,26 @@ call plug#end()
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_section_z = '%p%% %l:%c'
-set termguicolors
 let base16colorspace=256
 colorscheme base16-monokai
 hi Normal guibg=None ctermbg=None 
-set signcolumn=yes
+let g:rainbow_active = 1
 
 " Custom Editor settings
+set signcolumn=yes " For Git Gutter to not flicker
+set termguicolors
 set mouse=a
 set number
 set ignorecase
 set cursorline
 set relativenumber
 set autoindent
+set wrap linebreak " wrap lines without breakig words
 set expandtab softtabstop=2 " use space instead of tabs, and backspace deletes 2 chars instead of 1
 set tabstop=2 " width of tab char
 set shiftwidth=2 " witdth used for indetation commands (<<, >>)
 set textwidth=100 " line width/ column width before line wraps
 set autoread
-luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
 
 " Key Bindings
 let mapleader = " " " map leader to Space
@@ -82,10 +85,16 @@ nnoremap <leader>, <C-w><
 nnoremap <leader>. <C-w>>
 nnoremap <leader>t :NvimTreeToggle<CR>
 nnoremap <leader>g :Rg<CR>
+nnoremap <silent> <Leader><Leader> <CMD>Hallebarde<CR>
+nnoremap <leader>hr  <cmd>HallebardeRemove<CR>
+nnoremap <leader>ha  <cmd>HallebardeAdd<CR>
+" Move by displayed line
+nnoremap j gj
+nnoremap k gk
 
 "I'm gonna regret this
-nnoremap <Up> <Nop>
-nnoremap <Down> <Nop>
+nnoremap <Up> <cmd>HallebardeNext <CR>
+nnoremap <Down> <cmd>HallebardePrevious <CR>
 nnoremap <Right> :bn<CR>
 nnoremap <Left> :bp<CR>
 
@@ -98,13 +107,11 @@ nnoremap <leader>= :wincmd =<CR>
 nnoremap <leader>+ :wincmd \|<CR>
 wincmd _
 
-"vim zeal bindings
 vnoremap <leader>z <Plug>ZVVisSelection
 "nnoremap gz <Plug>ZVOperator
 nnoremap <leader>z <Plug>Zeavim
 
-luafile /home/adisuper/.config/nvim/lua/lsp-config.lua
-"luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
+let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn'] ", 'Makefile', 'package.json']
 
 " Set completeopt to have a better completion experience
 " :help completeopt
@@ -116,30 +123,38 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 set updatetime=300
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-autocmd CursorHoldI *rs,*.c,*.h lua vim.lsp.buf.signature_help()
-nnoremap gd <cmd> lua vim.lsp.buf.definition() <CR>
-nnoremap gD <cmd> lua vim.lsp.buf.declaration() <CR>
+autocmd CursorHoldI *rs,*.c,*.h,*js,*.json lua vim.lsp.buf.signature_help()
+nnoremap <F12> <cmd> lua vim.lsp.buf.definition() <CR>
+nnoremap <F24> <cmd> lua vim.lsp.buf.declaration() <CR>
 nnoremap ga <cmd> lua vim.lsp.buf.code_action() <CR>
-nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
-nnoremap gi <cmd> lua vim.lsp.buf.implementation() <CR>
-nnoremap gn <cmd> lua vim.lsp.buf.rename()<CR>
-autocmd BufWritePre *.rs,*.c,*.h lua vim.lsp.buf.format({async = true})
+"nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
+nnoremap <F11> <cmd> lua vim.lsp.buf.implementation() <CR>
+nnoremap <F10> <cmd> lua vim.lsp.buf.rename()<CR>
+autocmd BufWritePre *.rs,*.c,*.h,*.js,*.json lua vim.lsp.buf.format({async = true})
 autocmd CursorHold * GitGutter
-
+nnoremap <leader>k <cmd> lua vim.lsp.buf.hover() <CR>
 " Debug shortcuts
-nnoremap <leader>b <cmd>:lua require'dap'.toggle_breakpoint()<CR>
-nnoremap <leader>j <cmd>:lua require'dap'.step_over()<CR>
-nnoremap <leader>l <cmd>:lua require'dap'.step_into()<CR>
-nnoremap <leader>p <cmd>:lua require'dap'.continue()<CR>
-nnoremap // :noh<return> " clear highlighting
+nnoremap <F5> <cmd> lua require'dap'.restart() <CR>
+nnoremap <F6> <cmd> lua require'dap'.continue() <CR>
+nnoremap <F18> <cmd> lua require'dap'.pause <CR> " Shift + F6
+nnoremap <F7> <cmd> lua require'dap'.toggle_breakpoint() <CR>
+nnoremap <F8> <cmd> lua require'dap'.step_over() <CR>
+nnoremap <F9> <cmd> lua require'dap'.step_into() <CR>
+nnoremap <F21> <cmd> lua require'dap'.step_out() <CR> " Shift + F9
+
+nnoremap <F2> :nohlsearch<return> 
 
 nnoremap <leader>c <cmd>:edit /home/adisuper/.config/nvim/init.vim<CR>
 " Trying Shiz out from vim cast
 
 " Shortcut to rapidly toggle `set list`
 nnoremap <leader>l :set list! <CR>
-
 set listchars=tab:▸\ ,eol:¬ 
+
+luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
+luafile /home/adisuper/.config/nvim/lua/lsp-config.lua
+"luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
+
 "Plugins not being used but might be helpful
 
 "Plug 'octol/vim-cpp-enhanced-highlight'
@@ -150,6 +165,7 @@ set listchars=tab:▸\ ,eol:¬
 "Plug 'fatih/vim-go'
 "Plug 'sunaku/vim-dasht'
 "Plug 'mfussenegger/nvim-jdtls' " Debug
+"Plug 'tpope/vim-fugitive'
 
 " Configs for those unused plugins (I guess I am a hoarder) 
 "let g:ale_completion_enabled = 0 

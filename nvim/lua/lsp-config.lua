@@ -12,9 +12,10 @@ vim.cmd("let $PATH = '/home/adisuper/.nvm/versions/node/v18.7.0/bin:' . $PATH")
 local rt = require('rust-tools')
 rt.setup({
     tools = { -- rust-tools options
-        autoSetHints = true,
+        -- autoSetHints = true,
         hover_with_actions = false,
         inlay_hints = {
+            auto =true,
             show_parameter_hints = true,
             parameter_hints_prefix = "",
             other_hints_prefix = "",
@@ -134,15 +135,15 @@ dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-require'lspconfig'.clangd.setup{capabilities = capabilities}
-require'lspconfig'.gopls.setup{capabilities = capabilities}
-local servers = {'tsserver', 'jsonls'}
+local servers = {'tsserver', 'jsonls', 'clangd'}
 for _, lsp in pairs(servers) do
   nvim_lsp[lsp].setup {
     capabilites = capabilities,
   }
 end
+--require'lspconfig'.gopls.setup{capabilities = capabilities}
 --require'lspconfig'.pyright.setup{capabilities = capabilities}
 --require'lspconfig'.erlangls.setup{capabilities = capabilities}
+--require'lspconfig'.clangd.setup{capabilities = capabilities}
 --require'lspconfig'.jdtls.setup{}
 

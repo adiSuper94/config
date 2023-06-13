@@ -191,7 +191,8 @@ bar {
 exec_always $HOME/.screenlayout/dual-screen-setup.sh
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 bindsym Shift+space exec "rofi -show drun"
-bindsym $mod+x exec i3lock -f -i /home/adisuper/Pictures/Wallpapers/startlord2.png
+#bindsym $mod+x exec i3lock -f -i /home/adisuper/Pictures/Wallpapers/startlord2.png
+bindsym $mod+x move workspace to output next
 bindsym $mod+v exec copyq toggle
 exec "/usr/libexec/gsd-xsettings&"
 # xinput props might need change on each OS installation
@@ -199,7 +200,7 @@ exec "xinput set-prop 12 361 1" #  Tap
 exec "xinput set-prop 12 372 1" # Tap Default
 exec "xinput set-prop 12 340 1"
 exec "xinput set-prop 12 341 1"
-exec "nitrogen --restore&"
+exec_always "nitrogen --restore&"
 exec "compton -f&"
 exec "copyq &"
 exec "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &"
