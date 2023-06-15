@@ -41,7 +41,6 @@ export PATH="$PATH:/home/adisuper/.foundry/bin:/home/adisuper/devtools/bat-extra
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 alias top=htop 
-alias ls=exa
 export NVM_DIR=~/.nvm
 export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'
 declare -a NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)

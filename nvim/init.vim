@@ -8,7 +8,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'base16-project/base16-vim' ",  { 'commit': '88a1e73e5358fefe0288538e6866f99d5487c5a0' }
 
 " Syntax highlighting
-Plug 'sheerun/vim-polyglot'
+"Plug 'sheerun/vim-polyglot'
 
 " Bells and whistles
 Plug 'airblade/vim-rooter'

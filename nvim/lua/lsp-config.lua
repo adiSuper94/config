@@ -135,7 +135,7 @@ dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-local servers = {'tsserver', 'jsonls', 'clangd'}
+local servers = {'tsserver', 'jsonls', 'clangd', 'pyright'}
 for _, lsp in pairs(servers) do
   nvim_lsp[lsp].setup {
     capabilites = capabilities,
