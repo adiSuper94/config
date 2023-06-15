@@ -3,16 +3,16 @@ window:
 
 font:
   normal:
-    family: MesloLGS NF
+    family: FiraCode Nerd Font Mono
     style: Retina
   bold:
-    family: MesloLGS NF
+    family: FiraCode Nerd Font Mono
     style: Bold
   italic:
-    family: MesloLGS NF
+    family: FiraCode Nerd Font Mono
     style: Regular Italic
   bold_italic:
-    family: MesloLGS NF
+    family: FiraCode Nerd Font Mono
     style: Bold Italic
 
   size: 12.0
@@ -45,5 +45,5 @@ colors:
     magenta: '#AE81FF'
     cyan: '#66D9EF'
     white: '#F8F8F2'
-theme: Molokai
+theme: Monokai
 ## theme config end ##
