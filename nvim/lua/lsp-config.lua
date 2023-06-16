@@ -3,6 +3,9 @@
 -- See https://github.com/simrat39/rust-tools.nvim#configuration
 local nvim_lsp = require'lspconfig'
 
+require("mason").setup()
+-- require("mason-lspconfig").setup()
+
 vim.g.node_host_prog = "/home/adisuper/.nvm/versions/node/v18.7.0/bin/node"
 -- for mason.nvim
 -- prereq - install lsp server in that node/bin npm i -g typescript-language-server 
@@ -47,8 +50,6 @@ rt.setup({
         end,
     },
 })
-require("mason").setup()
-
 -- Setup Completion
 -- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
 local cmp = require'cmp'
@@ -133,17 +134,18 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 end
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-local servers = {'tsserver', 'jsonls', 'clangd', 'pyright'}
+local servers = {'jsonls', 'clangd', 'pyright'}
 for _, lsp in pairs(servers) do
   nvim_lsp[lsp].setup {
     capabilites = capabilities,
   }
 end
---require'lspconfig'.gopls.setup{capabilities = capabilities}
---require'lspconfig'.pyright.setup{capabilities = capabilities}
---require'lspconfig'.erlangls.setup{capabilities = capabilities}
---require'lspconfig'.clangd.setup{capabilities = capabilities}
---require'lspconfig'.jdtls.setup{}
+nvim_lsp.volar.setup{
+  capabilites = capabilities,
+  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue'}
+}
+-- require'lspconfig'.jdtls.setup{}
 

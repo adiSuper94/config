@@ -1,5 +1,15 @@
 " This file can be symlinked to ~/.vimrc
 
+function FormatAndSave()
+  lua vim.lsp.buf.format({async = false})
+  w
+  if &filetype == "python"
+    silent! !black --quiet %
+    sleep 150m
+    silent! e
+  endif
+endfunction
+
 call plug#begin()
 
 " Theme
@@ -8,7 +18,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'base16-project/base16-vim' ",  { 'commit': '88a1e73e5358fefe0288538e6866f99d5487c5a0' }
 
 " Syntax highlighting
-"Plug 'sheerun/vim-polyglot'
+Plug 'sheerun/vim-polyglot'
 
 " Bells and whistles
 Plug 'airblade/vim-rooter'
@@ -80,7 +90,7 @@ nnoremap <C-l> <C-w>l
 nnoremap <Tab> :Files<CR>
 nnoremap <C-p> :GFiles<CR>
 nnoremap <C-x> :bd<CR>
-nnoremap <C-w> :w<CR>
+nnoremap <C-w> :call FormatAndSave() <CR>
 nnoremap <leader>, <C-w><
 nnoremap <leader>. <C-w>>
 nnoremap <leader>t :NvimTreeToggle<CR>
@@ -123,14 +133,14 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 set updatetime=300
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-autocmd CursorHoldI *rs,*.c,*.h,*js,*.json lua vim.lsp.buf.signature_help()
+autocmd CursorHoldI *rs,*.c,*.h,*js lua vim.lsp.buf.signature_help()
 nnoremap <F12> <cmd> lua vim.lsp.buf.definition() <CR>
 nnoremap <F24> <cmd> lua vim.lsp.buf.declaration() <CR>
 nnoremap ga <cmd> lua vim.lsp.buf.code_action() <CR>
 "nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
 nnoremap <F11> <cmd> lua vim.lsp.buf.implementation() <CR>
 nnoremap <F10> <cmd> lua vim.lsp.buf.rename()<CR>
-autocmd BufWritePre *.rs,*.c,*.h,*.js,*.json lua vim.lsp.buf.format({async = true})
+" autocmd BufWritePre *.rs,*.c,*.h,*.js,*.json lua vim.lsp.buf.format({async = true})
 autocmd CursorHold * GitGutter
 nnoremap <leader>k <cmd> lua vim.lsp.buf.hover() <CR>
 " Debug shortcuts

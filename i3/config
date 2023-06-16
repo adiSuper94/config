@@ -206,7 +206,7 @@ exec "copyq &"
 exec "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &"
 exec "bluetoothctl power off"
 exec setxkbmap -option "ctrl:swapcaps"
-exec --no-startup-id i3-msg 'workspace $ws1; exec alacritty'
+# exec --no-startup-id i3-msg 'workspace $ws1; exec alacritty'
 set $mode_power [l]ogoff | [s]hutdown
 bindsym $mod+Shift+e mode "$mode_power"
 mode "$mode_power" {
