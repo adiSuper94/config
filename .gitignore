@@ -1,6 +1,6 @@
 /*
 !.gitignore
-!alacritty/alacritty.yml
+!alacritty
 !tmux
 !i3
 !nvim
