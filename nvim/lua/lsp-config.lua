@@ -6,11 +6,11 @@ local nvim_lsp = require'lspconfig'
 require("mason").setup()
 -- require("mason-lspconfig").setup()
 
-vim.g.node_host_prog = "/home/adisuper/.nvm/versions/node/v18.7.0/bin/node"
+-- vim.g.node_host_prog = "/home/adisuper/.local/share/fnm/node-versions/v18.16.0/installation/bin/node"
 -- for mason.nvim
 -- prereq - install lsp server in that node/bin npm i -g typescript-language-server 
 -- (handled by :Mason currently)
-vim.cmd("let $PATH = '/home/adisuper/.nvm/versions/node/v18.7.0/bin:' . $PATH")
+-- vim.cmd("let $PATH = '/home/adisuper/.local/share/fnm/node-versions/v18.16.0/installation/bin:' . $PATH")
 
 local rt = require('rust-tools')
 rt.setup({
@@ -137,15 +137,16 @@ dap.configurations.rust = dap.configurations.cpp
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-local servers = {'jsonls', 'clangd', 'pyright'}
+local servers = {'jsonls', 'clangd', 'pyright', 'tsserver'}
 for _, lsp in pairs(servers) do
   nvim_lsp[lsp].setup {
     capabilites = capabilities,
   }
 end
-nvim_lsp.volar.setup{
-  capabilites = capabilities,
-  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue'}
-}
+
+-- nvim_lsp.volar.setup{
+--   capabilites = capabilities,
+--   filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue'}
+-- }
 -- require'lspconfig'.jdtls.setup{}
 

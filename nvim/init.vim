@@ -41,14 +41,12 @@ Plug 'hrsh7th/cmp-vsnip' " auto completion source for vim-vsnip
 Plug 'hrsh7th/vim-vsnip' 
 Plug 'hrsh7th/nvim-cmp' " auto completion sink 
 Plug 'ray-x/lsp_signature.nvim'
-"Plug 'lewis6991/gitsigns.nvim'
 
 " Rust easy config from https://github.com/sharksforarms/neovim-rust 
 Plug 'simrat39/rust-tools.nvim'
 Plug 'rust-lang/rust.vim'
 
 Plug 'williamboman/mason.nvim' " tool to install LSPs and related shiz
-Plug 'KabbAmine/zeavim.vim'
 
 " Debug
 Plug 'mfussenegger/nvim-dap'
@@ -89,7 +87,8 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <Tab> :Files<CR>
 nnoremap <C-p> :GFiles<CR>
-nnoremap <C-x> :bd<CR>
+nnoremap <A-x> :bd<CR>
+nnoremap <C-x> :bp \| bd #<CR>
 nnoremap <C-w> :call FormatAndSave() <CR>
 nnoremap <leader>, <C-w><
 nnoremap <leader>. <C-w>>
@@ -117,10 +116,6 @@ nnoremap <leader>= :wincmd =<CR>
 nnoremap <leader>+ :wincmd \|<CR>
 wincmd _
 
-vnoremap <leader>z <Plug>ZVVisSelection
-"nnoremap gz <Plug>ZVOperator
-nnoremap <leader>z <Plug>Zeavim
-
 let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn'] ", 'Makefile', 'package.json']
 
 " Set completeopt to have a better completion experience
@@ -134,11 +129,11 @@ set shortmess+=c
 set updatetime=300
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 autocmd CursorHoldI *rs,*.c,*.h,*js lua vim.lsp.buf.signature_help()
-nnoremap <F12> <cmd> lua vim.lsp.buf.definition() <CR>
-nnoremap <F24> <cmd> lua vim.lsp.buf.declaration() <CR>
+nnoremap gd <cmd> lua vim.lsp.buf.definition() <CR>
+nnoremap gD <cmd> lua vim.lsp.buf.declaration() <CR>
 nnoremap ga <cmd> lua vim.lsp.buf.code_action() <CR>
 "nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
-nnoremap <F11> <cmd> lua vim.lsp.buf.implementation() <CR>
+nnoremap gi <cmd> lua vim.lsp.buf.implementation() <CR>
 nnoremap <F10> <cmd> lua vim.lsp.buf.rename()<CR>
 " autocmd BufWritePre *.rs,*.c,*.h,*.js,*.json lua vim.lsp.buf.format({async = true})
 autocmd CursorHold * GitGutter
@@ -162,7 +157,7 @@ nnoremap <leader>l :set list! <CR>
 set listchars=tab:▸\ ,eol:¬ 
 
 luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
-luafile /home/adisuper/.config/nvim/lua/lsp-config.lua
+luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
 "luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
 
 "Plugins not being used but might be helpful
