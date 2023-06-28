@@ -1,5 +1,5 @@
-dofile("/home/adisuper/.config/nvim/lua/lsp/rust.lua")
-dofile("/home/adisuper/.config/nvim/lua/lsp/dap.lua")
+-- dofile("/home/adisuper/.config/nvim/lua/lsp/rust.lua")
+-- dofile("/home/adisuper/.config/nvim/lua/lsp/dap.lua")
 local nvim_lsp = require'lspconfig'
 require("mason").setup()
 -- Setup Completion
@@ -7,11 +7,11 @@ require("mason").setup()
 local cmp = require'cmp'
 cmp.setup({
   -- Enable LSP snippets
-  snippet = {
-    expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
+  -- snippet = {
+  --   expand = function(args)
+  --       vim.fn["vsnip#anonymous"](args.body)
+  --   end,
+  -- },
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -31,7 +31,7 @@ cmp.setup({
   -- Installed sources
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'vsnip' },
+    -- { name = 'vsnip' },
     { name = 'path' },
 --    { name = 'buffer' },
   },
@@ -42,10 +42,23 @@ require "lsp_signature".setup(sig_cfg)
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-local servers = {'jsonls', 'clangd', 'pyright', 'tsserver'}
+local servers = {'jsonls', 'clangd', 'pyright', 'tsserver', 'rust_analyzer'}
 for _, lsp in pairs(servers) do
   nvim_lsp[lsp].setup {
     capabilites = capabilities,
   }
 end
 
+-- require("lsp-inlayhints").setup()
+-- vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   group = "LspAttach_inlayhints",
+--   callback = function(args)
+--     if not (args.data and args.data.client_id) then
+--       return
+--     end
+--     local bufnr = args.buf
+--     local client = vim.lsp.get_client_by_id(args.data.client_id)
+--     require("lsp-inlayhints").on_attach(client, bufnr)
+--   end,
+-- })

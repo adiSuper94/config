@@ -26,25 +26,18 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'kyazdani42/nvim-tree.lua' " file explorer util
-Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-commentary'
-Plug 'adiSuper94/hallebarde.vim'
+Plug 'adiSuper94/hallebarde.vim', {'branch': 'extra-bits'}
 
 " Completion framework
 Plug 'neovim/nvim-lspconfig' " neovim lsp configs
 Plug 'hrsh7th/cmp-nvim-lsp' " auto completion source for nvim built in lsp
 Plug 'hrsh7th/cmp-buffer' " auto completion source for buffer
 Plug 'hrsh7th/cmp-path' " auto completion source for filesystem paths
-Plug 'hrsh7th/cmp-vsnip' " auto completion source for vim-vsnip
-Plug 'hrsh7th/vim-vsnip' 
 Plug 'hrsh7th/nvim-cmp' " auto completion sink 
 Plug 'ray-x/lsp_signature.nvim'
 
-" Rust easy config from https://github.com/sharksforarms/neovim-rust 
-Plug 'simrat39/rust-tools.nvim'
-Plug 'rust-lang/rust.vim'
 
 Plug 'williamboman/mason.nvim' " tool to install LSPs and related shiz
 
@@ -92,14 +85,13 @@ nnoremap <C-x> :bp \| bd #<CR>
 nnoremap <C-w> :call FormatAndSave() <CR>
 nnoremap <leader>, <C-w><
 nnoremap <leader>. <C-w>>
-nnoremap <leader>t :NvimTreeToggle<CR>
+" nnoremap <leader>t :NvimTreeToggle<CR>
+nnoremap <leader>t :LexLuthor<CR>
 nnoremap <leader>g :Rg<CR>
 nnoremap <silent> <Leader><Leader> <CMD>Hallebarde<CR>
 nnoremap <leader>hr  <cmd>HallebardeRemove<CR>
 nnoremap <leader>ha  <cmd>HallebardeAdd<CR>
 " Move by displayed line
-nnoremap j gj
-nnoremap k gk
 
 "I'm gonna regret this
 nnoremap <Up> <cmd>HallebardeNext <CR>
@@ -155,29 +147,29 @@ nnoremap <leader>c <cmd>:edit /home/adisuper/.config/nvim/init.vim<CR>
 " Shortcut to rapidly toggle `set list`
 nnoremap <leader>l :set list! <CR>
 set listchars=tab:▸\ ,eol:¬ 
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 20
+let g:netrw_liststyle = 3
 
-luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
 luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
-"luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
+" luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
+" luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
 
 "Plugins not being used but might be helpful
 
-"Plug 'octol/vim-cpp-enhanced-highlight'
-"Plug 'uiiaoo/java-syntax.vim'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'dense-analysis/ale'
-"Plug 'hrsh7th/cmp-cmdline'
-"Plug 'fatih/vim-go'
-"Plug 'sunaku/vim-dasht'
-"Plug 'mfussenegger/nvim-jdtls' " Debug
-"Plug 'tpope/vim-fugitive'
-
-" Configs for those unused plugins (I guess I am a hoarder) 
-"let g:ale_completion_enabled = 0 
-"let g:ale_lint_on_text_changed = 1
-"let g:ale_lint_delay = 1000
-"let g:ale_disable_lsp = 1 
-"let g:go_highlight_functions = 1
-"let g:go_highlight_function_calls = 1
-"let g:go_highlight_extra_types = 1
-"let g:go_gopls_enabled = 0
+" Plug 'octol/vim-cpp-enhanced-highlight'
+" Plug 'uiiaoo/java-syntax.vim'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'dense-analysis/ale'
+" Plug 'hrsh7th/cmp-cmdline'
+" Plug 'fatih/vim-go'
+" Plug 'sunaku/vim-dasht'
+" Plug 'mfussenegger/nvim-jdtls' " Debug
+" Plug 'tpope/vim-fugitive'
+" " Rust easy config from https://github.com/sharksforarms/neovim-rust 
+" Plug 'simrat39/rust-tools.nvim'
+" Plug 'rust-lang/rust.vim'
+" Plug 'hrsh7th/cmp-vsnip' " auto completion source for vim-vsnip
+" Plug 'hrsh7th/vim-vsnip' 
+" Plug 'kyazdani42/nvim-tree.lua' " file explorer util
+" Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
