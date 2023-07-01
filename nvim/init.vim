@@ -25,10 +25,13 @@ Plug 'airblade/vim-rooter'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'kyazdani42/nvim-tree.lua' " file explorer util
+Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-commentary'
 Plug 'adiSuper94/hallebarde.vim', {'branch': 'extra-bits'}
+Plug 'github/copilot.vim'
 
 " Completion framework
 Plug 'neovim/nvim-lspconfig' " neovim lsp configs
@@ -42,17 +45,18 @@ Plug 'ray-x/lsp_signature.nvim'
 Plug 'williamboman/mason.nvim' " tool to install LSPs and related shiz
 
 " Debug
-Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
+" Plug 'mfussenegger/nvim-dap'
+" Plug 'rcarriga/nvim-dap-ui'
 
 call plug#end()
 
 " Custom visuals
-let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline_section_z = '%p%% %l:%c'
+let g:airline_theme = 'ayu_dark'
 let base16colorspace=256
-colorscheme base16-monokai
+colorscheme base16-ayu-dark
 hi Normal guibg=None ctermbg=None 
 let g:rainbow_active = 1
 
@@ -78,16 +82,17 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-nnoremap <Tab> :Files<CR>
+nnoremap <Tab> :tabnext <CR>
 nnoremap <C-p> :GFiles<CR>
 nnoremap <A-x> :bd<CR>
 nnoremap <C-x> :bp \| bd #<CR>
-nnoremap <C-w> :call FormatAndSave() <CR>
+nnoremap <A-w> :call FormatAndSave() <CR>
+nnoremap <C-n> :tabnew <CR>
 nnoremap <leader>, <C-w><
 nnoremap <leader>. <C-w>>
-" nnoremap <leader>t :NvimTreeToggle<CR>
-nnoremap <leader>t :LexLuthor<CR>
-nnoremap <leader>g :Rg<CR>
+nnoremap <leader>t :NvimTreeToggle<CR>
+" nnoremap <leader>t :LexLuthor<CR>
+nnoremap <leader>/ :Rg<CR>
 nnoremap <silent> <Leader><Leader> <CMD>Hallebarde<CR>
 nnoremap <leader>hr  <cmd>HallebardeRemove<CR>
 nnoremap <leader>ha  <cmd>HallebardeAdd<CR>
@@ -126,7 +131,7 @@ nnoremap gD <cmd> lua vim.lsp.buf.declaration() <CR>
 nnoremap ga <cmd> lua vim.lsp.buf.code_action() <CR>
 "nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
 nnoremap gi <cmd> lua vim.lsp.buf.implementation() <CR>
-nnoremap <F10> <cmd> lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>r <cmd> lua vim.lsp.buf.rename()<CR>
 " autocmd BufWritePre *.rs,*.c,*.h,*.js,*.json lua vim.lsp.buf.format({async = true})
 autocmd CursorHold * GitGutter
 nnoremap <leader>k <cmd> lua vim.lsp.buf.hover() <CR>
@@ -147,12 +152,17 @@ nnoremap <leader>c <cmd>:edit /home/adisuper/.config/nvim/init.vim<CR>
 " Shortcut to rapidly toggle `set list`
 nnoremap <leader>l :set list! <CR>
 set listchars=tab:▸\ ,eol:¬ 
-let g:netrw_browse_split = 4
-let g:netrw_winsize = 20
-let g:netrw_liststyle = 3
+
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+" let g:netrw_banner = 0
+" let g:netrw_browse_split = 4
+" let g:netrw_winsize = 20
+" let g:netrw_liststyle = 3
+" let g:netrw_keepdir = 0
 
 luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
-" luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
+luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
 " luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
 
 "Plugins not being used but might be helpful
@@ -171,5 +181,3 @@ luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
 " Plug 'rust-lang/rust.vim'
 " Plug 'hrsh7th/cmp-vsnip' " auto completion source for vim-vsnip
 " Plug 'hrsh7th/vim-vsnip' 
-" Plug 'kyazdani42/nvim-tree.lua' " file explorer util
-" Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons

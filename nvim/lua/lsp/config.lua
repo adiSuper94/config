@@ -4,6 +4,11 @@ local nvim_lsp = require'lspconfig'
 require("mason").setup()
 -- Setup Completion
 -- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+vim.g.copilot_tab_fallback = ""
+
 local cmp = require'cmp'
 cmp.setup({
   -- Enable LSP snippets
@@ -13,6 +18,19 @@ cmp.setup({
   --   end,
   -- },
   mapping = {
+    ['<C-k>'] = cmp.mapping(function(fallback)
+      local copilot_keys = vim.fn["copilot#Accept"]()
+      if cmp.visible() then
+        cmp.confirm({ select = true })
+      elseif copilot_keys ~= "" and type(copilot_keys) == "string" then
+        vim.api.nvim_feedkeys(copilot_keys, "n", true)
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
     -- Add tab support
@@ -42,7 +60,7 @@ require "lsp_signature".setup(sig_cfg)
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-local servers = {'jsonls', 'clangd', 'pyright', 'tsserver', 'rust_analyzer'}
+local servers = {'jsonls', 'clangd', 'pyright', 'tsserver', 'rust_analyzer', 'ocamllsp'}
 for _, lsp in pairs(servers) do
   nvim_lsp[lsp].setup {
     capabilites = capabilities,
