@@ -39,6 +39,9 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/Screenshots/$(date)"
+bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Pictures/Screenshots/$(date)"
+
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec alacritty
@@ -121,7 +124,7 @@ set $ws10 "10: "
 # switch to workspace
 bindsym $mod+1 workspace $ws1
 bindsym $mod+2 workspace number $ws2
-bindsym $mod+3 workspace mumber $ws3
+bindsym $mod+3 workspace number $ws3
 bindsym $mod+4 workspace number $ws4
 bindsym $mod+5 workspace $ws5
 bindsym $mod+6 workspace number $ws6
@@ -133,7 +136,7 @@ bindsym $mod+0 workspace $ws10
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
 bindsym $mod+Shift+2 move container to workspace $number ws2
-bindsym $mod+Shift+3 move container to workspace $number ws3
+bindsym $mod+Shift+3 move container to workspace number $ws3
 bindsym $mod+Shift+4 move container to workspace number $ws4
 bindsym $mod+Shift+5 move container to workspace $ws5
 bindsym $mod+Shift+6 move container to workspace number $ws6
@@ -203,7 +206,8 @@ exec "xinput set-prop 12 371 1" # Tap Default
 exec "xinput set-prop 12 349 1"
 exec "xinput set-prop 12 350 1"
 exec --no-startup-id "variety &"
-exec --no-startup-id "fluxgui &"
+#exec --no-startup-id "fluxgui &"
+exec "redshift -l 29.6172:-82.3877 -t 6500:3500 &"
 exec --no-startup-id "compton -f&"
 exec --no-startup-id "copyq &"
 exec --no-startup-id "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &"
