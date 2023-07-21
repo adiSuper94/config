@@ -6,7 +6,7 @@ ensure_tmux_is_running() {
     sh ~/.config/tmux/tat.sh
   fi
 }
-
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ensure_tmux_is_running
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -31,33 +31,24 @@ bindkey -e
 zstyle :compinstall filename '~/.zshrc'
 fpath+=~/.zfunc
 fpath+=~/.zsh/zsh-completions/src
-[[ -s /home/adisuper/.autojump/etc/profile.d/autojump.sh ]] && source /home/adisuper/.autojump/etc/profile.d/autojump.sh
+# Use modern completion system
 autoload -Uz compinit
 compinit -D
 # End of lines added by compinstall
 
+setopt histignorealldups sharehistory
+alias top=htop 
+alias lg=lazygit
+export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'
+
 source "$HOME/.cargo/env"
 export PATH="$PATH:/home/adisuper/.foundry/bin:/home/adisuper/devtools/bat-extras/bin"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-alias top=htop 
-export NVM_DIR=~/.nvm
-export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'
-declare -a NODE_GLOBALS=(`find ~/.nvm/versions/node -maxdepth 3 -type l -wholename '*/bin/*' | xargs -n1 basename | sort | uniq`)
-NODE_GLOBALS+=("node")
-NODE_GLOBALS+=("nvm")
-[ -s "$NVM_DIR/bash_completion" ] && source "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-load_nvm () {
-  echo "🚨 NVM not loaded! Loading now..."
-  [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh" # This loads nvm
-}
-
-for cmd in "${NODE_GLOBALS[@]}"; do 
-  eval "${cmd}(){ unset -f ${NODE_GLOBALS}; load_nvm; ${cmd} \$@ }"
-done
-
+eval "$(fnm env --use-on-cd)"
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -s /home/adisuper/.autojump/etc/profile.d/autojump.sh ]] && source /home/adisuper/.autojump/etc/profile.d/autojump.sh
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
