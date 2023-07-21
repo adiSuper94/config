@@ -135,7 +135,7 @@ bindsym $mod+0 workspace $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $number ws2
+bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
 bindsym $mod+Shift+4 move container to workspace number $ws4
 bindsym $mod+Shift+5 move container to workspace $ws5
@@ -213,6 +213,7 @@ exec --no-startup-id "copyq &"
 exec --no-startup-id "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &"
 exec "bluetoothctl power off"
 exec setxkbmap -option "ctrl:swapcaps"
+exec "rclone mount --vfs-cache-mode minimal dropbox: ~/Documents/dropbox/ &"
 # exec --no-startup-id i3-msg 'workspace $ws1; exec alacritty'
 set $mode_power [l]ogoff | [s]hutdown
 bindsym $mod+Shift+e mode "$mode_power"
