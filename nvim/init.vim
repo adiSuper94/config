@@ -126,15 +126,9 @@ set shortmess+=c
 set updatetime=300
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 autocmd CursorHoldI *rs,*.c,*.h,*js lua vim.lsp.buf.signature_help()
-nnoremap gd <cmd> lua vim.lsp.buf.definition() <CR>
-nnoremap gD <cmd> lua vim.lsp.buf.declaration() <CR>
-nnoremap ga <cmd> lua vim.lsp.buf.code_action() <CR>
 "nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
-nnoremap gi <cmd> lua vim.lsp.buf.implementation() <CR>
-nnoremap <leader>r <cmd> lua vim.lsp.buf.rename()<CR>
 " autocmd BufWritePre *.rs,*.c,*.h,*.js,*.json lua vim.lsp.buf.format({async = true})
 autocmd CursorHold * GitGutter
-nnoremap <leader>k <cmd> lua vim.lsp.buf.hover() <CR>
 " Debug shortcuts
 nnoremap <F5> <cmd> lua require'dap'.restart() <CR>
 nnoremap <F6> <cmd> lua require'dap'.continue() <CR>
