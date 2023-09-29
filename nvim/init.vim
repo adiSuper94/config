@@ -32,6 +32,7 @@ Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-commentary'
 Plug 'adiSuper94/hallebarde.vim', {'branch': 'extra-bits'}
 Plug 'github/copilot.vim'
+Plug 'lvimuser/lsp-inlayhints.nvim'
 
 " Completion framework
 Plug 'neovim/nvim-lspconfig' " neovim lsp configs
@@ -58,6 +59,7 @@ let g:airline_theme = 'ayu_dark'
 let base16colorspace=256
 colorscheme base16-ayu-dark
 hi Normal guibg=None ctermbg=None 
+hi LspInlayHint guifg=#aaaaaa guibg=#000000
 let g:rainbow_active = 1
 
 " Custom Editor settings
@@ -75,6 +77,7 @@ set tabstop=2 " width of tab char
 set shiftwidth=2 " witdth used for indetation commands (<<, >>)
 set textwidth=100 " line width/ column width before line wraps
 set autoread
+set clipboard+=unnamedplus
 
 " Key Bindings
 let mapleader = " " " map leader to Space
