@@ -1,4 +1,5 @@
 #zmodload zsh/zprof
+export PATH="$PATH:/usr/local/bin"
 _not_inside_tmux() { [[ -z "$TMUX" ]] }
 
 ensure_tmux_is_running() {
@@ -32,27 +33,29 @@ zstyle :compinstall filename '~/.zshrc'
 fpath+=~/.zfunc
 fpath+=~/.zsh/zsh-completions/src
 # Use modern completion system
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 autoload -Uz compinit
 compinit -D
 # End of lines added by compinstall
 
 setopt histignorealldups sharehistory
+source "$HOME/.cargo/env"
 alias top=htop 
+alias vim=nvim 
 alias lg=lazygit
 export FZF_DEFAULT_OPTS='--preview "bat --color=always --style=numbers --line-range=:500 {}"'
-
-source "$HOME/.cargo/env"
-export PATH="$PATH:/home/adisuper/.foundry/bin:/home/adisuper/devtools/bat-extras/bin"
 
 eval "$(fnm env --use-on-cd)"
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-[[ -s /home/adisuper/.autojump/etc/profile.d/autojump.sh ]] && source /home/adisuper/.autojump/etc/profile.d/autojump.sh
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 #zprof
 
 
+
+# bun completions
+[ -s "/Users/aditya.subramani/.bun/_bun" ] && source "/Users/aditya.subramani/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

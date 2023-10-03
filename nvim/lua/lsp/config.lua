@@ -1,5 +1,5 @@
 -- dofile("/home/adisuper/.config/nvim/lua/lsp/rust.lua")
--- dofile("/home/adisuper/.config/nvim/lua/lsp/dap.lua")
+dofile("/Users/aditya.subramani/.config/nvim/lua/lsp/dap.lua")
 local nvim_lsp = require'lspconfig'
 require("mason").setup()
 
@@ -92,7 +92,7 @@ require "lsp_signature".setup(sig_cfg)
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-local servers = {'jsonls', 'clangd', 'pyright', 'tsserver', 'rust_analyzer', 'ocamllsp', 'gopls'}
+local servers = {'jsonls', 'clangd', 'pyright', 'rust_analyzer', 'ocamllsp', 'gopls'}
 for _, lsp in pairs(servers) do
   nvim_lsp[lsp].setup {
     capabilites = capabilities,
