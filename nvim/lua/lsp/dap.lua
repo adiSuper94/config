@@ -1,7 +1,7 @@
 local dap, dapui = require("dap"), require("dapui")
 dap.adapters.lldb = {
   type = 'executable',
-  command = '/usr/bin/lldb-vscode-14', -- adjust as needed, must be absolute path
+  command = '/usr/bin/lldb-vscode-17', -- adjust as needed, must be absolute path
   name = 'lldb'
 }
 -- If you want to use this for Rust and C, add something like this:
@@ -31,6 +31,7 @@ dap.configurations.cpp = {
     runInTerminal = true,
   },
 }
+dap.configurations.rust = dap.configurations.cpp
 
 dap.adapters.delve = {
   type = 'server',

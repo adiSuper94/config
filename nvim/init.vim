@@ -16,18 +16,17 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'base16-project/base16-vim' ",  { 'commit': '88a1e73e5358fefe0288538e6866f99d5487c5a0' }
 
-" Syntax highlighting
-Plug 'sheerun/vim-polyglot'
+" Better Syntax highlighting
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Bells and whistles
 Plug 'airblade/vim-rooter'
 Plug 'airblade/vim-gitgutter'
+Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'kyazdani42/nvim-tree.lua' " file explorer util
-Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-commentary'
 Plug 'adiSuper94/hallebarde.vim', {'branch': 'extra-bits'}
 Plug 'github/copilot.vim'
@@ -36,13 +35,13 @@ Plug 'lvimuser/lsp-inlayhints.nvim'
 " Completion framework
 Plug 'neovim/nvim-lspconfig' " neovim lsp configs
 Plug 'hrsh7th/cmp-nvim-lsp' " auto completion source for nvim built in lsp
-Plug 'hrsh7th/cmp-buffer' " auto completion source for buffer
 Plug 'hrsh7th/cmp-path' " auto completion source for filesystem paths
 Plug 'hrsh7th/nvim-cmp' " auto completion sink 
 Plug 'ray-x/lsp_signature.nvim'
-
+Plug 'lvimuser/lsp-inlayhints.nvim'
 
 Plug 'williamboman/mason.nvim' " tool to install LSPs and related shiz
+Plug 'editorconfig/editorconfig-vim'
 
 " Debug
 Plug 'mfussenegger/nvim-dap'
@@ -51,15 +50,14 @@ Plug 'rcarriga/nvim-dap-ui'
 call plug#end()
 
 " Custom visuals
-" 
-" let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+" let g:airline#extensions#tabline#enabled = 0
+" let g:airline_powerline_fonts = 0
 let g:airline_section_z = '%p%% %l:%c'
 let g:airline_theme = 'ayu_dark'
 let base16colorspace=256
 colorscheme base16-ayu-dark
 hi Normal guibg=None ctermbg=None 
-hi LspInlayHint guifg=#aaaaaa guibg=#000000
+hi LspInlayHint guifg=#aaaaaa guibg=None ctermfg=grey ctermbg=black
 let g:rainbow_active = 1
 
 " Custom Editor settings
@@ -78,6 +76,7 @@ set shiftwidth=2 " witdth used for indetation commands (<<, >>)
 set textwidth=100 " line width/ column width before line wraps
 set autoread
 set clipboard+=unnamedplus
+set noshowmode
 
 " Key Bindings
 let mapleader = " " " map leader to Space
@@ -95,8 +94,8 @@ nnoremap ∑  <CMD> w <CR> " Option + w for mac
 nnoremap <C-n> :tabnew <CR>
 nnoremap <leader>, <C-w><
 nnoremap <leader>. <C-w>>
-nnoremap <leader>t :NvimTreeToggle<CR>
-" nnoremap <leader>t :LexLuthor<CR>
+" nnoremap <leader>t :NvimTreeToggle<CR>
+nnoremap <leader>t :LexLuthor<CR>
 nnoremap <leader>/ :Rg<CR>
 nnoremap <silent> <Leader><Leader> <CMD>Hallebarde<CR>
 nnoremap <leader>hr  <cmd>HallebardeRemove<CR>
@@ -129,8 +128,9 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing extra messages when using completion
 set shortmess+=c
 set updatetime=300
+set clipboard=unnamedplus
 " autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-autocmd CursorHoldI *rs,*.c,*.h,*js lua vim.lsp.buf.signature_help()
+" autocmd CursorHoldI *rs,*.c,*.h,*js lua vim.lsp.buf.signature_help()
 "nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
 autocmd BufWritePre *.rs,*.c,*.h,*.js,*.ts,*.go,*.json lua vim.lsp.buf.format({async = false})
 autocmd CursorHold * GitGutter
@@ -149,23 +149,23 @@ nnoremap ˙ <cmd> lua require'dap'.step_out() <CR> " Shift + F9
 nnoremap <leader>df <cmd> lua vim.diagnostic.open_float(nil, { focusable = false }) <CR>
 nnoremap <F2> :nohlsearch<return> 
 
-nnoremap <leader>c <cmd>:edit /Users/aditya.subramani/.config/nvim/init.vim<CR>
+nnoremap <leader>c <cmd>:edit /home/adisuper/.config/nvim/init.vim<CR>
 " Trying Shiz out from vim cast
 
 " Shortcut to rapidly toggle `set list`
 nnoremap <leader>l :set list! <CR>
 set listchars=tab:▸\ ,eol:¬ 
 
-let g:loaded_netrw = 1
-let g:loaded_netrwPlugin = 1
-" let g:netrw_banner = 0
-" let g:netrw_browse_split = 4
-" let g:netrw_winsize = 20
-" let g:netrw_liststyle = 3
-" let g:netrw_keepdir = 0
+" let g:loaded_netrw = 1
+" let g:loaded_netrwPlugin = 1
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 20
+let g:netrw_liststyle = 3
+let g:netrw_keepdir = 0
 
-luafile /Users/aditya.subramani/.config/nvim/lua/lsp/config.lua
-luafile /Users/aditya.subramani/.config/nvim/lua/nvim-tree-config.lua
+luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
+" luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
 " luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
 
 "Plugins not being used but might be helpful
@@ -183,4 +183,8 @@ luafile /Users/aditya.subramani/.config/nvim/lua/nvim-tree-config.lua
 " Plug 'simrat39/rust-tools.nvim'
 " Plug 'rust-lang/rust.vim'
 " Plug 'hrsh7th/cmp-vsnip' " auto completion source for vim-vsnip
-" Plug 'hrsh7th/vim-vsnip' 
+" Plug 'hrsh7th/vim-vsnip'
+" Plug 'hrsh7th/cmp-buffer' " auto completion source for buffer
+" Plug 'kyazdani42/nvim-tree.lua' " file explorer util
+" Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
+" Plug 'sheerun/vim-polyglot'
