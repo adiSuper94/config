@@ -83,17 +83,17 @@ cmp.setup({
   sources = {
     { name = 'nvim_lsp' },
     -- { name = 'vsnip' },
-    { name = 'path' }
+    { name = 'path' },
     -- { name = 'buffer' },
   },
 })
 
-sig_cfg = { bind = true}  -- add you config here
+sig_cfg = { bind = true, hint_prefix = "🐼 "}  -- add you config here
 require "lsp_signature".setup(sig_cfg)
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-local servers = {'jsonls', 'clangd', 'pyright', 'tsserver', 'rust_analyzer', 'ocamllsp', 'gopls'}
+local servers = {'jsonls', 'clangd', 'pyright', 'rust_analyzer', 'ocamllsp', 'gopls'}
 for _, lsp in pairs(servers) do
   nvim_lsp[lsp].setup {
     capabilites = capabilities,
@@ -142,12 +142,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     require("lsp-inlayhints").on_attach(client, bufnr)
   end,
 })
-require("fidget").setup {
-}
+require("fidget").setup {}
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "toml",  "go"},
+  ensure_installed = { "rust", "c", "lua", "vim", "vimdoc", "query", "toml",  "go", "typescript", "javascript"},
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -157,24 +156,19 @@ require'nvim-treesitter.configs'.setup {
   auto_install = false,
 
   -- List of parsers to ignore installing (or "all")
-  ignore_install = { "javascript" },
+  -- ignore_install = { "javascript" },
 
   ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
   -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
 
   highlight = {
     enable = true,
-    rainbow = {
-    enable = true,
-    extended_mode = true,
-    max_file_lines = 2000,
-  },
 
     -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
     -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
     -- the name of the parser)
     -- list of language that will be disabled
-    disable = { "rust" },
+    -- disable = { "rust" },
     -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
     disable = function(lang, buf)
         local max_filesize = 100 * 1024 -- 100 KB

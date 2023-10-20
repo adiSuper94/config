@@ -26,11 +26,11 @@ Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'luochen1990/rainbow'
+" Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-commentary'
 Plug 'adiSuper94/hallebarde.vim', {'branch': 'extra-bits'}
 Plug 'github/copilot.vim'
-Plug 'lvimuser/lsp-inlayhints.nvim'
+Plug 'jghauser/follow-md-links.nvim'
 
 " Completion framework
 Plug 'neovim/nvim-lspconfig' " neovim lsp configs
@@ -84,7 +84,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-nnoremap <Tab> :tabnext <CR>
+" nnoremap <Tab> :tabnext <CR>
 nnoremap <C-p> :GFiles<CR>
 nnoremap <A-x> :bd<CR>
 nnoremap ≈ :bd<CR>" option + x for mac
@@ -128,7 +128,6 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing extra messages when using completion
 set shortmess+=c
 set updatetime=300
-set clipboard=unnamedplus
 " autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 " autocmd CursorHoldI *rs,*.c,*.h,*js lua vim.lsp.buf.signature_help()
 "nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
