@@ -14,6 +14,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
     -- Enable completion triggered by <c-x><c-o>
     vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    client.server_capabilities.semanticTokensProvider = nil
 
     -- Buffer local mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -144,6 +146,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 require("fidget").setup {}
 
+vim.api.nvim_set_hl(0, "@punctuation.bracket", { link = "" })
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
   ensure_installed = { "rust", "c", "lua", "vim", "vimdoc", "query", "toml",  "go", "typescript", "javascript"},

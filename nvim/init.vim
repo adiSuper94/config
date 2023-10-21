@@ -26,7 +26,7 @@ Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-commentary'
 Plug 'adiSuper94/hallebarde.vim', {'branch': 'extra-bits'}
 Plug 'github/copilot.vim'
