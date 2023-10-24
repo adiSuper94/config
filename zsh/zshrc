@@ -38,6 +38,12 @@ autoload -Uz compinit
 compinit -D
 # End of lines added by compinstall
 
+# Ctrl-e open cli in nvim
+export EDITOR='nvim'
+autoload edit-command-line
+zle -N edit-command-line
+bindkey "^E" edit-command-line
+
 setopt histignorealldups sharehistory
 source "$HOME/.cargo/env"
 alias top=htop 
