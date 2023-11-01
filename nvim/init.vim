@@ -31,12 +31,14 @@ Plug 'tpope/vim-commentary'
 Plug 'adiSuper94/hallebarde.vim', {'branch': 'extra-bits'}
 Plug 'github/copilot.vim'
 Plug 'jghauser/follow-md-links.nvim'
+Plug 'preservim/vim-markdown'
+Plug 'godlygeek/tabular'
 
 " Completion framework
 Plug 'neovim/nvim-lspconfig' " neovim lsp configs
 Plug 'hrsh7th/cmp-nvim-lsp' " auto completion source for nvim built in lsp
 Plug 'hrsh7th/cmp-path' " auto completion source for filesystem paths
-Plug 'hrsh7th/nvim-cmp' " auto completion sink 
+Plug 'hrsh7th/nvim-cmp' " auto completion sink
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'lvimuser/lsp-inlayhints.nvim'
 
@@ -56,7 +58,7 @@ let g:airline_section_z = '%p%% %l:%c'
 let g:airline_theme = 'ayu_dark'
 let base16colorspace=256
 colorscheme base16-ayu-dark
-hi Normal guibg=None ctermbg=None 
+hi Normal guibg=None ctermbg=None
 hi LspInlayHint guifg=#aaaaaa guibg=None ctermfg=grey ctermbg=black
 let g:rainbow_active = 1
 
@@ -146,14 +148,14 @@ nnoremap ¬ <cmd> lua require'dap'.step_into() <CR>
 nnoremap <A-h> <cmd> lua require'dap'.step_out() <CR> " Shift + F9
 nnoremap ˙ <cmd> lua require'dap'.step_out() <CR> " Shift + F9
 nnoremap <leader>df <cmd> lua vim.diagnostic.open_float(nil, { focusable = false }) <CR>
-nnoremap <F2> :nohlsearch<return> 
+nnoremap <F2> :nohlsearch<return>
 
 nnoremap <leader>c <cmd>:edit /home/adisuper/.config/nvim/init.vim<CR>
 " Trying Shiz out from vim cast
 
 " Shortcut to rapidly toggle `set list`
 nnoremap <leader>l :set list! <CR>
-set listchars=tab:▸\ ,eol:¬ 
+set listchars=tab:▸\ ,eol:¬
 
 " let g:loaded_netrw = 1
 " let g:loaded_netrwPlugin = 1
@@ -178,7 +180,7 @@ luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
 " Plug 'sunaku/vim-dasht'
 " Plug 'mfussenegger/nvim-jdtls' " Debug
 " Plug 'tpope/vim-fugitive'
-" " Rust easy config from https://github.com/sharksforarms/neovim-rust 
+" " Rust easy config from https://github.com/sharksforarms/neovim-rust
 " Plug 'simrat39/rust-tools.nvim'
 " Plug 'rust-lang/rust.vim'
 " Plug 'hrsh7th/cmp-vsnip' " auto completion source for vim-vsnip
