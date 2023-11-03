@@ -26,13 +26,13 @@ Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' }
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'luochen1990/rainbow'
 Plug 'tpope/vim-commentary'
 Plug 'adiSuper94/hallebarde.vim', {'branch': 'extra-bits'}
 Plug 'github/copilot.vim'
 Plug 'jghauser/follow-md-links.nvim'
 Plug 'preservim/vim-markdown'
 Plug 'godlygeek/tabular'
+Plug 'folke/which-key.nvim'
 
 " Completion framework
 Plug 'neovim/nvim-lspconfig' " neovim lsp configs
@@ -60,7 +60,7 @@ let base16colorspace=256
 colorscheme base16-ayu-dark
 hi Normal guibg=None ctermbg=None
 hi LspInlayHint guifg=#aaaaaa guibg=None ctermfg=grey ctermbg=black
-let g:rainbow_active = 1
+" let g:rainbow_active = 1
 
 " Custom Editor settings
 set signcolumn=yes " For Git Gutter to not flicker
@@ -116,7 +116,7 @@ inoremap <Down> <Nop>
 " vim pane resize bindings
 autocmd VimResized * :wincmd =
 nnoremap <leader>= :wincmd =<CR>
-nnoremap <leader>+ :wincmd \|<CR>
+nnoremap <leader>z :wincmd \|<CR>
 wincmd _
 
 let g:rooter_patterns = ['.git', '_darcs', '.hg', '.bzr', '.svn'] ", 'Makefile', 'package.json']
@@ -172,6 +172,7 @@ luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
 "Plugins not being used but might be helpful
 
 " Plug 'octol/vim-cpp-enhanced-highlight'
+" Plug 'blazkowolf/gruber-darker.nvim'
 " Plug 'uiiaoo/java-syntax.vim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'dense-analysis/ale'
@@ -189,3 +190,4 @@ luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
 " Plug 'kyazdani42/nvim-tree.lua' " file explorer util
 " Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 " Plug 'sheerun/vim-polyglot'
+" Plug 'luochen1990/rainbow'

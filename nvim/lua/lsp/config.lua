@@ -188,3 +188,6 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+local wk = require("which-key")
+wk.register(mappings, opts)
