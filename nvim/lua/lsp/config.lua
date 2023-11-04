@@ -149,7 +149,7 @@ require("fidget").setup {}
 vim.api.nvim_set_hl(0, "@punctuation.bracket", { link = "" })
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = { "rust", "c", "lua", "vim", "vimdoc", "query", "toml",  "go", "typescript", "javascript"},
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "toml",  "go", "typescript", "javascript", "markdown", "markdown_inline"},
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,

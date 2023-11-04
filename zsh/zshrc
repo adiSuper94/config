@@ -1,5 +1,4 @@
 #zmodload zsh/zprof
-export PATH="$PATH:/usr/local/bin"
 _not_inside_tmux() { [[ -z "$TMUX" ]] }
 
 ensure_tmux_is_running() {
@@ -25,7 +24,7 @@ HISTFILE=~/.histfile
 HISTSIZE=2048
 SAVEHIST=2048
 setopt autocd
-bindkey -e
+bindkey -e # Use emacs keybindings even if our EDITOR is set to vi
 
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -45,7 +44,6 @@ zle -N edit-command-line
 bindkey "^E" edit-command-line
 
 setopt histignorealldups sharehistory
-source "$HOME/.cargo/env"
 alias top=htop 
 alias vim=nvim 
 alias lg=lazygit
@@ -55,9 +53,6 @@ eval "$(fnm env --use-on-cd)"
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-#zprof
-
-
 
 # bun completions
 [ -s "/Users/aditya.subramani/.bun/_bun" ] && source "/Users/aditya.subramani/.bun/_bun"
@@ -65,3 +60,5 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+#zprof

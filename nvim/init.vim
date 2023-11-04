@@ -31,6 +31,7 @@ Plug 'adiSuper94/hallebarde.vim', {'branch': 'extra-bits'}
 Plug 'github/copilot.vim'
 Plug 'jghauser/follow-md-links.nvim'
 Plug 'preservim/vim-markdown'
+Plug 'tpope/vim-fugitive'
 Plug 'godlygeek/tabular'
 Plug 'folke/which-key.nvim'
 
@@ -43,11 +44,6 @@ Plug 'ray-x/lsp_signature.nvim'
 Plug 'lvimuser/lsp-inlayhints.nvim'
 
 Plug 'williamboman/mason.nvim' " tool to install LSPs and related shiz
-Plug 'editorconfig/editorconfig-vim'
-
-" Debug
-Plug 'mfussenegger/nvim-dap'
-Plug 'rcarriga/nvim-dap-ui'
 
 call plug#end()
 
@@ -180,7 +176,6 @@ luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
 " Plug 'fatih/vim-go'
 " Plug 'sunaku/vim-dasht'
 " Plug 'mfussenegger/nvim-jdtls' " Debug
-" Plug 'tpope/vim-fugitive'
 " " Rust easy config from https://github.com/sharksforarms/neovim-rust
 " Plug 'simrat39/rust-tools.nvim'
 " Plug 'rust-lang/rust.vim'
@@ -191,3 +186,8 @@ luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
 " Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 " Plug 'sheerun/vim-polyglot'
 " Plug 'luochen1990/rainbow'
+" Plug 'editorconfig/editorconfig-vim'
+
+" Debug
+" Plug 'mfussenegger/nvim-dap'
+" Plug 'rcarriga/nvim-dap-ui'
