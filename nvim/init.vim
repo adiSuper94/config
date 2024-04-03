@@ -34,6 +34,8 @@ Plug 'preservim/vim-markdown'
 Plug 'tpope/vim-fugitive'
 Plug 'godlygeek/tabular'
 Plug 'folke/which-key.nvim'
+Plug 'kyazdani42/nvim-tree.lua' " file explorer util
+Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 
 " Completion framework
 Plug 'neovim/nvim-lspconfig' " neovim lsp configs
@@ -92,8 +94,8 @@ nnoremap ∑  <CMD> w <CR> " Option + w for mac
 nnoremap <C-n> :tabnew <CR>
 nnoremap <leader>, <C-w><
 nnoremap <leader>. <C-w>>
-" nnoremap <leader>t :NvimTreeToggle<CR>
-nnoremap <leader>t :LexLuthor<CR>
+nnoremap <leader>t :NvimTreeToggle<CR>
+" nnoremap <leader>t :LexLuthor<CR>
 nnoremap <leader>/ :Rg<CR>
 nnoremap <silent> <Leader><Leader> <CMD>Hallebarde<CR>
 nnoremap <leader>hr  <cmd>HallebardeRemove<CR>
@@ -162,7 +164,7 @@ let g:netrw_liststyle = 3
 let g:netrw_keepdir = 0
 
 luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
-" luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
+luafile /home/adisuper/.config/nvim/lua/nvim-tree-config.lua
 " luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
 
 "Plugins not being used but might be helpful
@@ -182,8 +184,6 @@ luafile /home/adisuper/.config/nvim/lua/lsp/config.lua
 " Plug 'hrsh7th/cmp-vsnip' " auto completion source for vim-vsnip
 " Plug 'hrsh7th/vim-vsnip'
 " Plug 'hrsh7th/cmp-buffer' " auto completion source for buffer
-" Plug 'kyazdani42/nvim-tree.lua' " file explorer util
-" Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 " Plug 'sheerun/vim-polyglot'
 " Plug 'luochen1990/rainbow'
 " Plug 'editorconfig/editorconfig-vim'
