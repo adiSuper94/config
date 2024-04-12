@@ -4,6 +4,30 @@ dap.adapters.lldb = {
   command = '/usr/bin/lldb-vscode-17', -- adjust as needed, must be absolute path
   name = 'lldb'
 }
+-- Debug shortcuts
+
+-- nnoremap <leader>br <cmd> lua require'dap'.restart() <CR>
+-- nnoremap <leader>bc <cmd> lua require'dap'.continue() <CR>
+-- nnoremap <leader>bp <cmd> lua require'dap'.pause <CR> " Shift + F6
+-- nnoremap <leader>bb <cmd> lua require'dap'.toggle_breakpoint() <CR>
+-- nnoremap <A-j> <cmd> lua require'dap'.step_over() <CR>
+-- nnoremap ∆ <cmd> lua require'dap'.step_over() <CR>
+-- nnoremap <A-l> <cmd> lua require'dap'.step_into() <CR>
+-- nnoremap ¬ <cmd> lua require'dap'.step_into() <CR>
+-- nnoremap <A-h> <cmd> lua require'dap'.step_out() <CR> " Shift + F9
+-- nnoremap ˙ <cmd> lua require'dap'.step_out() <CR> " Shift + F9
+
+vim.keymap.set('n', '<leader>br', function() dap.restart() end)
+vim.keymap.set('n', '<leader>bc', function() dap.continue() end)
+vim.keymap.set('n', '<leader>bp', function() dap.pause() end)
+vim.keymap.set('n', '<leader>bb', function() dap.toggle_breakpoint() end)
+vim.keymap.set('n', '<A-j>', function() dap.step_over() end)
+vim.keymap.set('n', '∆', function() dap.step_over() end) -- option + j
+vim.keymap.set('n', '<A-l>', function() dap.step_into() end)
+vim.keymap.set('n', '¬', function() dap.step_into() end) -- option + l
+vim.keymap.set('n', '<A-h>', function() dap.step_out() end)
+vim.keymap.set('n', '˙', function() dap.step_out() end) -- option + h
+
 -- If you want to use this for Rust and C, add something like this:
 dap.configurations.cpp = {
   {

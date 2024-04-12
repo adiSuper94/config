@@ -130,27 +130,12 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing extra messages when using completion
 set shortmess+=c
 set updatetime=300
-" autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
-" autocmd CursorHoldI *rs,*.c,*.h,*js lua vim.lsp.buf.signature_help()
-"nnoremap gs <cmd> lua vim.lsp.buf.signature_help() <CR>
 autocmd BufWritePre *.rs,*.c,*.h,*.js,*.ts,*.go,*.json lua vim.lsp.buf.format({async = false})
 autocmd CursorHold * GitGutter
-" Debug shortcuts
-
-" nnoremap <leader>br <cmd> lua require'dap'.restart() <CR>
-" nnoremap <leader>bc <cmd> lua require'dap'.continue() <CR>
-" nnoremap <leader>bp <cmd> lua require'dap'.pause <CR> " Shift + F6
-" nnoremap <leader>bb <cmd> lua require'dap'.toggle_breakpoint() <CR>
-" nnoremap <A-j> <cmd> lua require'dap'.step_over() <CR>
-" nnoremap ∆ <cmd> lua require'dap'.step_over() <CR>
-" nnoremap <A-l> <cmd> lua require'dap'.step_into() <CR>
-" nnoremap ¬ <cmd> lua require'dap'.step_into() <CR>
-" nnoremap <A-h> <cmd> lua require'dap'.step_out() <CR> " Shift + F9
-" nnoremap ˙ <cmd> lua require'dap'.step_out() <CR> " Shift + F9
 nnoremap <leader>df <cmd> lua vim.diagnostic.open_float(nil, { focusable = false }) <CR>
-nnoremap <F2> :nohlsearch<return>
+nnoremap <Esc> :nohlsearch<return>
 
-nnoremap <leader>c <cmd>:edit /Users/aditya.subramani/.config/nvim/init.vim<CR>
+nnoremap <leader>c <cmd>:edit ~/.config/nvim/init.vim<CR>
 " Trying Shiz out from vim cast
 
 " Shortcut to rapidly toggle `set list`
@@ -166,9 +151,9 @@ let g:netrw_winsize = 20
 let g:netrw_liststyle = 3
 let g:netrw_keepdir = 0
 
-luafile /Users/aditya.subramani/.config/nvim/lua/lsp/config.lua
-luafile /Users/aditya.subramani/.config/nvim/lua/nvim-tree-config.lua
-" luafile /home/adisuper/.config/nvim/lua/java-lsp-config.lua
+luafile ~/.config/nvim/lua/lsp/config.lua
+luafile ~/.config/nvim/lua/nvim-tree-config.lua
+" luafile ~/.config/nvim/lua/java-lsp-config.lua
 
 "Plugins not being used but might be helpful
 

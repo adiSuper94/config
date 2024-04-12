@@ -53,26 +53,12 @@ cmp.setup({
   --   end,
   -- },
   mapping = {
-    -- ['<C-k>'] = cmp.mapping(function(fallback)
-    --   local copilot_keys = vim.fn["copilot#Accept"]()
-    --   if cmp.visible() then
-    --     cmp.confirm({ select = true })
-    --   elseif copilot_keys ~= "" and type(copilot_keys) == "string" then
-    --     vim.api.nvim_feedkeys(copilot_keys, "n", true)
-    --   else
-    --     fallback()
-    --   end
-    -- end, {
-    --   'i',
-    --   's',
-    -- }),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
-    -- Add tab support
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({
@@ -213,6 +199,7 @@ hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
     vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#56B6C2" })
     vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#E06C75" })
 end)
+
 vim.g.rainbow_delimiters = { highlight = highlight }
 require("ibl").setup { scope = { highlight = highlight } }
 hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
