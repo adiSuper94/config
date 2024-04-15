@@ -46,6 +46,9 @@ Plug 'ray-x/lsp_signature.nvim'
 Plug 'lvimuser/lsp-inlayhints.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'hiphish/rainbow-delimiters.nvim'
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'kristijanhusak/vim-dadbod-completion'
 
 Plug 'williamboman/mason.nvim' " tool to install LSPs and related shiz
 
