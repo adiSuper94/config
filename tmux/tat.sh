@@ -35,5 +35,9 @@ switch_session() {
   fi
 }
 
-
-switch_session
+tat() {
+  if not_in_tmux; then
+      switch_session
+  fi
+}
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh && tat
