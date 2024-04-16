@@ -7,6 +7,21 @@ install_homebrew() {
   fi
 }
 
+ask(){
+  read -p "$1 [Y/n] " response
+  [-z "$response"] || [ "$response="Y" ] || [ "$response="y" ]
+}
+
+install_fnm() {
+  if ! command -v fnm &> /dev/null; then
+    if ask "Do you want to install fnm"; then
+      curl -fsSL https://fnm.vercel.app/install | bash
+    fi
+  else
+    echo "fnm already installed"
+  fi
+}
+
 get_os() {
   case $(uname -s) in
   Darwin)   os=MacOS ;;
@@ -29,19 +44,26 @@ get_os() {
 default_shell_is_zsh() {
   if [[ $SHELL != $(which zsh) ]]; then
     chsh -s $(which zsh)
+    mkdir -p $HOME/.zsh/zfunc
   fi
 }
 
 
 ubuntu_setup(){
   sudo apt-get update
+  sudo apt-get insatll coreutils
+
   if [ ! -d "$HOME/nutter-tools" ]; then
     mkdir -p $HOME/nutter-tools/bin
   fi
   # check if  htop, tmux, fzf, ripgrep, bat, bat-extra, exa, autojump, is installed, if not then install
-  if ! command -v curl &> /dev/null; then
-    sudo apt-get install curl
-  fi
+  for pkg in unzip curl zsh htop tmux fzf bat exa autojump; do
+    if ! command -v $pkg &> /dev/null; then
+      if ask "Do you want to install $pkg"; then
+        sudo apt-get install $pkg
+      fi
+    fi
+  done
 
   if ! command -v nvim &> /dev/null; then
     curl -o $HOME/nutter-tools/nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
@@ -50,30 +72,10 @@ ubuntu_setup(){
     rm $HOME/nutter-tools/nvim-linux64.tar.gz
   fi
 
-  if ! command -v zsh &> /dev/null; then
-    sudo apt-get install zsh
-  fi
-
   default_shell_is_zsh
-
-  if ! command -v htop &> /dev/null; then
-    sudo apt-get install htop
-  fi
-
-  if ! command -v tmux &> /dev/null; then
-    sudo apt-get install tmux
-  fi
-
-  if ! command -v fzf &> /dev/null; then
-    sudo apt-get install fzf
-  fi
 
   if ! command -v rg &> /dev/null; then
     sudo apt-get install ripgrep
-  fi
-
-  if ! command -v bat &> /dev/null; then
-    sudo apt-get install bat
   fi
 
   if ! command -v bat-extras &> /dev/null; then
@@ -81,59 +83,26 @@ ubuntu_setup(){
     ln -s $HOME/nutter-tools/bat-extras/bin/* $HOME/nutter-tools/bin
   fi
 
-  if ! command -v exa &> /dev/null; then
-    sudo apt-get install exa
-  fi
-
-  if ! command -v autojump &> /dev/null; then
-    sudo apt-get install autojump
-  fi
 }
 
 mac_setup(){
   install_homebrew
   # check if  nvim, htop, tmux, fzf, ripgrep, bat, bat-extra, exa, autojump, is installed, if not then install
+  for pkg in unzip curl zsh htop tmux fzf bat bat-extras exa autojump; do
+    if ! command -v $pkg &> /dev/null; then
+      if ask "Do you want to install $pkg"; then
+        brew install $pkg
+      fi
+    fi
+  done
+
+  default_shell_is_zsh
 
   if ! command -v nvim &> /dev/null; then
     brew install neovim
   fi
-
-  if ! command -v zsh &> /dev/null; then
-    brew install zsh
-  fi
-
-  default_shell_is_zsh
-
-  if ! command -v htop &> /dev/null; then
-    brew install htop
-  fi
-
-  if ! command -v tmux &> /dev/null; then
-    brew install tmux
-  fi
-
-  if ! command -v fzf &> /dev/null; then
-    brew install fzf
-  fi
-
   if ! command -v rg &> /dev/null; then
     brew install ripgrep
-  fi
-
-  if ! command -v bat &> /dev/null; then
-    brew install bat
-  fi
-
-  if ! command -v bat-extras &> /dev/null; then
-    brew install bat-extras
-  fi
-
-  if ! command -v exa &> /dev/null; then
-    brew install exa
-  fi
-
-  if ! command -v autojump &> /dev/null; then
-    brew install autojump
   fi
 }
 
