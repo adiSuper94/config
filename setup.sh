@@ -34,6 +34,8 @@ post_install_config(){
     echo 'export PATH=$HOME/nutter-tools/bin:$PATH' >> $HOME/.autozshrc
   elif [[ $1 == "golang" ]]; then
     echo "export PATH=$PATH:/usr/local/go/bin" >> $HOME/.autozshrc
+  elif [[ $1 == "lazygit" ]]; then
+    echo "alias lg=lazygit" >> $HOME/.autozshrc
   fi
   echo "# $1 SETUP END\n" >> $HOME/.autozshrc
 }
@@ -99,6 +101,16 @@ common_setup(){
   fi
 }
 
+install_lazygit_on_ubuntu(){
+  LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+  curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
+  tar xf lazygit.tar.gz lazygit
+  mv lazygit $HOME/nutter-tools/bin
+  chmod +x $HOME/nutter-tools/bin/lazygit
+  rm lazygit.tar.gz
+  post_install_config lazygit
+}
+
 ubuntu_setup(){
   sudo apt-get update
   sudo apt-get insatll coreutils
@@ -131,6 +143,7 @@ ubuntu_setup(){
     git clone git@github.com:eth-p/bat-extras.git $HOME/nutter-tools/bat-extras
     ln -s $HOME/nutter-tools/bat-extras/bin/* $HOME/nutter-tools/bin
   fi
+  install_lazygit_on_ubuntu
 
 }
 
@@ -149,10 +162,11 @@ install_golang() {
   fi
 }
 
+
 mac_setup(){
   install_homebrew
   # check if  nvim, htop, tmux, fzf, ripgrep, bat, bat-extra, exa, autojump, is installed, if not then install
-  for pkg in unzip curl zsh htop tmux fzf bat bat-extras exa autojump; do
+  for pkg in unzip curl zsh htop tmux fzf bat bat-extras exa autojump lazygit; do
     if ! command -v $pkg &> /dev/null; then
       if ask "Do you want to install $pkg"; then
         brew install $pkg
