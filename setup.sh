@@ -208,6 +208,7 @@ setup() {
     darwin) mac_setup ;;
   esac
   common_setup
+  sym_link
 }
 #setup
 # get_os
