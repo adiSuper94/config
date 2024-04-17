@@ -145,7 +145,7 @@ ubuntu_setup(){
     sudo apt-get install ripgrep
   fi
   if ! command -v batman &> /dev/null; then
-    git clone https://github.com/eth-p/bat-extras.git $HOME/nutter-tools/bat-extras
+    git clone 'https://github.com/eth-p/bat-extras.git' $HOME/nutter-tools/bat-extras
     ln -s $HOME/nutter-tools/bat-extras/bin/* $HOME/nutter-tools/bin
     post_install_config bat-extras
   fi
@@ -189,10 +189,9 @@ mac_setup(){
 }
 
 sym_link(){
-  for config in nvim alacritty i3 tmux rofi; do
-  if command -v nvim &> /dev/null; then
-    ln -s $DOTFILES/nvim $HOME/.config/nvim
-  fi
+  mkdir -p $HOME/.config
+  for pkg_config in nvim alacritty i3 tmux rofi; do
+    ln -s $DOTFILES/$pkg_config $HOME/.config/$pkg_config
   done
 }
 
