@@ -14,6 +14,7 @@ post_install_config(){
   elif [[ $1 == "homebrew" ]];then
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.autozshrc
   elif [[ $1 == "fnm" ]];then
+    echo 'export PATH=$HOME/.local/share/fnm:$PATH' >> $HOME/.autozshrc
     echo 'eval "$(fnm env --use-on-cd)"' >> $HOME/.autozshrc
   elif [[ $1 == "nvim" ]];then
     echo 'alias vim=nvim' >> $HOME/.autozshrc
