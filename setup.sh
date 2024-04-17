@@ -42,7 +42,7 @@ post_install_config(){
 
 ask(){
   read -p "$1 [Y/n] " response
-  [-z "$response"] || [ "$response="Y" ] || [ "$response="y" ]
+  [ -z "$response" ] || [ "$response="Y" ] || [ "$response="y" ]
 }
 
 install_fnm() {
@@ -188,9 +188,10 @@ mac_setup(){
 
 setup() {
   get_os
+  common_setup
   case $os in
-    Ubuntu|Debian) ubuntu_setup ;;
-    MacOS) mac_setup ;;
+    linux) ubuntu_setup ;;
+    darwin) mac_setup ;;
   esac
 }
 
