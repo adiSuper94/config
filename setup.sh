@@ -86,16 +86,31 @@ get_os() {
 }
 
 ## check if default shell is zsh
-default_shell_is_zsh() {
+configure_zsh() {
   if [[ $SHELL != $(which zsh) ]]; then
     chsh -s $(which zsh)
     mkdir -p $HOME/.zsh/zfunc
   fi
+  mkdir -p $HOME/.zsh
+  git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+  echo ". ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> $HOME/.autozshrc
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
+  echo ". ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> $HOME/.autozshrc
+  git clone https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
+
+  echo "zstyle :compinstall filename '~/.zshrc'" >> $HOME/.autozshrc
+  echo "fpath+=~/.zfunc" >> $HOME/.autozshrc
+  echo "fpath+=~/.zsh/zsh-completions/src" >> $HOME/.autozshrc
+  echo "autoload -Uz compinit" >> $HOME/.autozshrc
+  echo "compinit -D" >> $HOME/.autozshrc
+  echo "RUN  to recompile zsh-completions 'rm -f ~/.zcompdump; compinit'"
+
 }
 
 common_setup(){
   install_fnm
-  }
+  configure_zsh
+}
 
 install_lazygit_on_ubuntu(){
   LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
@@ -110,17 +125,15 @@ install_lazygit_on_ubuntu(){
 ubuntu_setup(){
   sudo apt-get update
   sudo apt-get install coreutils
-
   # check if  htop, tmux, fzf, ripgrep, bat, bat-extra, exa, autojump, is installed, if not then install
   for pkg in unzip curl zsh htop tmux fzf bat exa autojump; do
     if ! command -v $pkg &> /dev/null; then
       if ask "Do you want to install $pkg"; then
-        sudo apt-get install $pkg
+        sudo apt-get install -qy $pkg
         post_install_config $pkg
       fi
     fi
   done
-
   if ! command -v nvim &> /dev/null; then
     curl -o $HOME/nutter-tools/nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
     tar -xvf $HOME/nutter-tools/nvim-linux64.tar.gz --directory $HOME/nutter-tools/
@@ -128,20 +141,15 @@ ubuntu_setup(){
     rm $HOME/nutter-tools/nvim-linux64.tar.gz
     post_install_config nvim
   fi
-
-  default_shell_is_zsh
-
   if ! command -v rg &> /dev/null; then
     sudo apt-get install ripgrep
   fi
-
   if ! command -v batman &> /dev/null; then
     git clone https://github.com/eth-p/bat-extras.git $HOME/nutter-tools/bat-extras
     ln -s $HOME/nutter-tools/bat-extras/bin/* $HOME/nutter-tools/bin
     post_install_config bat-extras
   fi
   install_lazygit_on_ubuntu
-
 }
 
 install_golang() {
@@ -171,9 +179,6 @@ mac_setup(){
       fi
     fi
   done
-
-  default_shell_is_zsh
-
   if ! command -v nvim &> /dev/null; then
     brew install neovim
     post_install_config nvim
