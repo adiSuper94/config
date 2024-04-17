@@ -42,7 +42,7 @@ post_install_config(){
 
 ask(){
   read -p "$1 [Y/n] " response
-  [ -z "$response" ] || [ "$response="Y" ] || [ "$response="y" ]
+  [ -z "$response" ] || [ "$response" = "Y" ] || [ "$response" = "y" ]
 }
 
 install_fnm() {
@@ -183,7 +183,16 @@ mac_setup(){
   fi
 }
 
+sym_link(){
+  for config in nvim alacritty i3 tmux rofi; do
+  if command -v nvim &> /dev/null; then
+    ln -s $DOTFILES/nvim $HOME/.config/nvim
+  fi
+  done
+}
+
 setup() {
+  DOTFILES="$(cd $(dirname -- $BASH_SOURCE) && pwd)"
   get_os
   if [ ! -d "$HOME/nutter-tools" ]; then
     mkdir -p $HOME/nutter-tools/bin
@@ -195,6 +204,5 @@ setup() {
   esac
   common_setup
 }
-
 #setup
 # get_os
