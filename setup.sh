@@ -95,11 +95,7 @@ default_shell_is_zsh() {
 
 common_setup(){
   install_fnm
-  if [ ! -d "$HOME/nutter-tools" ]; then
-    mkdir -p $HOME/nutter-tools/bin
-    post_install_config nutter-tools
-  fi
-}
+  }
 
 install_lazygit_on_ubuntu(){
   LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
@@ -188,11 +184,15 @@ mac_setup(){
 
 setup() {
   get_os
-  common_setup
+  if [ ! -d "$HOME/nutter-tools" ]; then
+    mkdir -p $HOME/nutter-tools/bin
+    post_install_config nutter-tools
+  fi
   case $os in
     linux) ubuntu_setup ;;
     darwin) mac_setup ;;
   esac
+  common_setup
 }
 
 #setup
