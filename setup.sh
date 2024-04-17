@@ -109,7 +109,7 @@ install_lazygit_on_ubuntu(){
 
 ubuntu_setup(){
   sudo apt-get update
-  sudo apt-get insatll coreutils
+  sudo apt-get install coreutils
 
   # check if  htop, tmux, fzf, ripgrep, bat, bat-extra, exa, autojump, is installed, if not then install
   for pkg in unzip curl zsh htop tmux fzf bat exa autojump; do
