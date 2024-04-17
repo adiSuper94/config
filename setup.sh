@@ -25,9 +25,9 @@ post_install_config(){
   elif [[ $1 == "bat-extras" ]];then
     echo 'eval "$(batpipe)"' >> $HOME/.autozshrc
   elif [[ $1 == "autojump" ]];then
-    if [[ $os == "MacOS" ]];then
+    if [[ $os == "darwin" ]];then
       echo '[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh' >> $HOME/.autozshrc
-    elif [[ $os == "Ubuntu" ]];then
+    elif [[ $os == "linux" ]];then
       echo '[[ -s /usr/share/autojump/autojump.sh ]] && . /usr/share/autojump/autojump.sh' >> $HOME/.autozshrc
     fi
   elif [[ $1 == "nutter-tools" ]];then
@@ -135,9 +135,10 @@ ubuntu_setup(){
     sudo apt-get install ripgrep
   fi
 
-  if ! command -v bat-extras &> /dev/null; then
-    git clone git@github.com:eth-p/bat-extras.git $HOME/nutter-tools/bat-extras
+  if ! command -v batman &> /dev/null; then
+    git clone https://github.com/eth-p/bat-extras.git $HOME/nutter-tools/bat-extras
     ln -s $HOME/nutter-tools/bat-extras/bin/* $HOME/nutter-tools/bin
+    post_install_config bat-extras
   fi
   install_lazygit_on_ubuntu
 
