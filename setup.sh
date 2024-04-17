@@ -10,7 +10,7 @@ install_homebrew() {
 post_install_config(){
   echo "# $1 BEGIN\n" >> $HOME/.autozshrc
   if [[ $1 == "htop" ]];then
-    echo 'alais top=htop' >> $HOME/.autozshrc
+    echo 'alias top=htop' >> $HOME/.autozshrc
   elif [[ $1 == "homebrew" ]];then
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.autozshrc
   elif [[ $1 == "fnm" ]];then
