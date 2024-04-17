@@ -23,6 +23,9 @@ post_install_config(){
     echo 'zle -N edit-command-line' >> $HOME/.autozshrc
     echo 'bindkey "^E" edit-command-line' >> $HOME/.autozshrc
   elif [[ $1 == "bat-extras" ]];then
+    if [[ $os == "linux" ]];then
+      ln -s /usr/bin/batcat $HOME/nutter-tools/bin/bat
+    fi
     echo 'eval "$(batpipe)"' >> $HOME/.autozshrc
   elif [[ $1 == "autojump" ]];then
     if [[ $os == "darwin" ]];then
@@ -146,8 +149,10 @@ ubuntu_setup(){
   fi
   if ! command -v batman &> /dev/null; then
     git clone 'https://github.com/eth-p/bat-extras.git' $HOME/nutter-tools/bat-extras
-    cd $HOME/nutter-tools/bat-extras  && sh build.sh
-    ln -s $HOME/nutter-tools/bat-extras/bin/* $HOME/nutter-tools/bin
+    cd $HOME/nutter-tools/bat-extras  &&  ./build.sh
+    for f in $HOME/nutter-tools/bat-extras/target/release/*; do
+      ln -s $f $HOME/nutter-tools/bin/$(basename $f)
+    done
     post_install_config bat-extras
   fi
   install_lazygit_on_ubuntu
