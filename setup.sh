@@ -37,6 +37,7 @@ get_os() {
 install_homebrew() {
   if ! command -v brew &> /dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    post_install_config homebrew
   else
     echo "Homebrew already installed"
   fi
@@ -72,6 +73,7 @@ post_install_config(){
     echo 'alias top=htop' >> $HOME/.autozshrc
   elif [[ $1 == "homebrew" ]];then
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.autozshrc
+    eval "$(/opt/homebrew/bin/brew shellenv)"
   elif [[ $1 == "fnm" ]];then
     echo 'export PATH=$HOME/.local/share/fnm:$PATH' >> $HOME/.autozshrc
     echo 'eval "$(fnm env --use-on-cd)"' >> $HOME/.autozshrc
@@ -178,8 +180,9 @@ minimal_setup_linux(){
   sudo apt-get install -yq zsh rigpgrep fzf
   post_install_config fzf
   configure_zsh
+  mkdir -p $HOME/.config
   ln -s $DOTFILES/nvim $HOME/.config/nvim
-  nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
+  $HOME/nutter-tools/bin/nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
 }
 
 ubuntu_setup(){
@@ -200,6 +203,7 @@ ubuntu_setup(){
     ln -s $HOME/nutter-tools/nvim-linux64/bin/nvim $HOME/nutter-tools/bin/nvim
     rm $HOME/nutter-tools/nvim-linux64.tar.gz
     post_install_config nvim
+    $HOME/nutter-tools/bin/nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
   fi
   if ! command -v rg &> /dev/null; then
     sudo apt-get install ripgrep
@@ -233,10 +237,10 @@ mac_setup(){
   if ! command -v rg &> /dev/null; then
     brew install ripgrep
   fi
+  nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
 }
 
 sym_link(){
-  mkdir -p $HOME/.config
   for pkg_config in nvim alacritty i3 tmux rofi; do
     ln -s $DOTFILES/$pkg_config $HOME/.config/$pkg_config
   done
@@ -248,6 +252,7 @@ setup() {
     mkdir -p $HOME/nutter-tools/bin
     post_install_config nutter-tools
   fi
+  mkdir -p $HOME/.config
   case $os in
     linux) ubuntu_setup ;;
     darwin) mac_setup ;;
@@ -255,7 +260,6 @@ setup() {
   common_setup
   sym_link
 }
-
 
 #setup
 #minimal_setup_linux
