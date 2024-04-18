@@ -110,7 +110,7 @@ configure_zsh() {
   git clone https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
 
   echo "zstyle :compinstall filename '~/.zshrc'" >> $HOME/.autozshrc
-  echo "fpath+=~/.zfunc" >> $HOME/.autozshrc
+  echo "fpath+=~/.zsh/zfunc" >> $HOME/.autozshrc
   echo "fpath+=~/.zsh/zsh-completions/src" >> $HOME/.autozshrc
   echo "autoload -Uz compinit" >> $HOME/.autozshrc
   echo "compinit -D" >> $HOME/.autozshrc
