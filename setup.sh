@@ -180,7 +180,7 @@ minimal_setup_linux(){
     post_install_config nvim
     mkdir -p $HOME/.config
     ln -s $DOTFILES/nvim $HOME/.config/nvim
-    ~/nutter-tools/bin/nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
+    $HOME/nutter-tools/bin/nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
   fi
   }
 
