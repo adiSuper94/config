@@ -151,8 +151,8 @@ ubuntu_setup(){
   if ! command -v batman &> /dev/null; then
     git clone 'https://github.com/eth-p/bat-extras.git' $HOME/nutter-tools/bat-extras
     cd $HOME/nutter-tools/bat-extras  &&  ./build.sh
-    for f in $HOME/nutter-tools/bat-extras/bin; do
-      ln -s $f $HOME/nutter-tools/bin/$(basename $f)
+    for file in $HOME/nutter-tools/bat-extras/bin/*; do
+      ln -s $file $HOME/nutter-tools/bin
     done
     post_install_config bat-extras
   fi
