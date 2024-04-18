@@ -104,6 +104,8 @@ post_install_config(){
     echo '. $HOME/.cargo/env' >> $HOME/.autozshrc
     . $HOME/.cargo/env
     rustup completions zsh cargo > ~/.zsh/zfunc/_cargo
+  elif [[ $1 == "fzf" ]]; then
+    echo 'eval$"(fzf --zsh)"' >> $HOME/.autozshrc
   fi
 }
 
