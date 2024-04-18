@@ -19,8 +19,7 @@ endif
 call plug#begin()
 
 " Theme
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'base16-project/base16-vim' ",  { 'commit': '88a1e73e5358fefe0288538e6866f99d5487c5a0' }
 
 " Better Syntax highlighting
@@ -62,10 +61,6 @@ Plug 'williamboman/mason.nvim' " tool to install LSPs and related shiz
 call plug#end()
 
 " Custom visuals
-" let g:airline#extensions#tabline#enabled = 0
-" let g:airline_powerline_fonts = 0
-let g:airline_section_z = '%p%% %l:%c'
-let g:airline_theme = 'ayu_dark'
 let base16colorspace=256
 colorscheme base16-ayu-dark
 hi Normal guibg=None ctermbg=None
@@ -165,8 +160,15 @@ luafile ~/.config/nvim/lua/lsp/config.lua
 luafile ~/.config/nvim/lua/nvim-tree-config.lua
 " luafile ~/.config/nvim/lua/java-lsp-config.lua
 
-"Plugins not being used but might be helpful
+"Plugins & settings not being used but might be helpful
 
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" let g:airline#extensions#tabline#enabled = 0
+" let g:airline_powerline_fonts = 0
+" let g:airline_section_z = '%p%% %l:%c'
+" let g:airline_theme = 'ayu_dark'
+"
 " Plug 'octol/vim-cpp-enhanced-highlight'
 " Plug 'blazkowolf/gruber-darker.nvim'
 " Plug 'uiiaoo/java-syntax.vim'
