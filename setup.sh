@@ -8,7 +8,7 @@ install_homebrew() {
 }
 
 post_install_config(){
-  echo "# $1 BEGIN\n" >> $HOME/.autozshrc
+  echo "# THIS FILE AHS BEEN AUTO GENERATED.\nDO NOT EDIT\n\n" >> $HOME/.autozshrc
   if [[ $1 == "htop" ]];then
     echo 'alias top=htop' >> $HOME/.autozshrc
   elif [[ $1 == "homebrew" ]];then
@@ -37,11 +37,14 @@ post_install_config(){
   elif [[ $1 == "nutter-tools" ]];then
     echo 'export PATH=$HOME/nutter-tools/bin:$PATH' >> $HOME/.autozshrc
   elif [[ $1 == "golang" ]]; then
-    echo "export PATH=$PATH:/usr/local/go/bin" >> $HOME/.autozshrc
+    echo 'export PATH=$PATH:/usr/local/go/bin' >> $HOME/.autozshrc
   elif [[ $1 == "lazygit" ]]; then
     echo "alias lg=lazygit" >> $HOME/.autozshrc
+  elif [[ $1 == "rust" ]]; then
+    echo '. $HOME/.cargo/env' >> $HOME/.autozshrc
+    . $HOME/.cargo/env
+    rustup completions zsh cargo > ~/.zsh/zfunc/_cargo
   fi
-  echo "# $1 SETUP END\n" >> $HOME/.autozshrc
 }
 
 ask(){
@@ -69,12 +72,16 @@ get_os() {
   case $os in
   Darwin)   os=darwin
     flavour=macos
+    arch_alt=arch
     ;;
   Linux) os=linux
     if type -p lsb_release &>/dev/null; then
       flavour=$(lsb_release -si)
     elif [ -f /etc/os-release ]; then
       flavour=$(awk -F= '$1 == "NAME" { print $2; exit }' /etc/os-release)
+    fi
+    if $arch == "x86_64"; then
+      arch_alt="amd64"
     fi
   ;;
   esac
@@ -114,6 +121,8 @@ configure_zsh() {
 common_setup(){
   install_fnm
   configure_zsh
+  install_golang
+  install_rust
 }
 
 install_lazygit_on_ubuntu(){
@@ -159,11 +168,20 @@ ubuntu_setup(){
   install_lazygit_on_ubuntu
 }
 
+install_rust() {
+  if ! command -v rustup &> /dev/null; then
+    if ask "Do you want to install rust"; then
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      post_install_config rust
+    fi
+  fi
+}
+
 install_golang() {
   GO_VERSION=1.22.2
   if ! command -v go &> /dev/null; then
     if ask "Do you want to install golang"; then
-      curl -o $HOME/nutter-tools/go-$GO_VERSION.$os-$arch.tar.gz -L https://golang.org/dl/go$GO_VERSION.$os-$arch.tar.gz
+      curl -o $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz -L https://golang.org/dl/go$GO_VERSION.$os-$arch.tar.gz
       rm -rf /usr/local/go
       sudo tar -C /usr/local -xzf $HOME/nutter-tools/go-$GO_VERSION.$os-$arch.tar.gz
       rm $HOME/nutter-tools/go-$GO_VERSION.$os-$arch.tar.gz
