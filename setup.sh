@@ -115,7 +115,7 @@ configure_zsh() {
   echo "autoload -Uz compinit" >> $HOME/.autozshrc
   echo "compinit -D" >> $HOME/.autozshrc
   echo "RUN  to recompile zsh-completions 'rm -f ~/.zcompdump; compinit'"
-  echo ". autozshrc" >> $HOME/.zshrc
+  echo ". $HOME/.autozshrc" >> $HOME/.zshrc
 }
 
 common_setup(){
