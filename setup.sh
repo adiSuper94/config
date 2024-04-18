@@ -1,9 +1,68 @@
 #!/bin/bash
+
+DOTFILES="$(cd $(dirname -- $BASH_SOURCE) && pwd)"
+get_os() {
+  uname=($(uname -sm))
+  arch="${uname[1]}"
+  os="${uname[0]}"
+  echo $os
+  echo $arch
+  case $os in
+  Darwin)   os=darwin
+    flavour=macos
+    arch_alt=arch
+    ;;
+  Linux) os=linux
+    if type -p lsb_release &>/dev/null; then
+      flavour=$(lsb_release -si)
+    elif [ -f /etc/os-release ]; then
+      flavour=$(awk -F= '$1 == "NAME" { print $2; exit }' /etc/os-release)
+    fi
+    if [[ $arch = "x86_64" ]]; then
+      arch_alt="amd64"
+    fi
+  ;;
+  esac
+
+  if [[ $os != "linux" && $os != "darwin" ]]; then
+    printf '%s\n' "Unknown OS, aborting..." >&2
+    exit 1
+  fi
+  if [[ $flavour != "Ubuntu" && $flavour != "Debian" && $flavour != "macos" ]]; then
+    printf '%s\n' "Unknown flavour of Mac/Linux, aborting..." >&2
+    exit 1
+  fi
+}
+
 install_homebrew() {
   if ! command -v brew &> /dev/null; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   else
     echo "Homebrew already installed"
+  fi
+}
+
+install_rust() {
+  if ! command -v rustup &> /dev/null; then
+    if ask "Do you want to install rust"; then
+      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+      post_install_config rust
+    fi
+  fi
+}
+
+install_golang() {
+  GO_VERSION=1.22.2
+  if ! command -v go &> /dev/null; then
+    if ask "Do you want to install golang"; then
+      curl -o $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz -L https://golang.org/dl/go$GO_VERSION.$os-$arch_alt.tar.gz
+      rm -rf /usr/local/go
+      sudo tar -C /usr/local -xzf $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz
+      rm $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz
+      post_install_config golang
+    fi
+  else
+    echo "golang already installed"
   fi
 }
 
@@ -63,39 +122,6 @@ install_fnm() {
   fi
 }
 
-get_os() {
-  uname=($(uname -sm))
-  arch="${uname[1]}"
-  os="${uname[0]}"
-  echo $os
-  echo $arch
-  case $os in
-  Darwin)   os=darwin
-    flavour=macos
-    arch_alt=arch
-    ;;
-  Linux) os=linux
-    if type -p lsb_release &>/dev/null; then
-      flavour=$(lsb_release -si)
-    elif [ -f /etc/os-release ]; then
-      flavour=$(awk -F= '$1 == "NAME" { print $2; exit }' /etc/os-release)
-    fi
-    if [[ $arch = "x86_64" ]]; then
-      arch_alt="amd64"
-    fi
-  ;;
-  esac
-
-  if [[ $os != "linux" && $os != "darwin" ]]; then
-    printf '%s\n' "Unknown OS, aborting..." >&2
-    exit 1
-  fi
-  if [[ $flavour != "Ubuntu" && $flavour != "Debian" && $flavour != "macos" ]]; then
-    printf '%s\n' "Unknown flavour of Mac/Linux, aborting..." >&2
-    exit 1
-  fi
-}
-
 ## check if default shell is zsh
 configure_zsh() {
   if [[ $SHELL != $(which zsh) ]]; then
@@ -135,6 +161,27 @@ install_lazygit_on_ubuntu(){
   post_install_config lazygit
 }
 
+minimal_setup_linux(){
+  sudo apt-get update
+  sudo apt-get -y --quiet install coreutils gcc vim
+  if [ ! -d "$HOME/nutter-tools" ]; then
+    mkdir -p $HOME/nutter-tools/bin
+    post_install_config nutter-tools
+  fi
+  if ! command -v nvim &> /dev/null; then
+    curl -o $HOME/nutter-tools/nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    tar -xvf $HOME/nutter-tools/nvim-linux64.tar.gz --directory $HOME/nutter-tools/
+    ln -s $HOME/nutter-tools/nvim-linux64/bin/nvim $HOME/nutter-tools/bin/nvim
+    rm $HOME/nutter-tools/nvim-linux64.tar.gz
+    post_install_config nvim
+  fi
+  sudo apt-get install -yq zsh rigpgrep fzf
+  post_install_config fzf
+  configure_zsh
+  ln -s $DOTFILES/nvim $HOME/.config/nvim
+  nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
+}
+
 ubuntu_setup(){
   sudo apt-get update
   sudo apt-get -y --quiet install coreutils gcc
@@ -168,31 +215,6 @@ ubuntu_setup(){
   install_lazygit_on_ubuntu
 }
 
-install_rust() {
-  if ! command -v rustup &> /dev/null; then
-    if ask "Do you want to install rust"; then
-      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-      post_install_config rust
-    fi
-  fi
-}
-
-install_golang() {
-  GO_VERSION=1.22.2
-  if ! command -v go &> /dev/null; then
-    if ask "Do you want to install golang"; then
-      curl -o $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz -L https://golang.org/dl/go$GO_VERSION.$os-$arch_alt.tar.gz
-      rm -rf /usr/local/go
-      sudo tar -C /usr/local -xzf $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz
-      rm $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz
-      post_install_config golang
-    fi
-  else
-    echo "golang already installed"
-  fi
-}
-
-
 mac_setup(){
   install_homebrew
   # check if  nvim, htop, tmux, fzf, ripgrep, bat, bat-extra, exa, autojump, is installed, if not then install
@@ -221,7 +243,6 @@ sym_link(){
 }
 
 setup() {
-  DOTFILES="$(cd $(dirname -- $BASH_SOURCE) && pwd)"
   get_os
   if [ ! -d "$HOME/nutter-tools" ]; then
     mkdir -p $HOME/nutter-tools/bin
@@ -234,5 +255,7 @@ setup() {
   common_setup
   sym_link
 }
+
+
 #setup
-# get_os
+#minimal_setup_linux
