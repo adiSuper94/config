@@ -180,7 +180,6 @@ minimal_setup_linux(){
     post_install_config nvim
     mkdir -p $HOME/.config
     ln -s $DOTFILES/nvim $HOME/.config/nvim
-    $HOME/nutter-tools/bin/nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
   fi
   }
 
@@ -202,7 +201,6 @@ ubuntu_setup(){
     ln -s $HOME/nutter-tools/nvim-linux64/bin/nvim $HOME/nutter-tools/bin/nvim
     rm $HOME/nutter-tools/nvim-linux64.tar.gz
     post_install_config nvim
-    $HOME/nutter-tools/bin/nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
   fi
   if ! command -v rg &> /dev/null; then
     sudo apt-get install ripgrep
