@@ -137,7 +137,7 @@ install_lazygit_on_ubuntu(){
 
 ubuntu_setup(){
   sudo apt-get update
-  sudo apt-get install coreutils
+  sudo apt-get -y --quiet install coreutils gcc
   # check if  htop, tmux, fzf, ripgrep, bat, bat-extra, exa, autojump, is installed, if not then install
   for pkg in unzip curl zsh htop tmux fzf bat exa autojump; do
     if ! command -v $pkg &> /dev/null; then
@@ -181,10 +181,10 @@ install_golang() {
   GO_VERSION=1.22.2
   if ! command -v go &> /dev/null; then
     if ask "Do you want to install golang"; then
-      curl -o $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz -L https://golang.org/dl/go$GO_VERSION.$os-$arch.tar.gz
+      curl -o $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz -L https://golang.org/dl/go$GO_VERSION.$os-$arch_alt.tar.gz
       rm -rf /usr/local/go
-      sudo tar -C /usr/local -xzf $HOME/nutter-tools/go-$GO_VERSION.$os-$arch.tar.gz
-      rm $HOME/nutter-tools/go-$GO_VERSION.$os-$arch.tar.gz
+      sudo tar -C /usr/local -xzf $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz
+      rm $HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz
       post_install_config golang
     fi
   else
