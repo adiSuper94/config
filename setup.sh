@@ -80,7 +80,7 @@ get_os() {
     elif [ -f /etc/os-release ]; then
       flavour=$(awk -F= '$1 == "NAME" { print $2; exit }' /etc/os-release)
     fi
-    if $arch == "x86_64"; then
+    if [[ $arch = "x86_64" ]]; then
       arch_alt="amd64"
     fi
   ;;
@@ -115,7 +115,7 @@ configure_zsh() {
   echo "autoload -Uz compinit" >> $HOME/.autozshrc
   echo "compinit -D" >> $HOME/.autozshrc
   echo "RUN  to recompile zsh-completions 'rm -f ~/.zcompdump; compinit'"
-
+  echo ". autozshrc" >> $HOME/.zshrc
 }
 
 common_setup(){
