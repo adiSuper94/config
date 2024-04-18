@@ -1,5 +1,4 @@
 #!/bin/bash
-
 DOTFILES="$(cd $(dirname -- $BASH_SOURCE) && pwd)"
 get_os() {
   uname=($(uname -sm))
@@ -165,15 +164,13 @@ install_lazygit_on_ubuntu(){
 
 minimal_setup_linux(){
   sudo apt-get update
-  sudo apt-get -y --quiet install coreutils gcc vim curl
+  sudo apt-get -yq install coreutils gcc vim curl zsh ripgrep fzf
   if [ ! -d "$HOME/nutter-tools" ]; then
     mkdir -p $HOME/nutter-tools/bin
     post_install_config nutter-tools
   fi
-
-    sudo apt-get install -yq zsh rigpgrep fzf
-    post_install_config fzf
-    configure_zsh
+  post_install_config fzf
+  configure_zsh
 
   if ! command -v nvim &> /dev/null; then
     curl -o $HOME/nutter-tools/nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
@@ -183,7 +180,7 @@ minimal_setup_linux(){
     post_install_config nvim
     mkdir -p $HOME/.config
     ln -s $DOTFILES/nvim $HOME/.config/nvim
-    $($HOME/nutter-tools/bin/nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa")
+    ~/nutter-tools/bin/nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
   fi
   }
 
