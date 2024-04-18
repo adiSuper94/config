@@ -54,11 +54,5 @@ source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 
-# bun completions
-[ -s "/Users/aditya.subramani/.bun/_bun" ] && source "/Users/aditya.subramani/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 eval "$(batpipe)"
 #zprof
