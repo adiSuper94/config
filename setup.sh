@@ -105,7 +105,10 @@ post_install_config(){
     . $HOME/.cargo/env
     rustup completions zsh cargo > ~/.zsh/zfunc/_cargo
   elif [[ $1 == "fzf" ]]; then
-    echo 'eval$"(fzf --zsh)"' >> $HOME/.autozshrc
+    echo 'eval $"(fzf --zsh)"' >> $HOME/.autozshrc
+    if [[ $os == "darwin" ]] then
+      echo 'bindkey "ç" fzf-cd-widget' >> $HOME/.autozshrc
+    fi
   fi
 }
 
@@ -236,7 +239,6 @@ mac_setup(){
   if ! command -v rg &> /dev/null; then
     brew install ripgrep
   fi
-  nvim -es -u init.vim -i NONE -c "PlugInstall" -c "qa"
 }
 
 sym_link(){
