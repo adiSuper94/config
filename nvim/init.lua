@@ -103,5 +103,5 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 
 vim.cmd [[ set shortmess +=c ]]  -- Avoid showing extra messages when using completion
-vim.cmd [[ highlight Normal guibg=NONE ctermbg=NONE ]]
+-- vim.cmd [[ highlight Normal guibg=NONE ctermbg=NONE ]]
 

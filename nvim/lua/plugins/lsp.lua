@@ -168,7 +168,6 @@ return {
         end,
       })
       -- vim.api.nvim_set_hl can set the entire highlight group, not partialy update it
-      vim.cmd [[ hi LspInlayHint guibg=#3a3a3a ]]
     end
   },
 

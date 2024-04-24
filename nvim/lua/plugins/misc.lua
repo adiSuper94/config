@@ -8,7 +8,12 @@ return {
       vim.g.rooter_patterns = {'.git', '_darcs', '.hg', '.bzr', '.svn'} --, 'Makefile', 'package.json'
     end
   },
-  'airblade/vim-gitgutter',
+  {
+    'airblade/vim-gitgutter',
+    config = function()
+      vim.api.nvim_create_autocmd({"BufEnter","BufWritePre"}, { command = "GitGutter" })
+    end
+  },
   'tpope/vim-fugitive',
   'tpope/vim-commentary',
   'preservim/vim-markdown',
@@ -49,5 +54,18 @@ return {
       vim.keymap.set('n', '<leader>t', '<cmd>LexLuthor <CR>', keymap_opts)
     end
   },
+
+  {
+    'kevinhwang91/nvim-ufo', dependencies ={ 'kevinhwang91/promise-async', 'nvim-treesitter/nvim-treesitter'},
+    config = function()
+      require('ufo').setup({
+        open_fold_hl_timeout = 200,
+        provider_selector = function(bufnr, filetype, buftype)
+            return {'treesitter', 'indent'}
+        end
+      })
+      vim.opt.foldlevelstart = 99
+    end
+  }
 
 }
