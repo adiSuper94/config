@@ -12,7 +12,7 @@ return{
     config = function()
       require('ayu').setup({
         overrides = {
-          Normal = { bg = "None" }
+          -- Normal = { bg = "None" }
         }
       })
       vim.cmd.colorscheme('ayu-dark')
@@ -80,7 +80,7 @@ return{
     config = function()
       require'nvim-treesitter.configs'.setup {
         -- A list of parser names, or "all" (the five listed parsers should always be installed)
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "toml",  "go", "typescript", "javascript", "markdown", "markdown_inline", "ocaml", "python"},
+        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "toml",  "go", "rust", "typescript", "javascript", "markdown", "markdown_inline", "ocaml", "python"},
         -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
 

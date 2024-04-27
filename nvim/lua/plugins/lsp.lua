@@ -9,7 +9,13 @@ return {
       vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
       vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
       vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-
+      -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization
+      local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+      function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+        opts = opts or {}
+        opts.border = opts.border or "rounded"
+        return orig_util_open_floating_preview(contents, syntax, opts, ...)
+      end
       -- Use LspAttach autocommand to only map the following keys
       -- after the language server attaches to the current buffer
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -26,7 +32,6 @@ return {
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
           vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-          vim.keymap.set('n', '<space>df',vim.diagnostic.open_float, opts)
           vim.keymap.set('n', '<C-s>', vim.lsp.buf.signature_help, opts)
           vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
           vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
@@ -146,7 +151,7 @@ return {
     'ray-x/lsp_signature.nvim',
     dependencies = { "neovim/nvim-lspconfig", "hrsh7th/nvim-cmp" },
     -- event = "VeryLazy",
-    opts = { bind = true, hint_prefix = "🐼 "},  -- add you config here
+    opts = { bind = true, hint_prefix = "🐼 ", floating_window = false},  -- add you config here
     config = function(_, opts) require'lsp_signature'.setup(opts) end
   },
 

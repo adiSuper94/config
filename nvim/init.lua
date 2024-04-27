@@ -10,7 +10,7 @@ vim.opt.smartcase = true -- ignore case if search pattern is all lowercase
 vim.opt.signcolumn = 'yes' -- For Git Gutter to not flicker
 vim.opt.undofile = true
 vim.opt.updatetime = 250
-vim.opt.timeoutlen=300 -- time to wait for a mapped sequence to complete
+vim.opt.timeoutlen=500 -- time to wait for a mapped sequence to complete
 vim.opt.cursorline = true -- highlight current line
 vim.opt.breakindent = true -- indent wrapped lines. This does not reformate the text, just visually indents it
 vim.opt.scrolloff = 5 -- keep n lines above and below the cursor
@@ -72,7 +72,6 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', opts) -- clear highlights wi
 vim.keymap.set('n', '<leader>c', '<cmd>e ~/.config/nvim/init.lua<CR>', opts) -- open init.lua
 vim.keymap.set('n', '<right>', '<cmd>bn<CR>', opts) -- next buffer
 vim.keymap.set('n', '<left>', '<cmd>bp<CR>', opts) -- previous buffer
-vim.keymap.set('n','<Tab>', '<cmd>tabnext <CR>', opts)
 vim.keymap.set('n', '<A-x>', '<cmd>bd <CR>', opts)
 vim.keymap.set('n', '<C-x>', '<cmd>bp | bd # <CR>', opts)
 vim.keymap.set('n', '<A-w>', '<cmd>w <CR>', opts)
