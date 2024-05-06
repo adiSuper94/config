@@ -39,7 +39,7 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-bindsym Print exec --no-startup-id maim "/home/$USER/Pictures/Screenshots/$(date)"
+bindsym Print exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
 bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Pictures/Screenshots/$(date)"
 
 # start a terminal
@@ -193,8 +193,8 @@ bar {
         status_command i3blocks
 }
 ## Custom bindings and settings
-# exec_always $HOME/.screenlayout/alt-dual-screen-setup.sh
-exec_always $HOME/.screenlayout/dual-screen-setup.sh
+exec_always $HOME/.screenlayout/alt-dual-screen-setup.sh
+# exec_always $HOME/.screenlayout/dual-screen-setup.sh
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 bindsym Shift+space exec "rofi -show drun"
 #bindsym $mod+x exec i3lock -f -i /home/adisuper/Pictures/Wallpapers/startlord2.png
