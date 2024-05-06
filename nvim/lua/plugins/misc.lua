@@ -31,7 +31,7 @@ return {
   {
     "folke/which-key.nvim",
     -- event = "VeryLazy",
-    opts = {}
+    opts = {window = {border = "double"}}
   },
 
   {
@@ -40,7 +40,7 @@ return {
     config = function()
       vim.keymap.set('n', '<C-p>', '<cmd>GitFiles <CR>', keymap_opts)
       vim.keymap.set('n', '<leader>/', '<cmd>Rg <CR>', keymap_opts)
-      vim.keymap.set('n', '<leader>\'', '<cmd>Marks <CR>', keymap_opts)
+      -- vim.keymap.set('n', '<leader>\'', '<cmd>Marks <CR>', keymap_opts)
     end
   },
 
