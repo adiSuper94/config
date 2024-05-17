@@ -113,13 +113,13 @@ set $ws1 "1:  "
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
-set $ws5 "5:  "
+set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
-#glyphs -    
+#glyphs -      
 set $ws9 "9"
-set $ws10 "10: "
+set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -197,6 +197,7 @@ exec_always $HOME/.screenlayout/alt-dual-screen-setup.sh
 # exec_always $HOME/.screenlayout/dual-screen-setup.sh
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 bindsym Shift+space exec "rofi -show drun"
+bindsym F1 exec "sh ~/dev/config/kutti-scripts/bluetooth-widget.sh"
 #bindsym $mod+x exec i3lock -f -i /home/adisuper/Pictures/Wallpapers/startlord2.png
 bindsym $mod+x move workspace to output next
 bindsym $mod+v exec copyq toggle

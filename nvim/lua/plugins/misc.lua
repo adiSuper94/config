@@ -39,8 +39,9 @@ return {
     dependencies = {'junegunn/fzf'},
     config = function()
       vim.keymap.set('n', '<C-p>', '<cmd>GitFiles <CR>', keymap_opts)
-      vim.keymap.set('n', '<leader>/', '<cmd>Rg <CR>', keymap_opts)
-      -- vim.keymap.set('n', '<leader>\'', '<cmd>Marks <CR>', keymap_opts)
+      vim.keymap.set('n', '<leader>g/', '<cmd>Rg <CR>', keymap_opts)
+      vim.keymap.set('n', '<leader>/', '<cmd>Blines <CR>', keymap_opts)
+      vim.keymap.set('n', '<leader>\'', '<cmd>Marks <CR>', keymap_opts)
     end
   },
 
@@ -55,6 +56,20 @@ return {
       vim.keymap.set('n', '<leader>t', '<cmd>LexLuthor <CR>', keymap_opts)
     end
   },
+
+  -- {
+  --   'nvim-telescope/telescope.nvim', tag = '0.1.6',
+  --   dependencies = { 'nvim-lua/plenary.nvim' },
+  --   config = function()
+  --     require('telescope').setup({})
+  --     local builtin = require('telescope.builtin')
+  --     vim.keymap.set('n', '<C-p>', builtin.git_files, keymap_opts)
+  --     vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, keymap_opts)
+  --     vim.keymap.set('n', '<leader>g/', builtin.live_grep, keymap_opts)
+  --     vim.keymap.set('n', '<leader>tt', builtin.builtin, keymap_opts)
+  --     vim.keymap.set('n', '<leader>\'', builtin.marks, keymap_opts)
+  --   end
+  -- },
 
   {
     'kevinhwang91/nvim-ufo', dependencies ={ 'kevinhwang91/promise-async', 'nvim-treesitter/nvim-treesitter'},

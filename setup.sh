@@ -106,7 +106,7 @@ post_install_config(){
     rustup completions zsh cargo > ~/.zsh/zfunc/_cargo
   elif [[ $1 == "fzf" ]]; then
     echo 'eval $"(fzf --zsh)"' >> $HOME/.autozshrc
-    if [[ $os == "darwin" ]] then
+    if [[ $os == "darwin" ]]; then
       echo 'bindkey "ç" fzf-cd-widget' >> $HOME/.autozshrc
     fi
   fi

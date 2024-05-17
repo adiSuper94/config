@@ -7,7 +7,7 @@ program = "/bin/zsh"
 
 
 [window]
-opacity = 0.80
+opacity = 0.85
 
 [font]
 size = 12.0
@@ -21,7 +21,7 @@ size = 12.0
   [colors.primary]
   background = "#000000"
   foreground = "#F8F8F2"
-  
+
   [colors.normal]
   black = "#333333"
   red = "#C4265E"
@@ -31,7 +31,7 @@ size = 12.0
   magenta = "#8C6BC8"
   cyan = "#56ADBC"
   white = "#E3E3DD"
-  
+
   [colors.bright]
   black = "#666666"
   red = "#F92672"
