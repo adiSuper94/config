@@ -87,7 +87,7 @@ return {
       -- local capabilities = vim.lsp.protocol.make_client_capabilities()
       -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
       -- capabilities.textDocument.completion.completionItem.snippetSupport = false
-      local servers = {'jsonls', 'clangd', 'pyright', 'rust_analyzer', 'gopls', 'tsserver'}
+      local servers = {'jsonls', 'clangd', 'pyright', 'rust_analyzer', 'gopls', 'tsserver', 'bashls'}
       for _, lsp in pairs(servers) do
         nvim_lsp[lsp].setup {
           -- capabilities = capabilities,
