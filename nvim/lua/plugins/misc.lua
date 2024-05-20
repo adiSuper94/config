@@ -15,7 +15,6 @@ return {
     end
   },
   'tpope/vim-fugitive',
-  'tpope/vim-commentary',
   'preservim/vim-markdown',
   'jghauser/follow-md-links.nvim',
   'godlygeek/tabular',
