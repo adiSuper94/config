@@ -1,0 +1,26 @@
+[user]
+  name = Aditya Subramanian
+  email = aditarun2008@gmail.com
+  signingkey = ~/.ssh/id_ed25519.pub
+[commit]
+  gpgsign = true
+[gpg]
+  format = ssh
+[core]
+  editor = vim
+[diff]
+  tool = kdiff3
+[merge]
+  tool = kdiff3
+[difftool "kdiff3"]
+  path = /opt/homebrew/bin/kdiff3
+[mergetool "kdiff3"]
+  path = /opt/homebrew/bin/kdiff3
+[alias]
+  b = branch
+  c = commit
+  ca = commit --amend
+  co = checkout
+  stat = status
+  sla = log --oneline --all --graph
+  rem = !git checkout --quite main && git pull --quite && git checkout - && git rebase main
