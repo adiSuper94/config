@@ -8,6 +8,7 @@ program = "/bin/zsh"
 
 [window]
 opacity = 0.85
+option_as_alt = "Both"
 
 [font]
 size = 12.0
