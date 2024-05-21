@@ -36,9 +36,17 @@ return{
           },
         },
         component_function = {
-          gitbranch= 'FugitiveHead'
+          gitbranch= 'FugitiveHead',
+          filename = 'v:lua.LightlineFilename'
         },
       }
+      function LightlineFilename(opts)
+        if vim.fn.expand('%:t') == '' then
+          return '[No Name]'
+        else
+          return vim.fn.getreg('%')
+        end
+      end
     end
   },
 
@@ -80,7 +88,7 @@ return{
     config = function()
       require'nvim-treesitter.configs'.setup {
         -- A list of parser names, or "all" (the five listed parsers should always be installed)
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "toml",  "go", "rust", "typescript", "javascript", "markdown", "markdown_inline", "ocaml", "python"},
+        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "toml",  "go", "rust", "typescript", "javascript", "ocaml" },
         -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
 

@@ -14,7 +14,6 @@ vim.opt.timeoutlen=500 -- time to wait for a mapped sequence to complete
 vim.opt.cursorline = true -- highlight current line
 vim.opt.breakindent = true -- indent wrapped lines. This does not reformate the text, just visually indents it
 vim.opt.scrolloff = 5 -- keep n lines above and below the cursor
-vim.opt.termguicolors = true -- enable true colors
 vim.opt.autoindent = true -- enable autoindent (default is true, but just to be sure)
 vim.opt.autoread = true -- auto read file when changed outside of vim
 vim.opt.wrap = true -- wrap lines, (default is true, but just to be sure)
@@ -61,8 +60,21 @@ vim.opt.rtp:prepend(lazypath)
 
 
 require("lazy").setup({
+  ui = { border = "rounded"},
   spec = "plugins",
-  change_detection = { notify = false }
+  change_detection = { notify = false },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "tohtml",
+        "gzip",
+        "rplugin",
+        "tarPlugin",
+        "zipPlugin",
+        "tutor"
+      }
+    }
+  }
 })
 
 
