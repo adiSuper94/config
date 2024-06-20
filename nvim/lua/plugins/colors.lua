@@ -4,20 +4,20 @@ return{
   -- {'wincent/base16-nvim', lazy = false, config = function() vim.cmd.colorscheme('base16-gruber') end},
   -- Both grubers have issues, with gitgutter color, and inlay hint colors :(
   -- {'thimc/gruber-darker.nvim', lazy= false, config = function() require('gruber-darker').setup({ transparent = true }) vim.cmd.colorscheme('gruber-darker') end },
-  -- {'blazkowolf/gruber-darker.nvim', lazy= false, config = function() vim.cmd.colorscheme('gruber-darker') end },
+  {'blazkowolf/gruber-darker.nvim', lazy= false, config = function() vim.cmd.colorscheme('gruber-darker') end },
   -- {'base16-project/base16-vim', config = function() vim.cmd.colorscheme('base16-ayu-dark') end },
-  {
-    'Shatur/neovim-ayu',
-    lazy = false,
-    config = function()
-      require('ayu').setup({
-        overrides = {
-          -- Normal = { bg = "None" }
-        }
-      })
-      vim.cmd.colorscheme('ayu-dark')
-    end
-  },
+  -- {
+  --   'Shatur/neovim-ayu',
+  --   lazy = false,
+  --   config = function()
+  --     require('ayu').setup({
+  --       overrides = {
+  --         -- Normal = { bg = "None" }
+  --       }
+  --     })
+  --     vim.cmd.colorscheme('ayu-dark')
+  --   end
+  -- },
 
   {
     'itchyny/lightline.vim',

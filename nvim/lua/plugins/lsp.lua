@@ -28,7 +28,7 @@ return {
           -- Buffer local mappings.
           -- See `:help vim.lsp.*` for documentation on any of the below functions
           local opts = { buffer = ev.buf }
-          vim.lsp.inlay_hint.enable(true);
+          -- vim.lsp.inlay_hint.enable(true);
           vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
@@ -146,6 +146,27 @@ return {
       })
 
     end
+  },
+  -- have to wait for https://github.com/neovim/neovim/issues/28261 to be resolved
+  {
+  'lvimuser/lsp-inlayhints.nvim',
+  dependencies = { 'neovim/nvim-lspconfig' },
+  config = function()
+    require("lsp-inlayhints").setup()
+    vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+    vim.api.nvim_create_autocmd("LspAttach", {
+      group = "LspAttach_inlayhints",
+      callback = function(args)
+        if not (args.data and args.data.client_id) then
+          return
+        end
+        local bufnr = args.buf
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        require("lsp-inlayhints").on_attach(client, bufnr)
+      end,
+    })
+    -- vim.api.nvim_set_hl can set the entire highlight group, not partialy update it
+  end
   },
 
   {
