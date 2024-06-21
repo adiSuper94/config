@@ -12,11 +12,8 @@
   tool = kdiff3
 [merge]
   tool = kdiff3
-[difftool "kdiff3"]
-  path = /opt/homebrew/bin/kdiff3
-[mergetool "kdiff3"]
-  path = /opt/homebrew/bin/kdiff3
 [alias]
+  fsck = fuck
   b = branch
   c = commit
   ca = commit --amend
@@ -24,3 +21,5 @@
   stat = status
   sla = log --oneline --all --graph
   rem = !git checkout --quite main && git pull --quite && git checkout - && git rebase main
+[init]
+  defaultBranch = main

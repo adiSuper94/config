@@ -179,6 +179,7 @@ mode "resize" {
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
         bindsym Right resize grow width 10 px or 10 ppt
+        bindsym z border toggle
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -203,12 +204,13 @@ bindsym $mod+x move workspace to output next
 bindsym $mod+v exec copyq toggle
 exec "/usr/libexec/gsd-xsettings&"
 # xinput props might need change on each OS installation
-exec "xinput set-prop 11 370 1" #  Tap
-exec "xinput set-prop 11 371 1" # Tap Default
-exec "xinput set-prop 11 349 1"
-exec "xinput set-prop 11 350 1"
+exec_always "xinput set-prop 11 370 1" #  Tap
+exec_always "xinput set-prop 11 371 1" # Tap Default
+exec_always "xinput set-prop 11 349 1"
+exec_always "xinput set-prop 11 350 1"
 exec --no-startup-id "variety &"
-
+exec_always border none
+default_border pixel 1
 exec "redshift -l 29.6172:-82.3877 -t 6500:3500 &"
 # exec "redshift -l 217.3916:78.4830 -t 6500:3500 &"
 

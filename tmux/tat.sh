@@ -3,7 +3,7 @@ not_in_tmux() {
   [ -z "$TMUX" ]
 }
 session_exists(){
-  tmux has-session -t $1
+  tmux has-session -t "$1"
 }
 
 # switch to existing session
@@ -13,7 +13,7 @@ switch_or_create_session(){
     echo "enter name of new session: "
     read selected_session
   elif [ "$selected_session" = "no tmux ;(" ]; then
-    exit 0
+    return
   fi
   if not_in_tmux; then
     #echo "attach n  -d -t "
@@ -40,4 +40,4 @@ tat() {
       switch_session
   fi
 }
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh && tat
+source <(fzf --zsh) && tat
