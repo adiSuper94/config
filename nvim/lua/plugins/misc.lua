@@ -55,17 +55,28 @@ return {
   --   end
   -- },
 
+  { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   {
     'nvim-telescope/telescope.nvim', tag = '0.1.6',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzf-native.nvim' },
     config = function()
       require('telescope').setup({})
+      local utils = require("telescope.utils")
       local builtin = require('telescope.builtin')
-      vim.keymap.set('n', '<C-p>', builtin.git_files, keymap_opts)
+      local project_files = function()
+        local _, ret, _ = utils.get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' })
+        if ret == 0 then
+            builtin.git_files()
+        else
+            builtin.find_files()
+        end
+      end
+      vim.keymap.set('n', '<C-p>', project_files, keymap_opts)
       vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, keymap_opts)
       vim.keymap.set('n', '<leader>g/', builtin.live_grep, keymap_opts)
       vim.keymap.set('n', '<leader>tt', builtin.builtin, keymap_opts)
       vim.keymap.set('n', '<leader>\'', builtin.marks, keymap_opts)
+      require('telescope').load_extension('fzf')
     end
   },
 
