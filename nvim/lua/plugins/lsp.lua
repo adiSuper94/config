@@ -5,10 +5,6 @@ return {
     dependencies = { {'williamboman/mason.nvim', config = true}, {'j-hui/fidget.nvim', opts = {}} },
     config= function()
       local nvim_lsp = require'lspconfig'
-      vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-      vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-      vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
       -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization
       local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
       function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
@@ -31,6 +27,7 @@ return {
           -- vim.lsp.inlay_hint.enable(true);
           vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
           vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+          vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
           vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
           vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
           vim.keymap.set('n', '<C-s>', vim.lsp.buf.signature_help, opts)
@@ -46,6 +43,16 @@ return {
           vim.keymap.set('n', '<space>f', function()
             vim.lsp.buf.format { async = true }
           end, opts)
+          vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+          vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+          vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+          vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+          vim.cmd([[hi! link LspReferenceText CursorColumn]])
+          vim.cmd([[hi! link LspReferenceRead CursorColumn]])
+          vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
+          vim.cmd([[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]])
+          vim.cmd([[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
+          vim.cmd([[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]])
         end,
       })
       local settings = {
