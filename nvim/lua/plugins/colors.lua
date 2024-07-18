@@ -1,10 +1,10 @@
 -- if true then return {} end
 
 return{
-  -- {'wincent/base16-nvim', lazy = false, config = function() vim.cmd.colorscheme('base16-gruber') end},
+  {'wincent/base16-nvim', lazy = false, config = function() vim.cmd.colorscheme('base16-gruvbox-dark-hard') end},
   -- Both grubers have issues, with gitgutter color, and inlay hint colors :(
   -- {'thimc/gruber-darker.nvim', lazy= false, config = function() require('gruber-darker').setup({ transparent = true }) vim.cmd.colorscheme('gruber-darker') end },
-  {'blazkowolf/gruber-darker.nvim', lazy= false, config = function() vim.cmd.colorscheme('gruber-darker') end },
+  -- {'blazkowolf/gruber-darker.nvim', lazy= false, config = function() vim.cmd.colorscheme('gruber-darker') end },
   -- {'base16-project/base16-vim', config = function() vim.cmd.colorscheme('base16-ayu-dark') end },
   -- {
   --   'Shatur/neovim-ayu',
@@ -88,7 +88,7 @@ return{
     config = function()
       require'nvim-treesitter.configs'.setup {
         -- A list of parser names, or "all" (the five listed parsers should always be installed)
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "toml",  "go", "rust", "typescript", "javascript", "ocaml" },
+        ensure_installed = {"go", "typescript", "javascript" },
         -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
 

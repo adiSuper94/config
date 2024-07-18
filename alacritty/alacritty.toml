@@ -1,5 +1,5 @@
 import = [
-  "~/.config/alacritty/themes/custom.toml"
+  "~/.config/alacritty/themes/gruvbox-dark-hard.toml"
 ]
 
 [env]
@@ -13,6 +13,7 @@ program = "/bin/zsh"
 [window]
 opacity = 0.85
 option_as_alt = "Both"
+decorations = "none"
 
 [font]
 size = 12.0

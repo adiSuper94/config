@@ -47,12 +47,12 @@ return {
           vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
           vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
           vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-          vim.cmd([[hi! link LspReferenceText CursorColumn]])
-          vim.cmd([[hi! link LspReferenceRead CursorColumn]])
-          vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
-          vim.cmd([[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]])
-          vim.cmd([[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
-          vim.cmd([[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]])
+          -- vim.cmd([[hi! link LspReferenceText CursorColumn]])
+          -- vim.cmd([[hi! link LspReferenceRead CursorColumn]])
+          -- vim.cmd([[hi! link LspReferenceWrite CursorColumn]])
+          -- vim.cmd([[autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()]])
+          -- vim.cmd([[autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()]])
+          -- vim.cmd([[autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()]])
         end,
       })
       local settings = {

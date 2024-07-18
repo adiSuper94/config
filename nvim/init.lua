@@ -39,10 +39,10 @@ vim.g.netrw_winsize = 20
 vim.g.netrw_keepdir = 0
 
 
--- vim.api.nvim_set_keymap("i", "<C-k>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
--- vim.g.copilot_no_tab_map = true
--- vim.g.copilot_assume_mapped = true
--- vim.g.copilot_tab_fallback = ""
+vim.api.nvim_set_keymap("i", "<C-k>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
+vim.g.copilot_no_tab_map = true
+vim.g.copilot_assume_mapped = true
+vim.g.copilot_tab_fallback = ""
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -114,5 +114,5 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 
 vim.cmd [[ set shortmess +=c ]]  -- Avoid showing extra messages when using completion
--- vim.cmd [[ highlight Normal guibg=NONE ctermbg=NONE ]]
+vim.cmd [[ highlight Normal guibg=NONE ctermbg=NONE ]]
 
