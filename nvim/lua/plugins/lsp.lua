@@ -90,6 +90,13 @@ return {
             parameterNames = true,
             rangeVariableTypes = true,
           }
+        },
+        ["rust-analyzer"] = {
+          procMacro = {enable = true},
+          diagnostics = {
+              enable = true,
+              disabled = { "unresolved-proc-macro", "missing-unsafe" },
+          },
         }
       }
       -- local capabilities = vim.lsp.protocol.make_client_capabilities()
