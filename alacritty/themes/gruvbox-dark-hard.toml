@@ -1,27 +1,3 @@
-[[colors.indexed_colors]]
-color = "#fe8019"
-index = 16
-
-[[colors.indexed_colors]]
-color = "#d65d0e"
-index = 17
-
-[[colors.indexed_colors]]
-color = "#3c3836"
-index = 18
-
-[[colors.indexed_colors]]
-color = "#504945"
-index = 19
-
-[[colors.indexed_colors]]
-color = "#bdae93"
-index = 20
-
-[[colors.indexed_colors]]
-color = "#ebdbb2"
-index = 21
-
 [colors.bright]
 black = "0x665c54"
 blue = "0xbdae93"
@@ -31,10 +7,6 @@ magenta = "0xebdbb2"
 red = "0xfe8019"
 white = "0xfbf1c7"
 yellow = "0x504945"
-
-[colors.cursor]
-cursor = "0xd5c4a1"
-text = "0x1d2021"
 
 [colors.normal]
 black = "0x1d2021"
