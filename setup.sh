@@ -14,6 +14,7 @@ get_os() {
   Linux) os=linux
     if type -p lsb_release &>/dev/null; then
       flavour=$(lsb_release -si)
+      release=$(lsb_release -sr)
     elif [ -f /etc/os-release ]; then
       flavour=$(awk -F= '$1 == "NAME" { print $2; exit }' /etc/os-release)
     fi
@@ -132,22 +133,22 @@ install_fnm() {
 configure_zsh() {
   if [[ $SHELL != $(which zsh) ]]; then
     chsh -s $(which zsh)
-    mkdir -p $HOME/.zsh/zfunc
+    mkdir -p "$HOME"/.zsh/zfunc
   fi
-  mkdir -p $HOME/.zsh
+  mkdir -p "$HOME"/.zsh
   git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
-  echo ". ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> $HOME/.autozshrc
+  echo ". ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" >> "$HOME"/.autozshrc
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
-  echo ". ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> $HOME/.autozshrc
+  echo ". ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> "$HOME"/.autozshrc
   git clone https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
 
-  echo "zstyle :compinstall filename '~/.zshrc'" >> $HOME/.autozshrc
-  echo "fpath+=~/.zsh/zfunc" >> $HOME/.autozshrc
-  echo "fpath+=~/.zsh/zsh-completions/src" >> $HOME/.autozshrc
-  echo "autoload -Uz compinit" >> $HOME/.autozshrc
-  echo "compinit -D" >> $HOME/.autozshrc
+  echo "zstyle :compinstall filename '~/.zshrc'" >> "$HOME"/.autozshrc
+  echo "fpath+=~/.zsh/zfunc" >> "$HOME"/.autozshrc
+  echo "fpath+=~/.zsh/zsh-completions/src" >> "$HOME"/.autozshrc
+  echo "autoload -Uz compinit" >> "$HOME"/.autozshrc
+  echo "compinit -D" >> "$HOME"/.autozshrc
   echo "RUN  to recompile zsh-completions 'rm -f ~/.zcompdump; compinit'"
-  echo ". $HOME/.autozshrc" >> $HOME/.zshrc
+  echo ". $HOME/.autozshrc" >> "$HOME"/.zshrc
 }
 
 common_setup(){
@@ -178,19 +179,34 @@ minimal_setup_linux(){
   configure_zsh
 
   if ! command -v nvim &> /dev/null; then
-    curl -o $HOME/nutter-tools/nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-    tar -xvf $HOME/nutter-tools/nvim-linux64.tar.gz --directory $HOME/nutter-tools/
-    ln -s $HOME/nutter-tools/nvim-linux64/bin/nvim $HOME/nutter-tools/bin/nvim
-    rm $HOME/nutter-tools/nvim-linux64.tar.gz
+    curl -o "$HOME"/nutter-tools/nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    tar -xvf "$HOME"/nutterc-tools/nvim-linux64.tar.gz --directory "$HOME"/nutter-tools/
+    ln -s "$HOME"/nutter-tools/nvim-linux64/bin/nvim "$HOME"/nutter-tools/bin/nvim
+    rm "$HOME"/nutter-tools/nvim-linux64.tar.gz
     post_install_config nvim
-    mkdir -p $HOME/.config
-    ln -s $DOTFILES/nvim $HOME/.config/nvim
+    mkdir -p "$HOME"/.config
+    ln -s "$DOTFILES"/nvim "$HOME"/.config/nvim
   fi
   }
 
 ubuntu_setup(){
-  sudo apt-get update
+  wget -qO - https://regolith-desktop.org/regolith.key | \
+  gpg --dearmor | sudo tee /usr/share/keyrings/regolith-archive-keyring.gpg > /dev/null
+  case $release in
+    "22.04")
+      echo deb "[arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.gpg] \
+        https://regolith-desktop.org/release-3_2-ubuntu-jammy-amd64 jammy main" | \
+      sudo tee /etc/apt/sources.list.d/regolith.list
+      ;;
+    "24.04")
+      echo deb "[arch=amd64 signed-by=/usr/share/keyrings/regolith-archive-keyring.gpg] \
+        https://regolith-desktop.org/release-3_2-ubuntu-jammy-amd64 jammy main" | \
+      sudo tee /etc/apt/sources.list.d/regolith.list
+      ;;
+  esac
+  sudo apt update
   sudo apt-get -y --quiet install coreutils gcc
+  sudo apt install regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default
   # check if  htop, tmux, fzf, ripgrep, bat, bat-extra, exa, autojump, is installed, if not then install
   for pkg in unzip curl zsh htop tmux fzf bat exa autojump; do
     if ! command -v $pkg &> /dev/null; then
@@ -201,20 +217,20 @@ ubuntu_setup(){
     fi
   done
   if ! command -v nvim &> /dev/null; then
-    curl -o $HOME/nutter-tools/nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-    tar -xvf $HOME/nutter-tools/nvim-linux64.tar.gz --directory $HOME/nutter-tools/
-    ln -s $HOME/nutter-tools/nvim-linux64/bin/nvim $HOME/nutter-tools/bin/nvim
-    rm $HOME/nutter-tools/nvim-linux64.tar.gz
+    curl -o "$HOME"/nutter-tools/nvim-linux64.tar.gz -L https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+    tar -xvf "$HOME"/nutter-tools/nvim-linux64.tar.gz --directory "$HOME"/nutter-tools/
+    ln -s "$HOME"/nutter-tools/nvim-linux64/bin/nvim "$HOME"/nutter-tools/bin/nvim
+    rm "$HOME"/nutter-tools/nvim-linux64.tar.gz
     post_install_config nvim
   fi
   if ! command -v rg &> /dev/null; then
     sudo apt-get install ripgrep
   fi
   if ! command -v batman &> /dev/null; then
-    git clone 'https://github.com/eth-p/bat-extras.git' $HOME/nutter-tools/bat-extras
-    cd $HOME/nutter-tools/bat-extras  &&  ./build.sh
+    git clone 'https://github.com/eth-p/bat-extras.git' "$HOME"/nutter-tools/bat-extras
+    cd "$HOME"/nutter-tools/bat-extras  &&  ./build.sh
     for file in $HOME/nutter-tools/bat-extras/bin/*; do
-      ln -s $file $HOME/nutter-tools/bin
+      ln -s "$file" "$HOME"/nutter-tools/bin
     done
     post_install_config bat-extras
   fi
@@ -242,18 +258,18 @@ mac_setup(){
 }
 
 sym_link(){
-  for pkg_config in nvim alacritty i3 tmux rofi; do
-    ln -s $DOTFILES/$pkg_config $HOME/.config/$pkg_config
+  for pkg_config in nvim alacritty i3 tmux rofi regolith3; do
+    ln -s "$DOTFILES"/$pkg_config "$HOME"/.config/$pkg_config
   done
 }
 
 setup() {
   get_os
   if [ ! -d "$HOME/nutter-tools" ]; then
-    mkdir -p $HOME/nutter-tools/bin
+    mkdir -p "$HOME"/nutter-tools/bin
     post_install_config nutter-tools
   fi
-  mkdir -p $HOME/.config
+  mkdir -p "$HOME"/.config
   case $os in
     linux) ubuntu_setup ;;
     darwin) mac_setup ;;
