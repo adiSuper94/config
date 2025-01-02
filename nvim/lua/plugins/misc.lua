@@ -16,8 +16,8 @@ return {
   },
   'tpope/vim-fugitive',
   -- 'github/copilot.vim',
-  {'preservim/vim-markdown' , ft = {'markdown'}},
-  {'godlygeek/tabular', ft = {'markdown'}},
+  -- {'preservim/vim-markdown' , ft = {'markdown'}},
+  -- {'godlygeek/tabular', ft = {'markdown'}},
 
   {
     'christoomey/vim-tmux-navigator',
