@@ -89,7 +89,7 @@ return{
     config = function()
       require'nvim-treesitter.configs'.setup {
         -- A list of parser names, or "all" (the five listed parsers should always be installed)
-        ensure_installed = {"go", "typescript", "javascript", "rust","vim", "vimdoc" },
+        ensure_installed = {"go", "typescript", "javascript", "rust", "vim", "vimdoc" },
         -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
 
@@ -109,9 +109,12 @@ return{
           -- disable = { "rust" },
           -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
           disable = function(lang, buf)
-             if lang == "rust" then
-               return true
-             end
+            highlight_disable_languages = { "rust", "bash" }
+            for _, hd_lang in ipairs(highlight_disable_languages) do
+              if hd_lang == lang then
+                return true
+              end
+            end
             local max_filesize = 100 * 1024 -- 100 KB
             local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then

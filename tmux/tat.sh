@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 not_in_tmux() {
   [ -z "$TMUX" ]
 }
@@ -11,15 +11,14 @@ switch_or_create_session(){
   selected_session=$( (tmux list-sessions | sed "s/:.*//"; echo "--new-session--"; echo "no tmux ;(") | fzf)
   if [ "$selected_session" = "--new-session--" ]; then
     echo "enter name of new session: "
-    read selected_session
+    read -r selected_session
   elif [ "$selected_session" = "no tmux ;(" ]; then
     return
   fi
   if not_in_tmux; then
-    #echo "attach n  -d -t "
-    tmux new-session -As "$selected_session"
+    # echo "attach n  -d -t "
+    exec tmux new-session -As "$selected_session"
   else
-    #echo "switch"
     tmux switch-client -t "$selected_session"
   fi
 }
@@ -27,9 +26,9 @@ switch_or_create_session(){
 # switches or attaches to an existing/new session
 switch_session() {
   # for first session use defaut name "noname"
-  if [ -z "$(tmux list-sessions)" ]; then
+  if [ -z "$(tmux list-sessions 2>/dev/null)" ]; then
     selected_session="noname"
-    tmux new-session -As "$selected_session"
+    exec tmux -v new-session -As "$selected_session"
   else
     switch_or_create_session
   fi
@@ -40,4 +39,4 @@ tat() {
       switch_session
   fi
 }
-source <(fzf --zsh) && tat
+. <(fzf --zsh) && tat
