@@ -41,11 +41,12 @@ return{
         },
       }
       function LightlineFilename(opts)
-        if vim.fn.expand('%:t') == '' then
-          return '[No Name]'
-        else
-          return vim.fn.getreg('%')
+        local git_root = vim.b.git_dir and vim.fn.fnamemodify(vim.b.git_dir, ":h") or nil
+        local path = vim.fn.expand("%:p")
+        if git_root and path:sub(1, #git_root) == git_root then
+          return path:sub(#git_root + 2) -- Remove the Git root and leading slash
         end
+        return vim.fn.expand("%")
       end
     end
   },

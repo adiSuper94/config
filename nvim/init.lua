@@ -70,6 +70,7 @@ require("lazy").setup({
         "gzip",
         "rplugin",
         "tarPlugin",
+        "netrwPlugin",
         "zipPlugin",
         "tutor"
       }

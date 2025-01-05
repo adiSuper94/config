@@ -2,7 +2,6 @@ wm.bar.position: bottom
 wm.gaps.focus_follows_mouse: yes
 gtk.font_name: Ubuntu, Regular
 gtk.monospace_font_name: Ubuntu Mono, Regular
-!regolith.look.path: /usr/share/regolith-look/i3-default
 regolith.look.path: /usr/share/regolith-look/gruvbox
 wm.workspace.01.name: 1
 wm.workspace.02.name: 2
@@ -14,4 +13,5 @@ wm.workspace.07.name: 7
 wm.workspace.08.name: 8
 wm.workspace.09.name: 9
 wm.workspace.10.name: 10
-
+wm.gaps.inner.size: 0
+wm.program.terminal: /usr/bin/ghostty
