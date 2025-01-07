@@ -16,10 +16,9 @@ switch_or_create_session(){
     return
   fi
   if not_in_tmux; then
-    #echo "attach n  -d -t "
+    # echo "attach n  -d -t "
     tmux new-session -As "$selected_session"
   else
-    #echo "switch"
     tmux switch-client -t "$selected_session"
   fi
 }
@@ -40,4 +39,4 @@ tat() {
       switch_session
   fi
 }
-source <(fzf --zsh) && tat
+. <(fzf --zsh) && tat

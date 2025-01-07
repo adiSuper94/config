@@ -15,11 +15,11 @@
 [alias]
   fsck = fuck
   b = branch
-  c = commit
+  cc = commit
   ca = commit --amend
   co = checkout
   stat = status
   sla = log --oneline --all --graph
-  rem = !git checkout --quite main && git pull --quite && git checkout - && git rebase main
+  rem = !git checkout --quiet main && git pull --quiet && git checkout - && git rebase main
 [init]
   defaultBranch = main

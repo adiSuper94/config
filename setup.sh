@@ -1,8 +1,8 @@
 #!/bin/bash
-DOTFILES="$(cd "$(dirname "$0")" && pwd)"
-
 YES=false
 UNINSTALL=false
+apt="apt-get -qqy"
+
 
 get_os() {
   uname=$(uname -sm)
@@ -47,66 +47,81 @@ get_os
 
 post_install_config(){
   if [[ $1 == "htop" ]];then
-    echo 'alias top=htop' >> "$HOME/.autozshrc"
+    echo 'alias top=htop' >> "$ALIAS_FILE"
   elif [[ $1 == "homebrew" ]];then
     if [[ $os == "darwin" ]]; then
       # shellcheck disable=SC2016
-      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.autozshrc"
+      echo 'eval "$(/opt/homebrew/bin/brew shellenv)' >> "$PROFILE_FILE"
       eval "$(/opt/homebrew/bin/brew shellenv)"
     elif [[ $os == "linux" ]]; then
       # shellcheck disable=SC2016
-      echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$HOME/.autozshrc"
+      echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> "$EXPORT_FILE"
       eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     fi
   elif [[ $1 == "fnm" ]];then
     # shellcheck disable=SC2016
-    echo 'eval "$(fnm env --use-on-cd --shell zsh)"' >> "$HOME/.autozshrc"
+    echo 'eval "$(fnm env --use-on-cd --shell zsh)"' >> "$EVAL_FILE"
   elif [[ $1 == "nvim" ]];then
+      echo 'alias vim=nvim' >> "$ALIAS_FILE"
+      echo 'export EDITOR=nvim' >> "$EXPORT_FILE"
     {
-      echo 'alias vim=nvim';
-      echo 'export EDITOR=nvim';
       echo '# Ctrl-e open cli in nvim';
       echo 'autoload edit-command-line';
       echo 'zle -N edit-command-line';
       echo 'bindkey "^E" edit-command-line'
-    } >> "$HOME/.autozshrc"
+      printf "\n"
+    } >> "$RC_FILE"
   elif [[ $1 == "batman" ]];then
     # shellcheck disable=SC2016
-    echo 'eval "$(batpipe)"' >> "$HOME/.autozshrc"
+    echo 'eval "$(batpipe)"' >> "$EVAL_FILE"
+    echo 'alias man=batman' >> "$ALIAS_FILE"
   elif [[ $1 == "autojump" ]];then
       # shellcheck disable=SC2016
-      echo '[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh' >> "$HOME/.autozshrc"
+      echo '[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh' >> "$RC_FILE"
   elif [[ $1 == "nutter-tools" ]];then
     # shellcheck disable=SC2016
-    echo 'export PATH="$HOME/nutter-tools/bin:$PATH"' >> "$HOME/.autozshrc"
+    echo 'export PATH="$HOME/nutter-tools/bin:$PATH"' >> "$EXPORT_FILE"
   elif [[ $1 == "golang" ]]; then
     # shellcheck disable=SC2016
-    echo 'export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"' >> "$HOME/.autozshrc"
+    echo 'export PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"' >> "$EXPORT_FILE"
   elif [[ $1 == "lazygit" ]]; then
-    echo "alias lg=lazygit" >> "$HOME/.autozshrc"
+    {
+      echo "alias g=git";
+      echo "alias lg=lazygit"
+    } >> "$ALIAS_FILE"
   elif [[ $1 == "rust" ]]; then
     # shellcheck disable=SC2016
-    echo '. "$HOME/.cargo/env"' >> "$HOME/.autozshrc"
     . "$HOME/.cargo/env"
+    mkdir -p "$HOME/.zsh/zfunc"
+    rustup completions zsh > "$HOME/.zsh/zfunc/_rustup"
     rustup completions zsh cargo > "$HOME/.zsh/zfunc/_cargo"
   elif [[ $1 == "fzf" ]]; then
     # shellcheck disable=SC2016
-    echo 'eval "$(fzf --zsh)"' >> "$HOME/.autozshrc"
+    echo 'eval "$(fzf --zsh)"' >> "$EVAL_FILE"
     if [[ $os == "darwin" ]]; then
-      echo 'bindkey "ç" fzf-cd-widget' >> "$HOME/.autozshrc"
+      echo 'bindkey "ç" fzf-cd-widget' >> "$RC_FILE"
     fi
   elif [[ $1 == "eza" ]]; then
-    echo 'alias ls=eza' >> "$HOME/.autozshrc"
+    echo 'alias ls=eza' >> "$ALIAS_FILE"
   elif [[ $1 == "zoxide" ]]; then
     # shellcheck disable=SC2016
-    echo 'eval "$(zoxide init zsh)"' >> "$HOME/.autozshrc"
-    echo 'alias j=z' >> "$HOME/.autozshrc"
+    echo 'eval "$(zoxide init zsh)"' >> "$EVAL_FILE"
+    echo 'alias j=z' >> "$ALIAS_FILE"
   elif [[ $1 == "p10k" ]]; then
     # shellcheck disable=SC2016
-    echo '. $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme' >> "$HOME/.autozshrc"
+    echo '. $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme' >> "$RC_FILE"
   elif [[ $1 == "tmux" ]]; then
     # shellcheck disable=SC2016
-    echo '. "$HOME/.config/tmux/tat.sh"' >> "$HOME/.autozshrc"
+    echo '. "$HOME/.config/tmux/tat.sh"' >> "$SOURCE_FILE"
+  elif [[ $1 == "fd" ]];then
+    {
+      echo "# use fd instead of find for fzf";
+      echo 'export FZF_DEFAULT_COMMAND="fd --type file --color=always"';
+      echo 'export FZF_DEFAULT_OPTS=--ansi';
+      # shellcheck disable=SC2016
+      echo 'export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"';
+      printf "\n"
+    } >> "$EXPORT_FILE"
   fi
 }
 
@@ -172,7 +187,7 @@ ensure_zsh() {
     if ask "Do you want to change default shell to zsh"; then
       if ! command -v zsh &> /dev/null; then
           if ask "Do you want to install zsh"; then
-            sudo nala install zsh
+            sudo "$apt" install zsh
             printf "Tried installing zsh."
           fi
       fi
@@ -198,7 +213,7 @@ ensure_zsh() {
 check_last_cmd(){
   last_command=$(history | tail -n 1 | sed 's/^[ ]*[0-9]*[ ]*//')
   if [[ $1 -ne 0 ]]; then
-    printf "Last command: %s\n Failed with exit code %s\n" "$last_command" "$?"
+    printf "Last command: %s, failed.\nExit code: %d\n" "$last_command" "$1"
     if [[ $2 -eq 1 ]]; then
       printf "Exiting...\n"
       exit 1
@@ -240,7 +255,7 @@ install_alacritty(){
     return 0
   fi
   printf "Installing alacritty dependencies\n."
-  sudo nala install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 gzip scdoc
+  eval "sudo $apt install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 gzip scdoc"
   errno=$?
   check_last_cmd $errno 1
   if ! ask "Installed dependencies. Continue with installation?"; then
@@ -276,44 +291,74 @@ install_alacritty(){
 }
 
 configure_zsh() {
-  rm -rf ~/.zsh
   mkdir -p "$HOME"/.zsh/zfunc
   git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
+  git clone https://github.com/zsh-users/zsh-completions.git ~/.zsh/zsh-completions
   git clone https://github.com/olets/zsh-abbr ~/.zsh/zsh-abbr --recurse-submodules --single-branch --branch v6 --depth 1
   git clone https://github.com/Aloxaf/fzf-tab ~/.zsh/fzf-tab
 
   {
-    echo ". ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh";
-    echo ". ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh";
-    echo ". ~/.zsh/zsh-abbr/zsh-abbr.zsh";
-    echo ". ~/.zsh/fzf-tab/fzf-tab.plugin.zsh";
+    printf "\n# Loading zsh plugins\n";
+    echo ". ~/.zsh/fzf-tab/fzf-tab.plugin.zsh # Replace zsh's default tab completion selection menu with fzf";
+    echo ". ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh # Inline autosuggestions, like fish";
+    echo ". ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Syntax highlighting, like fish";
+    echo ". ~/.zsh/zsh-abbr/zsh-abbr.zsh # replace command abbreviations with full commands, like fish";
+    printf "\n\n"
+  } >> "$SOURCE_FILE"
+  {
+    printf "\n"
+    echo "HISTFILE=~/.zsh_history";
+    echo "HISTSIZE=2048";
+    echo "SAVEHIST=2048";
+    echo "setopt autocd extendedglob";
+    echo "bindkey -e # Use emacs keybindings even if our EDITOR is set to vi";
+    printf "\n"
     echo "zstyle :compinstall filename '~/.zshrc'";
     echo "fpath+=~/.zsh/zfunc";
     echo "fpath+=~/.zsh/zsh-completions/src";
     echo "autoload -Uz compinit";
-    echo "compinit -D";
+    echo "compinit";
+  } >> "$RC_FILE"
+  {
+    printf "# THIS FILE HAS BEEN AUTO GENERATED.\n";
+    printf "# This file should be sourced in your .zshrc file\n\n";
+    cat "$EXPORT_FILE";
+    printf "\n";
+    cat "$ALIAS_FILE";
+    printf "\n";
+    cat "$EVAL_FILE";
+    printf "\n";
+    cat "$RC_FILE"
+    printf "\n";
+    cat "$SOURCE_FILE";
+    printf"\n"
     echo "abbr import-aliases --quiet"
-  } >> "$HOME"/.autozshrc
-
+  } > "$HOME/.autozshrc"
+  if [[ $os == "darwin" ]]; then
+    cat "$PROFILE_FILE" >> "$HOME/.zprofile"
+  fi
   echo "To recompile zsh-completions run: 'rm -f ~/.zcompdump; compinit'"
-  echo ". $HOME/.autozshrc"
-  # Add line to $HOME/.zshrc if not already present
-  grep -q ".autozshrc" "$HOME/.zshrc" || echo ". $HOME/.autozshrc" >> "$HOME/.zshrc"
+  rm -f "$EXPORT_FILE" "$ALIAS_FILE" "$EVAL_FILE" "$SOURCE_FILE" "$RC_FILE" "$PROFILE_FILE"
+  grep -q ".autozshrc" "$HOME/.zshrc" || (
+    echo "Did not find .autozshrc in .zshrc, adding it)" &&
+    echo ". $HOME/.autozshrc" >> "$HOME/.zshrc"
+  )
 }
 
 common_setup(){
-  configure_zsh
+  rm -rf ~/.zsh
   install_golang
   install_rust
   install_alacritty
-  printf "Installing brave browser\n\n"
+  configure_zsh
+  printf "\nInstalling brave browser\n\n"
   curl -fsS https://dl.brave.com/install.sh | sh
 }
 
 minimal_setup_linux(){
-  sudo apt-get update
-  sudo apt-get -yq install coreutils gcc vim curl zsh ripgrep fzf
+  sudo "$apt" update
+  sudo "$apt" install coreutils gcc vim curl zsh ripgrep fzf
   if [ ! -d "$HOME/nutter-tools" ]; then
     mkdir -p "$HOME/nutter-tools/bin"
     post_install_config nutter-tools
@@ -326,6 +371,14 @@ minimal_setup_linux(){
     mkdir -p "$HOME"/.config
     ln -s "$DOTFILES"/nvim "$HOME"/.config/nvim
   fi
+}
+
+minimal_unsetup_linux(){
+  sudo "$apt" remove ripgrep fzf
+  sudo "$apt" autoremove
+  rm -rf "$HOME/nutter-tools"
+  rm -rf "$HOME/.zsh"
+  rm -rf "$HOME/.config/nvim"
 }
 
 pretty_exec(){
@@ -356,8 +409,8 @@ install_regolith(){
       sudo tee $apt_source_file
       ;;
   esac
-  pretty_exec "sudo nala update"
-  pretty_exec "sudo nala install regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default"
+  pretty_exec "sudo $apt update"
+  pretty_exec "sudo $apt install regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default"
 
   printf "Deleting \n\tkeyring: %s\n\tapt source file: %s\n" "$keyring" "$apt_source_file"
   rm -f $keyring
@@ -368,8 +421,8 @@ install_regolith(){
 }
 
 uninstall_regolith(){
-  pretty_exec "sudo nala remove regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default"
-  pretty_exec "sudo nala autoremove"
+  pretty_exec "sudo $apt remove regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default"
+  pretty_exec "sudo $apt autoremove"
 }
 
 ubuntu_install_neovim(){
@@ -383,38 +436,40 @@ ubuntu_install_neovim(){
 }
 
 
-declare -A brew_pkgs
 brew_pkgs=(
-  ["fzf"]="fzf"
-  ["tmux"]="tmux"
-  ["rg"]="ripgrep"
-  ["nvim"]="neovim"
-  ["unzip"]="unzip"
-  ["htop"]="htop"
-  ["bat"]="bat"
-  ["batman"]="bat-extras"
-  ["eza"]="eza"
-  ["zoxide"]="zoxide"
-  ["lazygit"]="lazygit"
-  ["fnm"]="fnm"
-  ["jq"]="jq"
-  ["p10k"]="powerlevel10k"
-  ["wget"]="wget"
+  "fzf=fzf"
+  "tmux=tmux"
+  "unzip=unzip"
+  "htop=htop"
+  "bat=bat"
+  "eza=eza"
+  "zoxide=zoxide"
+  "lazygit=lazygit"
+  "fnm=fnm"
+  "jq=jq"
+  "wget=wget"
+  "fd=fd"
+  "rg=ripgrep"
+  "p10k=powerlevel10k"
+  "batman=bat-extras"
+  "nvim=neovim"
 )
 
 install_brew_pkgs(){
   install_homebrew
   export HOMEBREW_NO_ENV_HINTS=TRUE
   # check if  nvim, htop, tmux, fzf, ripgrep, bat, bat-extra, eza, autojump, is installed, if not then install
-  for pkg_cmd in "${!brew_pkgs[@]}"; do
+  for pkg_entry in "${brew_pkgs[@]}"; do
+    pkg_cmd=$(echo "$pkg_entry" | awk -F'=' '{print $1}')
+    pkg_name=$(echo "$pkg_entry" | awk -F'=' '{print $2}')
     if ! command -v "$pkg_cmd" &> /dev/null; then
-      if ask "Do you want to install ${brew_pkgs[$pkg_cmd]}"; then
-        brew install --quiet "${brew_pkgs[$pkg_cmd]}"
+      if ask "Do you want to install $pkg_name"; then
+        brew install --quiet "$pkg_name"
         post_install_config "$pkg_cmd"
         printf "\n\n\n"
       fi
     else
-      echo "${brew_pkgs[$pkg_cmd]} is already installed"
+      echo "$pkg_name is already installed"
     fi
   done
 }
@@ -469,7 +524,7 @@ ubuntu_purge_snap(){
   sudo systemctl stop snapd
   sudo systemctl disable snapd
   sudo systemctl mask snapd
-  sudo apt-get -yq purge snapd
+  sudo "$apt" purge snapd
   sudo apt-mark hold snapd
   sudo rm -rf ~/snap
   sudo rm -rf /snap
@@ -487,19 +542,14 @@ EOF
 ## Fonts name map, for nerd fonts
 ## Key is the name of the font folder in nerd-fonts repo
 ## Find values by guessing, or https://gist.github.com/davidteren/898f2dcccd42d9f8680ec69a3a5d350e
-declare -A fonts=(
+fonts=(
   # BitstreamVeraSansMono
   # CodeNewRoman
   # DroidSansMono
-  # ["FiraCode"]="fira-code"
-  # ["FiraMono"]="fira-mono"
-  # ["GeistMono"]="geist-mono"
-  # Gohu
   # Go-Mono
   # Hack
   # Hasklig
   # Hermit
-  ["JetBrainsMono"]="jetbrains-mono"
   # Meslo
   # Noto
   # Overpass
@@ -507,11 +557,16 @@ declare -A fonts=(
   # RobotoMono
   # SourceCodePro
   # SpaceMono
-  # ["Hasklig"]="hasklug"
-  # ["Lilex"]="lilex"
-  # ["Ubuntu"]="ubuntu"
-  # ["UbuntuMono"]="ubuntu-mono"
-  # ["UbuntuSans"]="ubuntu-sans"
+  # Gohu
+  "JetBrainsMono=jetbrains-mono"
+  # "FiraCode=fira-code"
+  # "FiraMono=fira-mono"
+  # "GeistMono=geist-mono"
+  # "Hasklig=hasklug"
+  # "Lilex=lilex"
+  # "Ubuntu=ubuntu"
+  # "UbuntuMono=ubuntu-mono"
+  # "UbuntuSans=ubuntu-sans"
 )
 
 ubuntu_install_fonts(){
@@ -520,7 +575,8 @@ ubuntu_install_fonts(){
   if [[ ! -d "$fonts_dir" ]]; then
       mkdir -p "$fonts_dir"
   fi
-  for font_name in "${!fonts[@]}"; do
+  for font_entry in "${fonts[@]}"; do
+    font_name=$(echo "$font_entry" | awk -F'=' '{print $1}')
     if [[ $UNINSTALL = true ]]; then
       find "$fonts_dir" -name "'*${font_name}*'" -delete
       continue
@@ -542,11 +598,12 @@ ubuntu_install_fonts(){
 }
 
 macos_install_fonts(){
-  for font_name in "${!fonts[@]}"; do
+  for font_entry in "${fonts[@]}"; do
+    font_pkg_name=$(echo "$font_entry" | awk -F'=' '{print $2}')
     if [[ $UNINSTALL = true ]]; then
-      brew uninstall --cask "font-${fonts[$font_name]}-nerd-font"
+      brew uninstall --cask "font-${font_pkg_name}-nerd-font"
     else
-      brew install --cask "font-${fonts[$font_name]}-nerd-font"
+      brew install --cask "font-${font_pkg_name}-nerd-font"
     fi
   done
 }
@@ -570,19 +627,18 @@ install_fonts(){
 }
 
 ubuntu_setup(){
-  printf "This script will install bunch of packages and tools that I use on my system\n\n"
-  printf "Going to install nala package manager, it is a front end to apt-get. \nIt has a better signal to noise ratio than using plain apt/apt-get\n\n"
-  if  ! ask "Do you want to continue?"; then
-    exit 1
+  printf "'nala' package manager like apt, it is a front end to apt-get.\nIt has a better signal/noise ratio than using plain apt/apt-get\n\n"
+  eval "sudo $apt update"
+  if  ask "Do you want to install nala?"; then
+    pretty_exec "sudo $apt install nala"
+    apt="nala"
   fi
-  pretty_exec "sudo apt-get -qqy update"
-  pretty_exec "sudo apt-get -qqy install nala"
 
-  printf "\n\nInstalling the following important packages:\n\tcoreutils, gcc, curl, wget, build-essential\n"
-  if ! ask "Do you want to continue."; then
+  printf "\n\nThe following packages are required to continue:\n\tcoreutils, gcc, curl, wget, build-essential\n"
+  if ! ask "Do you want to and continue ?"; then
     exit 1
   fi
-  pretty_exec "sudo nala install coreutils gcc curl wget build-essential"
+  pretty_exec "sudo $apt install coreutils gcc curl wget build-essential"
   install_regolith
   install_brew_pkgs
   ubuntu_purge_snap
@@ -609,17 +665,26 @@ sym_link(){
       if [[ -L "$HOME"/.config/$pkg_config ]]; then
         rm -rf "$HOME"/.config/$pkg_config
       else
-        mv "$HOME"/.config/$pkg_config "$HOME"/.config/$pkg_config.bak
+        mv "$HOME/.config/$pkg_config" "$HOME/.config/${pkg_config}.bak"
       fi
     fi
-    ln -s "$DOTFILES"/$pkg_config "$HOME"/.config/$pkg_config
+    ln -s "$DOTFILES/$pkg_config" "$HOME/.config/$pkg_config"
   done
+  # check if rg and fzf are installed
+  if command -v rg &> /dev/null && command -v fzf &> /dev/null; then
+    rm -f "$HOME/nutter-tools/bin/irg"
+    chmod +x "$DOTFILES/kutti-scripts/irg"
+    ln -s "$DOTFILES/kutti-scripts/irg" "$HOME/nutter-tools/bin/"
+  fi
 }
 
 setup() {
+  printf "This script will install bunch of packages and tools that I use on my system\n\n"
   ensure_zsh
-  rm -f "$HOME"/.autozshrc
-  printf "# THIS FILE HAS BEEN AUTO GENERATED. DO NOT EDIT MANUALLY\n\n" >> "$HOME/.autozshrc"
+  if [[ -f "$HOME/.autozshrc" ]]; then
+    printf "Backing up existing .autozshrc to .autozshrc.bak\n"
+    mv "$HOME/.autozshrc" "$HOME/.autozshrc.bak"
+  fi
   if [ ! -d "$HOME/nutter-tools" ]; then
     mkdir -p "$HOME"/nutter-tools/bin
     post_install_config nutter-tools
@@ -646,8 +711,8 @@ unsetup() {
 
 ubuntu_bootstrap(){
   printf "installing git and zsh\n"
-  pretty_exec "sudo apt-get -qqy update"
-  pretty_exec "sudo apt-get -qqy install zsh git"
+  pretty_exec "sudo $apt update"
+  pretty_exec "sudo $apt install zsh git"
   if [[ $SHELL != *"zsh"* ]]; then
     sudo chsh -s "$(which zsh)"
   fi
@@ -659,16 +724,36 @@ macos_bootstrap(){
 }
 
 bootstrap(){
-  printf "This script will setup the system with my dotfiles and install the necessary packages and tools\n\n"
+  DOTFILES="$HOME"/dev/config
+  EXPORT_FILE="$DOTFILES/.env"
+  EVAL_FILE="$DOTFILES/.eval"
+  ALIAS_FILE="$DOTFILES/.aliase"
+  SOURCE_FILE="$DOTFILES/.source"
+  PROFILE_FILE="$DOTFILES/.profile"
+  RC_FILE="$DOTFILES/.rc"
+
   if [[ $1 = "fonts" ]]; then
     install_fonts
     exit 0
   fi
+  if [[ $1 = "bare" ]]; then
+    case $os in
+      linux)
+        if [[ $UNINSTALL = true ]]; then
+          minimal_unsetup_linux;
+        else
+          minimal_setup_linux;
+        fi;;
+      darwin) printf "Bare setup not supported on MacOS\n" ;;
+    esac
+    exit 0
+  fi
+
   if [[ $UNINSTALL = true ]]; then
     unsetup
     exit 0
   fi
-  DOTFILES="$HOME"/dev/config
+
   if [[ -d "$DOTFILES" ]]; then
     printf "Looks like, config repo already cloned to %s/dev/config. Continuing with setup\n\n" "$HOME"
     setup
@@ -689,35 +774,61 @@ bootstrap(){
   setup
 }
 
-ARGS=$(getopt -o yhu --long yes,help,uninstall -- "$@")
-eval set -- "$ARGS"
-while true; do
-  case "$1" in
+help(){
+  printf "Usage: setup.sh [-y|--yes] [-h|--help] [-u|--uninstall]\n"
+  printf "Options:\n"
+  printf "\t-y, --yes\n\t\t Automatic yes to prompts; assume 'yes' as answer to all prompts and run non-interactively\n"
+  printf "\t-h, --help\n\t\t Display this help message and exit\n"
+  printf "\t-u, --uninstall\n\t\t Uninstall all the packages and tools installed by this script\n"
+}
+
+for arg in "$@"; do
+  case $arg in
     -y|--yes)
+      printf "Setting YES to true\n"
       YES=true
       shift
       ;;
     -h|--help)
-      printf "Usage: setup.sh [-y|--yes] [-h|--help] [-u|--uninstall]\n"
-      printf "Options:\n"
-      printf "\t-y, --yes\n\t\t Automatic yes to prompts; assume 'yes' as answer to all prompts and run non-interactively\n"
-      printf "\t-h, --help\n\t\t Display this help message and exit\n"
-      printf "\t-u, --uninstall\n\t\t Uninstall all the packages and tools installed by this script\n"
+      help
+      shift
       exit 0
       ;;
     -u|--uninstall)
+      printf "Setting UNINSTALL to true\n"
       UNINSTALL=true
-      exit 0
-      ;;
-    --)
       shift
+      ;;
+    --*|-*)
+      printf "Unknown option: %s\n" "$arg"
+      help
+      exit 1
+      ;;
+    *)
       break
       ;;
   esac
 done
 
-bootstrap "$@"
+valid_commands=("fonts" "bare")
+if [[ $# -gt 1 ]]; then
+  printf "Invalid number of commands/args\n"
+  help
+  exit 1
+fi
 
-# setup
-# uninstall_regolith
-# uninstall_brew_pkgs
+if [[ $# -eq 0 ]]; then
+  bootstrap
+  exit 0
+fi
+
+for cmd in "${valid_commands[@]}"; do
+  if [[ $1 == "$cmd" ]]; then
+    bootstrap "$@"
+    exit 0
+  fi
+done
+
+printf "Invalid command: %s\n" "$1"
+help
+exit 1

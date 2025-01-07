@@ -1,3 +1,4 @@
+[general]
 import = [
   "~/.config/alacritty/themes/gruvbox-dark-hard.toml"
 ]
@@ -6,19 +7,18 @@ import = [
 TERM = "alacritty"
 WINIT_X11_SCALE_FACTOR = "1"
 
-[shell]
-program = "/bin/zsh"
+[terminal]
+  [terminal.shell]
+  program = "/bin/zsh"
 
 
 [window]
 option_as_alt = "Both"
 opacity = 0.95
-decorations = "none"
+# decorations = "none" # uncomment to the close, minimize and maximize bar
 
 [font]
 size = 10.5
 
   [font.normal]
-  # family = "FiraCode Nerd Font"
   family = "JetBrainsMono Nerd Font"
-  # style = "Medium"
