@@ -1,11 +1,17 @@
 -- if true then return {} end
 
-return{
+return {
   -- {'wincent/base16-nvim', lazy = false, config = function() vim.cmd.colorscheme('base16-gruvbox-dark-hard') end},
   -- Both grubers have issues, with gitgutter color, and inlay hint colors :(
   -- {'thimc/gruber-darker.nvim', lazy= false, config = function() require('gruber-darker').setup({ transparent = true }) vim.cmd.colorscheme('gruber-darker') end },
   -- {'blazkowolf/gruber-darker.nvim', lazy= false, config = function() vim.cmd.colorscheme('gruber-darker') end },
-  { "ellisonleao/gruvbox.nvim", priority = 1000 , config = function()vim.cmd.colorscheme('gruvbox') end},
+  {
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme("gruvbox")
+    end,
+  },
   -- {
   --   'Shatur/neovim-ayu',
   --   lazy = false,
@@ -20,24 +26,24 @@ return{
   -- },
 
   {
-    'itchyny/lightline.vim',
+    "itchyny/lightline.vim",
     lazy = false,
     config = function()
       vim.g.lightline = {
         active = {
           left = {
-            { 'mode', 'paste' },
-            { 'gitbranch', 'readonly', 'filename', 'modified' }
+            { "mode", "paste" },
+            { "gitbranch", "readonly", "filename", "modified" },
           },
           right = {
-            { 'lineinfo' },
-            { 'percent' },
-            { 'fileencoding', 'filetype' }
+            { "lineinfo" },
+            { "percent" },
+            { "fileencoding", "filetype" },
           },
         },
         component_function = {
-          gitbranch= 'FugitiveHead',
-          filename = 'v:lua.LightlineFilename'
+          gitbranch = "FugitiveHead",
+          filename = "v:lua.LightlineFilename",
         },
       }
       function LightlineFilename(opts)
@@ -48,13 +54,15 @@ return{
         end
         return vim.fn.expand("%")
       end
-    end
+    end,
   },
 
   {
-    "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {},
-    dependencies = { 'hiphish/rainbow-delimiters.nvim'},
-    config= function()
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = {},
+    dependencies = { "hiphish/rainbow-delimiters.nvim" },
+    config = function()
       local highlight = {
         "RainbowDelimiterYellow",
         "RainbowDelimiterGreen",
@@ -64,32 +72,32 @@ return{
         "RainbowDelimiterCyan",
         "RainbowDelimiterRed",
       }
-      local hooks = require "ibl.hooks"
+      local hooks = require("ibl.hooks")
       -- create the highlight groups in the highlight setup hook, so they are reset
       -- every time the colorscheme changes
       hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-          vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#E5C07B" })
-          vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#61AFEF" })
-          vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = "#D19A66" })
-          vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#98C379" })
-          vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#C678DD" })
-          vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#56B6C2" })
-          vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#E06C75" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#E5C07B" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#61AFEF" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = "#D19A66" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#98C379" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#C678DD" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#56B6C2" })
+        vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#E06C75" })
       end)
 
       vim.g.rainbow_delimiters = { highlight = highlight }
-      require("ibl").setup { scope = { highlight = highlight } }
+      require("ibl").setup({ scope = { highlight = highlight } })
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
-      end
+    end,
   },
 
   {
-    'nvim-treesitter/nvim-treesitter',
+    "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     config = function()
-      require'nvim-treesitter.configs'.setup {
+      require("nvim-treesitter.configs").setup({
         -- A list of parser names, or "all" (the five listed parsers should always be installed)
-        ensure_installed = {"go", "typescript", "javascript", "rust", "vim", "vimdoc" },
+        ensure_installed = { "go", "typescript", "javascript", "rust", "vim", "vimdoc" },
         -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
 
@@ -118,7 +126,7 @@ return{
             local max_filesize = 100 * 1024 -- 100 KB
             local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then
-                return true
+              return true
             end
           end,
           -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
@@ -127,8 +135,7 @@ return{
           -- Instead of true it can also be a list of languages
           additional_vim_regex_highlighting = false,
         },
-      }
-    end
-  }
-
+      })
+    end,
+  },
 }

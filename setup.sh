@@ -13,16 +13,20 @@ PROFILE_FILE="$DOTFILES/.profile"
 RC_FILE="$DOTFILES/.rc"
 BREW_PREFIX="/opt/homebrew/bin"
 apt="apt-get -qqy"
+install="install"
 
 ask(){
   if [[ $YES = true ]]; then
     return 0
   fi
-  read -r -p "$1 [Y/n] " response
+  read -r -p "$1 [Y/n/q] " response
   if [[ $response =~ ^[nN]$ ]]; then
     return 1
   elif [[ $response =~ ^[yY]$ ]] || [[ -z $response ]]; then
     return 0
+  elif [[ $response =~ ^[qQ]$ ]]; then
+    printf "Exiting...\n"
+    exit 0
   else
     printf "Invalid response. Please enter y or n\n"
     ask "$1"
@@ -160,13 +164,14 @@ install_rust() {
     if ask "Do you want to install rust"; then
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
       post_install_config rust
+      printf "\n\n"
       return 0
     else
-      echo "You chose not to install rust"
+      printf "You chose not to install rust\n\n"
       return 1
     fi
   fi
-  echo "Rust already installed"
+  printf "Rust already installed\n\n"
   return 0
 }
 
@@ -179,9 +184,10 @@ install_golang() {
       sudo tar -C /usr/local -xzf "$HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz"
       rm "$HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz"
       post_install_config golang
+      printf "\n\n"
     fi
   else
-    echo "golang already installed"
+    printf "golang already installed\n\n"
   fi
 }
 
@@ -193,7 +199,7 @@ ensure_zsh() {
     if ask "Do you want to change default shell to zsh"; then
       if ! command -v zsh &> /dev/null; then
           if ask "Do you want to install zsh"; then
-            sudo "$apt" install zsh
+            sudo "$apt $install" zsh
             printf "Tried installing zsh."
           fi
       fi
@@ -234,7 +240,7 @@ install_alacritty(){
       return 1
     fi
   else
-    echo "Alacritty is already installed"
+    printf "Alacritty is already installed\n"
     return 0
   fi
 
@@ -260,8 +266,8 @@ install_alacritty(){
     printf "Alacritty installed successfully\n"
     return 0
   fi
-  printf "Installing alacritty dependencies\n."
-  eval "sudo $apt install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 gzip scdoc"
+  printf "\nInstalling alacritty dependencies\n."
+  eval "sudo $apt $install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 gzip scdoc"
   errno=$?
   check_last_cmd $errno 1
   if ! ask "Installed dependencies. Continue with installation?"; then
@@ -291,7 +297,7 @@ install_alacritty(){
   scdoc < extra/man/alacritty.5.scd | gzip -c | sudo tee /usr/local/share/man/man5/alacritty.5.gz > /dev/null
   scdoc < extra/man/alacritty-bindings.5.scd | gzip -c | sudo tee /usr/local/share/man/man5/alacritty-bindings.5.gz > /dev/null
   cp extra/completions/_alacritty ~/.zsh/zfunc
-  printf "Alacritty installed successfully\n"
+  printf "Alacritty installed successfully\n\n\n"
   cd "$DOTFILES" || exit
   return 1
 }
@@ -338,25 +344,25 @@ configure_zsh() {
     cat "$RC_FILE"
     printf "\n";
     cat "$SOURCE_FILE";
-    printf"\n"
+    printf "\n"
     echo "abbr import-aliases --quiet"
   } > "$HOME/.autozshrc"
   grep -q "brew shellenv" "$HOME/.zshenv" || (
     # shellcheck disable=SC2016
-    echo "Did not find brew shellenv in .zshenv, adding it)" &&
+    echo "Did not find brew shellenv in .zshenv, adding it" &&
     printf 'eval "$(%s/brew shellenv)"\n' "$BREW_PREFIX" >> "$HOME/.zshenv"
   )
+  rm -f "$EXPORT_FILE" "$ALIAS_FILE" "$EVAL_FILE" "$SOURCE_FILE" "$RC_FILE" "$PROFILE_FILE"
+  grep -q ".autozshrc" "$HOME/.zshrc" ||
+    echo "Did not find .autozshrc in .zshrc, adding it)" &&
+    echo ". $HOME/.autozshrc" >> "$HOME/.zshrc"
+
   if [[ $TAT = true ]]; then
     # add this to first line of .zshrc
     printf "# Ensure that sourcing tat is the first line in .zshrc\n . %s/.tat/tat.sh\n" "$HOME" |
       cat - "$HOME/.zshrc" > /tmp/zshrc && mv /tmp/zshrc "$HOME/.zshrc"
   fi
   echo "To recompile zsh-completions run: 'rm -f ~/.zcompdump; compinit'"
-  rm -f "$EXPORT_FILE" "$ALIAS_FILE" "$EVAL_FILE" "$SOURCE_FILE" "$RC_FILE" "$PROFILE_FILE"
-  grep -q ".autozshrc" "$HOME/.zshrc" || (
-    echo "Did not find .autozshrc in .zshrc, adding it)" &&
-    echo ". $HOME/.autozshrc" >> "$HOME/.zshrc"
-  )
 }
 
 common_setup(){
@@ -371,7 +377,7 @@ common_setup(){
 
 minimal_setup_linux(){
   sudo "$apt" update
-  sudo "$apt" install coreutils gcc vim curl zsh ripgrep fzf
+  sudo "$apt $install" coreutils gcc vim curl zsh ripgrep fzf
   if [ ! -d "$HOME/nutter-tools" ]; then
     mkdir -p "$HOME/nutter-tools/bin"
     post_install_config nutter-tools
@@ -423,7 +429,7 @@ install_regolith(){
       ;;
   esac
   pretty_exec "sudo $apt update"
-  pretty_exec "sudo $apt install regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default"
+  pretty_exec "sudo $apt $install regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default"
 
   printf "Deleting \n\tkeyring: %s\n\tapt source file: %s\n" "$keyring" "$apt_source_file"
   rm -f $keyring
@@ -642,15 +648,18 @@ ubuntu_setup(){
   printf "'nala' package manager like apt, it is a front end to apt-get.\nIt has a better signal/noise ratio than using plain apt/apt-get\n\n"
   eval "sudo $apt update"
   if  ask "Do you want to install nala?"; then
-    pretty_exec "sudo $apt install nala"
+    pretty_exec "sudo $apt $install nala"
     apt="nala"
+    if [[ $YES = true ]]; then
+      install="install --assume-yes"
+    fi
   fi
 
   printf "\n\nThe following packages are required to continue:\n\tcoreutils, gcc, curl, wget, build-essential\n"
   if ! ask "Do you want to and continue ?"; then
     exit 1
   fi
-  pretty_exec "sudo $apt install coreutils gcc curl wget build-essential"
+  pretty_exec "sudo $apt $install coreutils gcc curl wget build-essential"
   install_regolith
   install_brew_pkgs
   ubuntu_purge_snap
@@ -726,7 +735,7 @@ unsetup() {
 ubuntu_bootstrap(){
   printf "installing git and zsh\n"
   pretty_exec "sudo $apt update"
-  pretty_exec "sudo $apt install zsh git"
+  pretty_exec "sudo $apt $install zsh git"
   if [[ $SHELL != *"zsh"* ]]; then
     sudo chsh -s "$(which zsh)"
   fi

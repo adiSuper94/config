@@ -13,7 +13,7 @@ WINIT_X11_SCALE_FACTOR = "1"
 
 
 [window]
-option_as_alt = "Both"
+option_as_alt = "OnlyLeft"
 opacity = 0.95
 # decorations = "none" # uncomment to the close, minimize and maximize bar
 

@@ -1,23 +1,23 @@
 return {
   "rcarriga/nvim-dap-ui",
-  enabled = false,
-  dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
+  keys = { "<leader>bb", "<leader>bc" },
+  dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
   config = function()
     local dap, dapui = require("dap"), require("dapui")
     dap.adapters.lldb = {
-      type = 'executable',
-      command = '/usr/bin/lldb-vscode-17', -- adjust as needed, must be absolute path
-      name = 'lldb'
+      type = "executable",
+      command = "/usr/bin/lldb-vscode-17", -- adjust as needed, must be absolute path
+      name = "lldb",
     }
     dap.configurations.cpp = {
       {
-        name = 'Launch',
-        type = 'lldb',
-        request = 'launch',
+        name = "Launch",
+        type = "lldb",
+        request = "launch",
         program = function()
-          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
         end,
-        cwd = '${workspaceFolder}',
+        cwd = "${workspaceFolder}",
         stopOnEntry = false,
         args = {},
 
@@ -39,12 +39,12 @@ return {
     dap.configurations.rust = dap.configurations.cpp
 
     dap.adapters.delve = {
-      type = 'server',
-      port = '${port}',
+      type = "server",
+      port = "${port}",
       executable = {
-        command = 'dlv',
-        args = {'dap', '-l', '127.0.0.1:${port}'},
-      }
+        command = "dlv",
+        args = { "dap", "-l", "127.0.0.1:${port}" },
+      },
     }
 
     -- https://github.com/go-delve/delve/blob/master/Documentation/usage/dlv_dap.md
@@ -53,14 +53,14 @@ return {
         type = "delve",
         name = "Debug",
         request = "launch",
-        program = "${file}"
+        program = "${file}",
       },
       {
         type = "delve",
         name = "Debug test", -- configuration for debugging test files
         request = "launch",
         mode = "test",
-        program = "${file}"
+        program = "${file}",
       },
       -- works with go.mod packages and sub packages
       {
@@ -68,8 +68,8 @@ return {
         name = "Debug test (go.mod)",
         request = "launch",
         mode = "test",
-        program = "./${relativeFileDirname}"
-      }
+        program = "./${relativeFileDirname}",
+      },
     }
 
     dapui.setup()
@@ -85,16 +85,35 @@ return {
 
     -- Debug shortcuts
 
-    vim.keymap.set('n', '<leader>br', function() dap.restart() end)
-    vim.keymap.set('n', '<leader>bc', function() dap.continue() end)
-    vim.keymap.set('n', '<leader>bp', function() dap.pause() end)
-    vim.keymap.set('n', '<leader>bb', function() dap.toggle_breakpoint() end)
-    vim.keymap.set('n', '<A-j>', function() dap.step_over() end)
-    vim.keymap.set('n', '∆', function() dap.step_over() end) -- option + j
-    vim.keymap.set('n', '<A-l>', function() dap.step_into() end)
-    vim.keymap.set('n', '¬', function() dap.step_into() end) -- option + l
-    vim.keymap.set('n', '<A-h>', function() dap.step_out() end)
-    vim.keymap.set('n', '˙', function() dap.step_out() end) -- option + h
-
+    vim.keymap.set("n", "<leader>br", function()
+      dap.restart()
+    end, { desc = "DAP: Restart" })
+    vim.keymap.set("n", "<leader>bc", function()
+      dap.continue()
+    end, { desc = "DAP: Continue" })
+    vim.keymap.set("n", "<leader>bp", function()
+      dap.pause()
+    end, { desc = "DAP: Pause" })
+    vim.keymap.set("n", "<leader>bb", function()
+      dap.toggle_breakpoint()
+    end, { desc = "DAP: Toggle Breakpoint" })
+    vim.keymap.set("n", "<A-j>", function()
+      dap.step_over()
+    end, { desc = "DAP: Step Over" })
+    vim.keymap.set("n", "∆", function()
+      dap.step_over()
+    end, { desc = "DAP: Step Over(Mac)" }) -- option + j
+    vim.keymap.set("n", "<A-l>", function()
+      dap.step_into()
+    end, { desc = "DAP: Step Into" })
+    vim.keymap.set("n", "¬", function()
+      dap.step_into()
+    end, { desc = "DAP: Step Into(Mac)" }) -- option + l
+    vim.keymap.set("n", "<A-h>", function()
+      dap.step_out()
+    end, { desc = "DAP: Step Out" })
+    vim.keymap.set("n", "˙", function()
+      dap.step_out()
+    end, { desc = "DAP: Step Out(Mac)" }) -- option + h
   end,
 }
