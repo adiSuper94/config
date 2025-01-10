@@ -101,4 +101,5 @@ else
   vim.cmd([[ highlight LspInlayHint guifg=#40443d ]]) -- grubber-darker has confusing colors for inlay hints
 end
 
+
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion

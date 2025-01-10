@@ -39,4 +39,4 @@ tat() {
       switch_session
   fi
 }
-. <(fzf --zsh) && tat
+. <(~/go/bin/fzf --zsh) && tat

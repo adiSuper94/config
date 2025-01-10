@@ -1,0 +1,130 @@
+#!/bin/bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+. "$SCRIPT_DIR/utils.sh"
+
+install_go_pkgs(){
+  echo "Installing go packages..."
+  while read -r line; do
+    echo "Installing go package: $line"
+    go install "$line"
+  done < "$SCRIPT_DIR/pkgs/go/pkgs"
+}
+
+help(){
+  printf "Usage: bob (command)\n"
+  printf "\nCommands:\n"
+  printf "\tinstall\n\t\t Install specified package.\n\n"
+  printf "\tbuild\n\t\t Alias for install. Because bob the builder.\n\n"
+  printf "\tuninstall\n\t\t Uninstall specified package.\n\n"
+  printf "\tremove\n\t\t Alias for uninstall.\n\n"
+}
+
+build_all(){
+  if ask "Are you sure you want to build all?"; then
+    "${SCRIPT_DIR}/rust.sh" build
+    "${SCRIPT_DIR}/go.sh" build
+    "${SCRIPT_DIR}/alacritty.sh" build
+    "${SCRIPT_DIR}/fonts.sh" build
+    "${SCRIPT_DIR}/regolith.sh" build
+    "${SCRIPT_DIR}/i3.sh" build
+    "${SCRIPT_DIR}/bat-extras.sh" build
+    "${SCRIPT_DIR}/neovim.sh" build
+    PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
+    . "$HOME/.cargo/env"
+    install_rust_pkgs
+    install_go_pkgs
+  else
+    printf "Not building all\n"
+  fi
+}
+
+cmd=""
+case $1 in
+  "thebuilder")
+    printf "Bob the builder, can we build it?\n"
+    build_all
+    printf "Bob the builder, yes we can!\n"
+    exit 0
+    ;;
+  "build"|"install")
+    cmd="install"
+    ;;
+  "remove"|"uninstall")
+    cmd="uninstall"
+    ;;
+  "help"|"--help"|"-h")
+    help
+    exit 0
+    ;;
+  "")
+    echo "Bob needs a command, try bob --help"
+    exit 1
+    ;;
+  *)
+    printf "Unknown command: %s\n" "$1"
+    help
+    exit 1
+    ;;
+esac
+
+arg=$2
+case $arg in
+  "go"|"rust"|"alacritty"|"fonts"|"regolith"|"i3")
+    if ask "Are you sure you want to $cmd $arg?"; then
+      "${SCRIPT_DIR}/${arg}.sh" "$cmd"
+    else
+      printf "Not %sing %s\n" "$cmd" "$arg"
+    fi
+    exit 0
+    ;;
+  "pkgs"|"gopkgs")
+    if [[ $cmd = "uninstall" ]]; then
+      printf "Bob can't uninstall these packages for you\n"
+      exit 1
+    fi
+    ;;
+  "neovim")
+    nvim_version=$3
+    if [[ $nvim_version != "nightly" ]]; then
+      nvim_version="stable"
+    fi
+    if ask "Are you sure you want to neovim?"; then
+      "${SCRIPT_DIR}/neovim.sh" "$cmd" "$nvim_version"
+    else
+      printf "Not %sing neovim\n" "$cmd"
+    fi
+    exit 0
+    ;;
+  "")
+    printf "Bob needs a package to %s\n" "$cmd"
+    exit 1
+    ;;
+  *)
+    printf "Unknown package: %s\n" "$2"
+    exit 1
+    ;;
+esac
+
+if [[ $cmd = "install" ]]; then
+case $2 in
+  "gopkgs")
+    if ask "Are you sure you want to go packages?"; then
+      install_go_pkgs
+    else
+      printf "Not installing go packages\n"
+    fi
+    ;;
+  "pkgs")
+    if ask "Are you sure you want to install all packages?"; then
+      install_pkg
+    else
+      printf "Not installing all packages\n"
+    fi
+    ;;
+  *)
+    printf "Unknown package: %s\n" "$2"
+    exit 1
+    ;;
+esac
+fi
