@@ -1,0 +1,27 @@
+#!/bin/bash
+
+kbd_file="/tmp/regolith-keybindings.txt"
+printf "" > "$kbd_file"
+if [[ $# -eq 0 ]]; then
+  sources=(
+      "/usr/share/regolith/common/config.d"
+      "/usr/share/regolith/i3/config.d"
+      "$HOME/.config/regolith3/common-wm/config.d"
+      "$HOME/.config/regolith3/i3/config.d"
+    )
+else
+  sources=("$@")
+fi
+
+## Look through all args and check if they are dir or file
+for arg in "${sources[@]}"; do
+  if [[ -d "$arg" || -f "$arg" ]]; then
+    rg  "^[ ]*## .* // .* // .* ##" -o --no-line-number --no-filename "$arg" |
+      sed 's/#//g' |
+      sed 's/^[ \t]*//'|
+      awk  -F//\   '{printf "%-25s %-9s %s\n", $3, $1, $2}' >> "$kbd_file"
+  else
+    echo "Not a valid file or directory: $arg"
+  fi
+done
+exit 0

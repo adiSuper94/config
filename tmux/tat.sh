@@ -28,7 +28,7 @@ switch_session() {
   # for first session use defaut name "noname"
   if [ -z "$(tmux list-sessions 2>/dev/null)" ]; then
     selected_session="noname"
-    exec tmux -v new-session -As "$selected_session"
+    tmux new-session -As "$selected_session"
   else
     switch_or_create_session
   fi

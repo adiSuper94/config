@@ -101,6 +101,7 @@ post_install_config(){
     # shellcheck disable=SC2016
     echo 'eval "$(batpipe)"' >> "$EVAL_FILE"
     echo 'alias man=batman' >> "$ALIAS_FILE"
+    echo 'alias cat=bat' >> "$ALIAS_FILE"
   elif [[ $1 == "autojump" ]];then
       # shellcheck disable=SC2016
       echo '[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh' >> "$RC_FILE"
@@ -431,6 +432,10 @@ install_regolith(){
   pretty_exec "sudo $apt update"
   pretty_exec "sudo $apt $install regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default"
 
+  sudo rm -f "/usr/share/regolith/i3/config.d/60_config_keybindings"
+  sudo rm -f "/usr/share/regolith/common/config.d/30_navigation"
+  sudo rm -f "/usr/share/regolith/common/config.d/40_workspace-config"
+
   printf "Deleting \n\tkeyring: %s\n\tapt source file: %s\n" "$keyring" "$apt_source_file"
   rm -f $keyring
   rm -f $apt_source_file
@@ -662,6 +667,8 @@ ubuntu_setup(){
   pretty_exec "sudo $apt $install coreutils gcc curl wget build-essential"
   install_regolith
   install_brew_pkgs
+  brew remove ripgrep # brew packages are available only in the shell
+  eval "sudo $apt $install ripgrep rofi"
   ubuntu_purge_snap
 }
 
@@ -693,9 +700,10 @@ sym_link(){
   done
   # check if rg and fzf are installed
   if command -v rg &> /dev/null && command -v fzf &> /dev/null; then
-    rm -f "$HOME/nutter-tools/bin/irg"
-    chmod +x "$DOTFILES/kutti-scripts/irg"
+    rm -f "$HOME/nutter-tools/bin/irg" 2> /dev/null
+    rm -f "$HOME/nutter-tools/bin/kbd" 2> /dev/null
     ln -s "$DOTFILES/kutti-scripts/irg" "$HOME/nutter-tools/bin/"
+    ln -s "$DOTFILES/kutti-scripts/kbd" "$HOME/nutter-tools/bin/"
   fi
 }
 

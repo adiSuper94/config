@@ -1,0 +1,14 @@
+#!/bin/bash
+
+kbd_file="/tmp/regolith-keybindings.txt"
+kbd_file_size=$(du "$kbd_file" 2>/dev/null | awk '{print $1}')
+if [[ ! -f $kbd_file || $kbd_file_size -eq 0 ]]; then
+  bash ~/dev/config/kutti-scripts/grep-kbd
+fi
+
+if [[ $1 == "--rofi" ]]; then
+  exec rofi -dmenu -i -p "Regolith Keybindings" -matching fuzzy < $kbd_file
+fi
+
+exec fzf < $kbd_file
+echo "This should not be printed"
