@@ -1,3 +1,15 @@
+local tree = "oil" --- "oil" | "nvim-tree" | "raw-dog"
+if tree == "raw-dog" then
+  -- Set up NetRW
+  vim.g.netrw_banner = 0
+  vim.g.netrw_browse_split = 4
+  vim.g.netrw_winsize = 20
+  -- vim.g.netrw_liststyle = 3
+  vim.g.netrw_keepdir = 0
+  vim.keymap.set("n", "<leader>t", "<CMD>Lex<CR>", { desc = "Toggle Netrw" })
+  return {}
+end
+
 -- Please see https://github.com/nvim-tree/nvim-tree.lua/wiki/Migrating-To-on_attach for assistance in migrating.
 local function on_attach(bufnr)
   local api = require("nvim-tree.api")
@@ -10,11 +22,10 @@ local function on_attach(bufnr)
   vim.keymap.set("n", "l", api.node.open.edit, { desc = "Open" })
 end
 
-local use_oil = true
 return {
   {
     "kyazdani42/nvim-tree.lua",
-    enabled = not use_oil,
+    enabled = tree == "nvim-tree",
     dependencies = { "kyazdani42/nvim-web-devicons" },
     config = function()
       vim.g.loaded_netrw = 1
@@ -30,7 +41,7 @@ return {
 
   {
     "stevearc/oil.nvim",
-    enabled = use_oil,
+    enabled = tree == "oil",
     config = function()
       require("oil").setup({})
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })

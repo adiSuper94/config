@@ -2,7 +2,21 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    dependencies = { { "williamboman/mason.nvim", config = true }, { "j-hui/fidget.nvim", opts = {} } },
+    dependencies = {
+      { "j-hui/fidget.nvim", opts = {} },
+      {
+        "williamboman/mason.nvim",
+        opts = {
+          ui = {
+            icons = {
+              package_installed = "✓",
+              package_pending = "➜",
+              package_uninstalled = "✗",
+            },
+          },
+        },
+      },
+    },
     config = function()
       local nvim_lsp = require("lspconfig")
       -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization
@@ -36,7 +50,7 @@ return {
           map("gr", vim.lsp.buf.references, "[G]oto [r]eferences")
           map("K", vim.lsp.buf.hover, "Show hover")
           map("gi", vim.lsp.buf.implementation, "[G]oto [i]mplementation")
-          map("<C-s>", vim.lsp.buf.signature_help, "Show signature help")
+          map("gs", vim.lsp.buf.signature_help, "Show signature help")
           map("<space>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
           map("<space>wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder")
           map("<space>wl", function()
@@ -104,7 +118,7 @@ return {
       -- local capabilities = vim.lsp.protocol.make_client_capabilities()
       -- capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
       -- capabilities.textDocument.completion.completionItem.snippetSupport = false
-      local servers = { "jsonls", "clangd", "pyright", "rust_analyzer", "gopls", "ts_ls", "bashls" }
+      local servers = { "jsonls", "clangd", "pyright", "rust_analyzer", "gopls", "ts_ls", "bashls", "lua_ls" }
       for _, lsp in pairs(servers) do
         nvim_lsp[lsp].setup({
           -- capabilities = capabilities,

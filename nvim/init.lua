@@ -31,12 +31,6 @@ vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣" }
 vim.opt.splitbelow = true -- open new split windows below the current window
 vim.opt.splitright = true -- open new split windows to the right of the current wind
 
--- Set up NetRW
-vim.g.netrw_banner = 0
-vim.g.netrw_browse_split = 4
-vim.g.netrw_winsize = 20
--- vim.g.netrw_liststyle = 3
-vim.g.netrw_keepdir = 0
 
 vim.api.nvim_set_keymap("i", "<C-k>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
 vim.g.copilot_no_tab_map = true
@@ -112,3 +106,4 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
 vim.cmd([[ highlight Normal guibg=NONE ctermbg=NONE ]])
+vim.cmd([[ highlight @comment guifg=#afafaf ]]) --comments are important AFAFAF

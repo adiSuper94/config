@@ -47,10 +47,20 @@ return {
         },
       }
       function LightlineFilename(opts)
-        local git_root = vim.b.git_dir and vim.fn.fnamemodify(vim.b.git_dir, ":h") or nil
+        local git_root = vim.b.git_dir
+        if not git_root then
+          return vim.fn.expand("%")
+        end
+        local branch = ""
+        if vim.fn.fnamemodify(vim.b.git_dir, ":t") == ".git" then
+          git_root = vim.fn.fnamemodify(vim.b.git_dir, ":h")
+        else
+          git_root = vim.fn.fnamemodify(vim.b.git_dir, ":h:h")
+          branch = vim.fn.FugitiveHead() .. "/"
+        end
         local path = vim.fn.expand("%:p")
         if git_root and path:sub(1, #git_root) == git_root then
-          return path:sub(#git_root + 2) -- Remove the Git root and leading slash
+          return path:sub(#git_root + #branch + 2) -- Remove the Git root and leading slash
         end
         return vim.fn.expand("%")
       end
@@ -101,10 +111,10 @@ return {
         -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
 
-        auto_install = false,
+        auto_install = true,
 
         -- List of parsers to ignore installing (or "all")
-        -- ignore_install = { "javascript" },
+        ignore_install = { "markdown", "gitignore", "markdown_inline" },
         ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
         -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
 

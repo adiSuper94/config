@@ -1,27 +1,6 @@
 -- if true then return {} end
-keymap_opts = { noremap = true, silent = true }
 return {
-  {
-    "airblade/vim-rooter",
-    lazy = false,
-    config = function()
-      vim.g.rooter_patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn" } --, 'Makefile', 'package.json'
-    end,
-  },
-
-  {
-    "airblade/vim-gitgutter",
-    config = function()
-      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePre" }, { command = "GitGutter" })
-    end,
-  },
-
-  {
-    'tpope/vim-fugitive',
-    cmd = {'G'}
-  },
-
-  'github/copilot.vim',
+  "github/copilot.vim",
   -- {'preservim/vim-markdown' , ft = {'markdown'}},
   -- {'godlygeek/tabular', ft = {'markdown'}},
 
@@ -56,36 +35,22 @@ return {
     },
   },
 
-  -- {
-  --   'junegunn/fzf.vim',
-  --   dependencies = {'junegunn/fzf'},
-  --   config = function()
-  --     vim.keymap.set('n', '<C-p>', '<cmd>GitFiles <CR>', keymap_opts)
-  --     vim.keymap.set('n', '<leader>g/', '<cmd>Rg <CR>', keymap_opts)
-  --     vim.keymap.set('n', '<leader>/', '<cmd>BLines <CR>', keymap_opts)
-  --     vim.keymap.set('n', '<leader>\'', '<cmd>Marks <CR>', keymap_opts)
-  --   end
-  -- },
-
-  -- {
-  --   'adiSuper94/hallebarde.vim', branch='extra-bits',
-  --   config = function()
-  --     vim.keymap.set('n', '<leader>hr', '<cmd>HallebardeRemove <CR>', keymap_opts) -- remove marked file
-  --     vim.keymap.set('n', '<leader>ha', '<cmd>HallebardeAdd <CR>', keymap_opts) -- add marked file
-  --     vim.keymap.set('n', '<leader><leader>', '<cmd>Hallebarde <CR>', keymap_opts) -- open marked files
-  --     vim.keymap.set('n', '<up>', '<cmd>HallebardeNext <CR>', keymap_opts) -- next marked file
-  --     vim.keymap.set('n', '<down>', '<cmd>HallebardePrevious <CR>', keymap_opts) -- previous marked file
-  --     vim.keymap.set('n', '<leader>t', '<cmd>LexLuthor <CR>', keymap_opts)
-  --   end
-  -- },
-
-  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.8",
-    dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope-fzf-native.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+      "nvim-telescope/telescope-ui-select.nvim",
+    },
     config = function()
-      require("telescope").setup({})
+      require("telescope").setup({
+        extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_ivy(),
+          },
+        },
+      })
       local utils = require("telescope.utils")
       local builtin = require("telescope.builtin")
       local project_files = function()
@@ -97,11 +62,16 @@ return {
         end
       end
       vim.keymap.set("n", "<C-p>", project_files, { desc = "Project Files" })
-      vim.keymap.set("n", "<leader>/", builtin.current_buffer_fuzzy_find, { desc = "Search in buffer" })
-      vim.keymap.set("n", "<leader>g/", builtin.live_grep, { desc = "Live Grep" })
-      vim.keymap.set("n", "<leader>tt", builtin.builtin, { desc = "Telescope" })
+      vim.keymap.set("n", "<A-f>", builtin.current_buffer_fuzzy_find, { desc = "Search in buffer" })
       vim.keymap.set("n", "<leader>'", builtin.marks, { desc = "Marks" })
+
+      vim.keymap.set("n", "<leader>tj", builtin.builtin, { desc = "Telescope builtins" })
+      vim.keymap.set("n", "<leader>af", builtin.find_files, { desc = "Telescope find files" })
+      vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "Telescope live grep" })
+      vim.keymap.set("n", "<leader>ht", builtin.help_tags, { desc = "Telescope help tags" })
+
       require("telescope").load_extension("fzf")
+      require("telescope").load_extension("ui-select")
     end,
   },
 
@@ -141,5 +111,20 @@ return {
       })
       vim.opt.foldlevelstart = 99
     end,
+  },
+
+  {
+    "m4xshen/hardtime.nvim",
+    dependencies = { "MunifTanjim/nui.nvim" },
+    opts = {
+      disable_mouse = false,
+      disabled_keys = {
+        ["<Up>"] = { "i" },
+        ["<Down>"] = { "i" },
+        ["<Left>"] = { "i" },
+        ["<Right>"] = { "i" },
+      },
+      disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil", "pr" , "help"},
+    },
   },
 }

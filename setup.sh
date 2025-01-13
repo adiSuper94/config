@@ -99,9 +99,12 @@ post_install_config(){
     } >> "$RC_FILE"
   elif [[ $1 == "batman" ]];then
     # shellcheck disable=SC2016
-    echo 'eval "$(batpipe)"' >> "$EVAL_FILE"
-    echo 'alias man=batman' >> "$ALIAS_FILE"
-    echo 'alias cat=bat' >> "$ALIAS_FILE"
+    echo 'eval "$(batpipe)"' >> "$EVAL_FILE";
+    {
+      echo 'alias man=batman';
+      echo 'alias cat=bat';
+      echo 'alias diff=batdiff';
+    } >> "$ALIAS_FILE"
   elif [[ $1 == "autojump" ]];then
       # shellcheck disable=SC2016
       echo '[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh' >> "$RC_FILE"
@@ -346,7 +349,7 @@ configure_zsh() {
     printf "\n";
     cat "$SOURCE_FILE";
     printf "\n"
-    echo "abbr import-aliases --quiet"
+    echo "# abbr import-aliases --quiet ## Run this command once"
   } > "$HOME/.autozshrc"
   grep -q "brew shellenv" "$HOME/.zshenv" || (
     # shellcheck disable=SC2016
