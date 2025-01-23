@@ -1,7 +1,7 @@
 -- if true then return {} end
 
 return {
-  -- {'wincent/base16-nvim', lazy = false, config = function() vim.cmd.colorscheme('base16-gruvbox-dark-hard') end},
+  -- {'wincent/base16-nvim', lazy = false, config = function() vim.cmd.colorscheme('gruvbox-dark-hard') end},
   -- Both grubers have issues, with gitgutter color, and inlay hint colors :(
   -- {'thimc/gruber-darker.nvim', lazy= false, config = function() require('gruber-darker').setup({ transparent = true }) vim.cmd.colorscheme('gruber-darker') end },
   -- {'blazkowolf/gruber-darker.nvim', lazy= false, config = function() vim.cmd.colorscheme('gruber-darker') end },
@@ -101,6 +101,7 @@ return {
     end,
   },
 
+  { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = "nvim-treesitter/nvim-treesitter" },
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -117,7 +118,6 @@ return {
         ignore_install = { "markdown", "gitignore", "markdown_inline" },
         ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
         -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
         highlight = {
           enable = true,
           -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
@@ -127,7 +127,7 @@ return {
           -- disable = { "rust" },
           -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
           disable = function(lang, buf)
-            highlight_disable_languages = { "rust", "bash" }
+            local highlight_disable_languages = { "rust", "bash" }
             for _, hd_lang in ipairs(highlight_disable_languages) do
               if hd_lang == lang then
                 return true

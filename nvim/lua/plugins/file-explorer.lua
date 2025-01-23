@@ -1,12 +1,18 @@
-local tree = "oil" --- "oil" | "nvim-tree" | "raw-dog"
-if tree == "raw-dog" then
+local explorer = "raw-dog" --- "oil" | "nvim-tree" | "raw-dog"
+if explorer == "raw-dog" then
   -- Set up NetRW
   vim.g.netrw_banner = 0
-  vim.g.netrw_browse_split = 4
-  vim.g.netrw_winsize = 20
-  -- vim.g.netrw_liststyle = 3
-  vim.g.netrw_keepdir = 0
-  vim.keymap.set("n", "<leader>t", "<CMD>Lex<CR>", { desc = "Toggle Netrw" })
+  vim.g.netrw_liststyle = 3
+  vim.keymap.set("n", "-", "<CMD>Explore<CR>", { desc = "raw-dog: Toggle Netrw" })
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "netrw",
+    callback = function()
+      vim.api.nvim_buf_set_keymap(0, "n", "<up>", "<nop>", { desc = "Up arrow disabled" })
+      vim.api.nvim_buf_set_keymap(0, "n", "<down>", "<nop>", { desc = "Down arrow disabled" })
+      vim.api.nvim_buf_set_keymap(0, "n", "<left>", "<nop>", { desc = "Up arrow disabled" })
+      vim.api.nvim_buf_set_keymap(0, "n", "<right>", "<nop>", { desc = "Down arrow disabled" })
+    end,
+  })
   return {}
 end
 
@@ -25,7 +31,7 @@ end
 return {
   {
     "kyazdani42/nvim-tree.lua",
-    enabled = tree == "nvim-tree",
+    enabled = explorer == "nvim-tree",
     dependencies = { "kyazdani42/nvim-web-devicons" },
     config = function()
       vim.g.loaded_netrw = 1
@@ -41,7 +47,7 @@ return {
 
   {
     "stevearc/oil.nvim",
-    enabled = tree == "oil",
+    enabled = explorer == "oil",
     config = function()
       require("oil").setup({})
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })

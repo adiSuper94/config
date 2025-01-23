@@ -32,10 +32,37 @@ vim.opt.splitbelow = true -- open new split windows below the current window
 vim.opt.splitright = true -- open new split windows to the right of the current wind
 
 
-vim.api.nvim_set_keymap("i", "<C-k>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-vim.g.copilot_no_tab_map = true
-vim.g.copilot_assume_mapped = true
-vim.g.copilot_tab_fallback = ""
+vim.keymap.set("n", "<leader>l", "<cmd>set list! <CR>", { desc = "Toggle blank line chars" })
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
+vim.keymap.set("n", "<right>", "<cmd>bn<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<left>", "<cmd>bp<CR>", { desc = "Previous buffer" })
+vim.keymap.set("n", "<A-x>", "<cmd>bd <CR>", { desc = "Close buffer and window" })
+vim.keymap.set("n", "<leader>x", "<cmd>bp | bd # <CR>", { desc = "Close Buffer" })
+vim.keymap.set("n", "<A-w>", "<cmd>w <CR>", { desc = "Save buffer" })
+vim.keymap.set("n", "<C-n>", "<cmd>tabnew <CR>", { desc = "New tab" })
+vim.keymap.set("n", "<leader>,", "<cmd>wincmd < <CR>", { desc = "Move to left window" })
+vim.keymap.set("n", "<leader>.", "<cmd>wincmd > <CR>", { desc = "Increase window width" })
+vim.keymap.set("n", "<leader>z", "<cmd>wincmd | | wincmd _<CR>", { desc = "Maximize current window" })
+vim.keymap.set("n", "<leader>=", "<cmd>wincmd = <CR>", { desc = "Equalize window size" })
+vim.keymap.set("n", "≈", "<cmd>bd <CR>", { desc = "Close buffer and window (Mac)" })
+vim.keymap.set("n", "∑", "<cmd>w <CR>", { desc = "Save buffer (Mac)" })
+
+-- disable arrow keys in insert mode
+vim.keymap.set("i", "<up>", "<nop>", { desc = "Up arrow disabled" })
+vim.keymap.set("i", "<down>", "<nop>", { desc = "Down arrow disabled" })
+
+vim.api.nvim_create_autocmd("VimResized", { command = "wincmd =" })
+vim.api.nvim_create_autocmd("TextYankPost", {
+  callback = function()
+    vim.highlight.on_yank({ timeout = 500 })
+  end,
+})
+
+-- Remove trailing whitespace
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = [[%s/\s\+$//e]],
+})
 
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -62,46 +89,12 @@ require("lazy").setup({
         "gzip",
         "rplugin",
         "tarPlugin",
-        "netrwPlugin",
+        -- "netrwPlugin",
         "zipPlugin",
         "tutor",
       },
     },
   },
-})
-
-vim.keymap.set("n", "<leader>l", "<cmd>set list! <CR>", { desc = "Toggle blank line chars" })
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
-vim.keymap.set("n", "<leader>c", "<cmd>e ~/.config/nvim/init.lua<CR>", { desc = "Open nvim init.lua" })
-vim.keymap.set("n", "<right>", "<cmd>bn<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<left>", "<cmd>bp<CR>", { desc = "Previous buffer" })
-vim.keymap.set("n", "<A-x>", "<cmd>bd <CR>", { desc = "Close buffer and window" })
-vim.keymap.set("n", "<C-x>", "<cmd>bp | bd # <CR>", { desc = "Close Buffer" })
-vim.keymap.set("n", "<A-w>", "<cmd>w <CR>", { desc = "Save buffer" })
-vim.keymap.set("n", "<C-n>", "<cmd>tabnew <CR>", { desc = "New tab" })
-vim.keymap.set("n", "<Tab>", "<cmd>tabNext <CR>", { desc = "Next tab" })
-vim.keymap.set("n", "<leader>,", "<cmd>wincmd < <CR>", { desc = "Move to left window" })
-vim.keymap.set("n", "<leader>.", "<cmd>wincmd > <CR>", { desc = "Increase window width" })
-vim.keymap.set("n", "<leader>z", "<cmd>wincmd | | wincmd _<CR>", { desc = "Maximize current window" })
-vim.keymap.set("n", "<leader>=", "<cmd>wincmd = <CR>", { desc = "Equalize window size" })
-vim.keymap.set("n", "≈", "<cmd>bd <CR>", { desc = "Close buffer and window (Mac)" })
-vim.keymap.set("n", "∑", "<cmd>w <CR>", { desc = "Save buffer (Mac)" })
-
--- disable arrow keys in insert mode
-vim.keymap.set("i", "<up>", "<nop>", { desc = "Up arrow disabled" })
-vim.keymap.set("i", "<down>", "<nop>", { desc = "Down arrow disabled" })
-
-vim.api.nvim_create_autocmd("VimResized", { command = "wincmd =" })
-vim.api.nvim_create_autocmd("TextYankPost", {
-  callback = function()
-    vim.highlight.on_yank({ timeout = 500 })
-  end,
-})
-
--- Remove trailing whitespace
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*" },
-  command = [[%s/\s\+$//e]],
 })
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion

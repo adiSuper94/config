@@ -1,9 +1,10 @@
 -- if true then return {} end
 return {
+  { "j-hui/fidget.nvim", opts = {}, ft = { "rust" } },
+
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-      { "j-hui/fidget.nvim", opts = {} },
       {
         "williamboman/mason.nvim",
         opts = {
@@ -38,7 +39,8 @@ return {
           client.server_capabilities.semanticTokensProvider = nil
           -- Buffer local mappings.
           -- See `:help vim.lsp.*` for documentation on any of the below functions
-          if not client.name == "ts_ls" then
+          local enabled_inaly_hints_lang = { "rust_analyzer", "gopls" }
+          if vim.tbl_contains(enabled_inaly_hints_lang, client.name) then
             vim.lsp.inlay_hint.enable(true)
           end
           local map = function(keys, func, desc, mode)
@@ -149,54 +151,6 @@ return {
     },
   },
 
-  {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    dependencies = { "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-path" },
-    config = function()
-      local cmp = require("cmp")
-      cmp.setup({
-        -- Enable LSP snippets
-        -- snippet = {
-        --   expand = function(args)
-        --       vim.fn["vsnip#anonymous"](args.body)
-        --   end,
-        -- },
-
-        -- Set completeopt to have a better completion experience
-        -- :help completeopt│
-        -- menuone: popup even when there's only one match
-        -- noinsert: Do not insert text until a selection is made
-        -- noselect: Do not select, force user to select one from the menu
-        completion = {
-          completeopt = "menu,menuone,noinsert,noselect",
-        },
-        mapping = {
-          ["<C-p>"] = cmp.mapping.select_prev_item(),
-          ["<C-n>"] = cmp.mapping.select_next_item(),
-          ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-          ["<Tab>"] = cmp.mapping.select_next_item(),
-          ["<C-u>"] = cmp.mapping.scroll_docs(-4),
-          ["<C-d>"] = cmp.mapping.scroll_docs(4),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<C-e>"] = cmp.mapping.close(),
-          ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Insert,
-            select = true,
-          }),
-        },
-
-        -- Installed sources
-        sources = {
-          { name = "nvim_lsp" },
-          -- { name = 'vsnip' },
-          { name = "path" },
-          -- { name = 'buffer' },
-          -- { name = 'vim-dadbod-completion' }
-        },
-      })
-    end,
-  },
   -- have to wait for https://github.com/neovim/neovim/issues/28261 to be resolved
   {
     "lvimuser/lsp-inlayhints.nvim",
@@ -222,7 +176,6 @@ return {
 
   {
     "kristijanhusak/vim-dadbod-ui",
-    lazy = "VeryLazy",
     dependencies = {
       { "tpope/vim-dadbod", lazy = true },
       { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
