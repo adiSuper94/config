@@ -1,8 +1,18 @@
-local searcher = "telescope" --- "telescope" | "raw-dog"
+local searcher = "raw-dog" --- "telescope" | "raw-dog"
 if searcher == "raw-dog" then
   vim.opt.path:append("**") -- search in subdirectories
   vim.opt.grepprg = "rg --vimgrep --smart-case"
-  vim.keymap.set("n", "<C-p>", ":find *", { desc = "raw-dog: Project Files" })
+  vim.opt.wildignore:append("**/node_modules/**")
+
+  vim.keymap.set("n", "<C-p>", function()
+    local input = vim.fn.input("Find file: ")
+    -- add star after every character
+    input = input:gsub(".", "%1*")
+    if input ~= "" then
+      vim.api.nvim_feedkeys(":find " .. input.. "\t", "t", false)
+    end
+  end, { desc = "raw-dog: Project Files" })
+
   vim.keymap.set("n", "<leader>/", function()
     local pattern = vim.fn.input("rg: ")
     if pattern ~= "" then

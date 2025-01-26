@@ -67,9 +67,12 @@ return {
     end,
   },
 
+  { "hiphish/rainbow-delimiters.nvim" },
+
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
+    enabled = false,
     opts = {},
     dependencies = { "hiphish/rainbow-delimiters.nvim" },
     config = function()
@@ -101,7 +104,7 @@ return {
     end,
   },
 
-  { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = "nvim-treesitter/nvim-treesitter" },
+  { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = "nvim-treesitter/nvim-treesitter" }, -- not really used for colors, but this is here cuz treesitter is here.
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
@@ -144,6 +147,33 @@ return {
           -- Using this option may slow down your editor, and you may see some duplicate highlights.
           -- Instead of true it can also be a list of languages
           additional_vim_regex_highlighting = false,
+        },
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              ["af"] = "@call.outer",
+              ["if"] = "@call.inner",
+              ["aF"] = "@function.outer",
+              ["iF"] = "@function.inner",
+              ["aa"] = "@parameter.outer",
+              ["ia"] = "@parameter.inner",
+              ["al"] = "@loop.outer",
+              ["il"] = "@loop.inner",
+              ["ad"] = "@conditional.outer",
+              ["id"] = "@conditional.inner",
+            },
+          },
+          swap = {
+            enable = true,
+            swap_next = {
+              ["<leader>a"] = "@parameter.inner",
+            },
+            swap_previous = {
+              ["<leader>A"] = "@parameter.inner",
+            },
+          },
         },
       })
     end,

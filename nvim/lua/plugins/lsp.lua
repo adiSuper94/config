@@ -1,6 +1,6 @@
 -- if true then return {} end
 return {
-  { "j-hui/fidget.nvim", opts = {}, ft = { "rust" } },
+  -- { "j-hui/fidget.nvim", opts = {}, ft = { "rust" } }, -- disabling this if in favour of mini.notify. But still keeping this around in case I change my mind
 
   {
     "neovim/nvim-lspconfig",

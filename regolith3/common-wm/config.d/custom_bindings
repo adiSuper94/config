@@ -1,0 +1,8 @@
+## Screenshot // Entire Screen // <Alt> 4 ##
+bindsym Mod1+4 exec --no-startup-id maim -s | xclip -selection clipboard -t image/png
+## Screenshot // Selected Region // <Alt> <Shift> 4 ##
+bindsym Mod1+Shift+4 exec --no-startup-id maim --select "/home/$USER/Pictures/Screenshots/$(date)"
+## CopyQ // Toggle // <Alt> v ##
+bindsym Mod1+v exec copyq toggle
+## Navigate // Move workspace to next window // <> x ##
+bindsym $mod+x move workspace to output next

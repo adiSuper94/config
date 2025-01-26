@@ -169,12 +169,10 @@ assign [class="Slack"] $ws9
 assign [class="discord"] $ws9
 assign [class="Spotify"] $ws10
 
-bindsym $mod+x move workspace to output next
 exec "redshift -l 29.6172:-82.3877 -t 6500:3500 &"
 exec "rclone mount --vfs-cache-mode minimal dropbox: ~/Documents/dropbox/ &"
 # exec "redshift -l 217.3916:78.4830 -t 6500:3500 &"
-# bindsym $mod+z fullscreen toggle
-# bindsym $mod+v exec copyq toggle
+
 # Start the systemd target manually is the session is not started by systemd
 # Notify systemd about successful session start otherwise
 exec --no-startup-id "copyq &"

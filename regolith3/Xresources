@@ -19,4 +19,4 @@ wm.program.launcher.cmd: rofi -show run
 wm.program.launcher.window: rofi -show window
 wm.program.file_search: rofi -show filebrowser
 wm.program.help: ~/nutter-tools/bin/kbd --rofi
-regolith.look.path: /usr/share/regolith-look/gruvbox
+regolith.look.path: /usr/share/regolith-look/i3-default
