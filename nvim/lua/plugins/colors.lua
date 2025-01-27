@@ -5,6 +5,7 @@ return {
   -- Both grubers have issues, with gitgutter color, and inlay hint colors :(
   -- {'thimc/gruber-darker.nvim', lazy= false, config = function() require('gruber-darker').setup({ transparent = true }) vim.cmd.colorscheme('gruber-darker') end },
   -- {'blazkowolf/gruber-darker.nvim', lazy= false, config = function() vim.cmd.colorscheme('gruber-darker') end },
+
   {
     "ellisonleao/gruvbox.nvim",
     priority = 1000,
@@ -12,6 +13,7 @@ return {
       vim.cmd.colorscheme("gruvbox")
     end,
   },
+
   -- {
   --   'Shatur/neovim-ayu',
   --   lazy = false,
@@ -24,6 +26,16 @@ return {
   --     vim.cmd.colorscheme('ayu-dark')
   --   end
   -- },
+
+  {
+    "catgoose/nvim-colorizer.lua",
+    ft = { "css", "sass", "rasi" },
+    config = function()
+      require("colorizer").setup({
+        filetypes = { "css", "sass", "rasi" },
+      })
+    end,
+  },
 
   {
     "itchyny/lightline.vim",
@@ -72,7 +84,7 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
-    enabled = false,
+    enabled = false, -- colored brackets are useful, but scope line seems unnecessary right now.
     opts = {},
     dependencies = { "hiphish/rainbow-delimiters.nvim" },
     config = function()

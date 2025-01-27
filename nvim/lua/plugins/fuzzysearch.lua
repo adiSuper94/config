@@ -1,26 +1,11 @@
-local searcher = "raw-dog" --- "telescope" | "raw-dog"
+
+local searcher = "telescope" --- "telescope" | "raw-dog"
 if searcher == "raw-dog" then
   vim.opt.path:append("**") -- search in subdirectories
-  vim.opt.grepprg = "rg --vimgrep --smart-case"
   vim.opt.wildignore:append("**/node_modules/**")
-
-  vim.keymap.set("n", "<C-p>", function()
-    local input = vim.fn.input("Find file: ")
-    -- add star after every character
-    input = input:gsub(".", "%1*")
-    if input ~= "" then
-      vim.api.nvim_feedkeys(":find " .. input.. "\t", "t", false)
-    end
-  end, { desc = "raw-dog: Project Files" })
-
-  vim.keymap.set("n", "<leader>/", function()
-    local pattern = vim.fn.input("rg: ")
-    if pattern ~= "" then
-      vim.cmd("silent grep! " .. pattern)
-      vim.cmd("copen")
-    end
-  end, { desc = "raw-dog: Live grep" })
-  return {}
+  vim.opt.wildignore:append("**/build/**")
+  vim.opt.wildignore:append("**/target/**")
+  vim.keymap.set("n", "<C-p>", ":find *", { desc = "raw-dog: Project Files" }) -- This is better than start between every char, but its still kinda slow
 end
 
 return {
@@ -70,13 +55,11 @@ return {
         end
       end
       vim.keymap.set("n", "<C-p>", project_files, { desc = "Project Files" })
-      vim.keymap.set("n", "<A-f>", builtin.current_buffer_fuzzy_find, { desc = "Search in buffer" })
-      vim.keymap.set("n", "<leader>'", builtin.marks, { desc = "Marks" })
 
       vim.keymap.set("n", "<leader>tj", builtin.builtin, { desc = "Telescope builtins" })
-      vim.keymap.set("n", "<leader>af", builtin.find_files, { desc = "Telescope find files" })
-      vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "Telescope live grep" })
-      vim.keymap.set("n", "<leader>ht", builtin.help_tags, { desc = "Telescope help tags" })
+      vim.keymap.set("n", "<leader>tf", builtin.find_files, { desc = "Telescope find files" })
+      vim.keymap.set("n", "<leader>t/", builtin.live_grep, { desc = "Telescope live grep" })
+      vim.keymap.set("n", "<leader>th", builtin.help_tags, { desc = "Telescope help tags" })
       vim.keymap.set("n", "<leader>c", function()
         builtin.git_files({ cwd = "~/.config/nvim/" })
       end, { desc = "Open nvim init.lua" })

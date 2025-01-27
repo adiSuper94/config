@@ -1,3 +1,4 @@
+// Shamelessly copied form Eric Murphy, https://www.youtube.com/watch?v=TutfIwxSE_s
 configuration {
   display-drun: "Applications:";
   display-window: "Windows:";
@@ -10,8 +11,29 @@ configuration {
 @theme "/dev/null"
 
 * {
-  bg: #11121D;
-  bg-alt: #444b6a;
+
+  darcula-ish-bg: #11121D;
+  darcula-ish-bg-alt: #444b6a;
+
+  //color codes from https://github.com/ubuntu/yaru/blob/efe91fc9a211b4077ed38a508afafd5c4203f807/common/accent-colors.scss.in
+  yaru-orange-accent: #E95420;
+  yaru-bark-accent: #787859;
+  yaru-sage-accent: #657B69;
+  yaru-olive-accent: #4B8501;
+  yaru-viridian-accent: #03875B;
+  yaur-prussiangreen-accent: #308280;
+  yaru-blue-accent: #0073E5;
+  yaru-purple-accent: #7764D8;
+  yaru-magenta-accent: #B34CB3;
+  yaru-red-accent: #DA3450;
+  yaru-yellow-accent: #C88800;
+  yaru-wartybrown-accent: #B39169;
+
+  selected-bg: #070707;
+  base:#131313;
+
+  bg: @base;
+  bg-alt: @yaru-olive-accent;
 
   fg: #FFFFFF;
   fg-alt: #787c99;
@@ -34,6 +56,7 @@ element {
 }
 
 element selected {
+  background-color: @selected-bg;
   text-color: @fg;
 }
 

@@ -74,7 +74,14 @@ return {
       vim.api.nvim_set_hl(0, "GitSignsAdd", { fg = get_color("GitSignsAdd", "fg"), bg = color })
       vim.api.nvim_set_hl(0, "GitSignsChange", { fg = get_color("GitSignsChange", "fg"), bg = color })
       vim.api.nvim_set_hl(0, "GitSignsDelete", { fg = get_color("GitSignsDelete", "fg"), bg = color })
-      vim.api.nvim_set_hl(0, "GitSignsChangeDelete", { fg = get_color("GitSignsChangeDelete", "fg"), bg = color })
+      vim.api.nvim_set_hl(0, "GitSignsTopdelete", { fg = get_color("GitSignsTopdelete", "fg"), bg = color })
+      vim.api.nvim_set_hl(0, "GitSignsChangedelete", { fg = get_color("GitSignsChangedelete", "fg"), bg = color })
+      vim.api.nvim_set_hl(0, "GitSignsUntracked", { fg = get_color("GitSignsUntracked", "fg"), bg = color })
+      vim.api.nvim_set_hl(0, "GitSignsStagedAdd", { fg = get_color("GitSignsStagedAdd", "fg"), bg = color })
+      vim.api.nvim_set_hl(0, "GitSignsStagedChange", { fg = get_color("GitSignsStagedChange", "fg"), bg = color })
+      vim.api.nvim_set_hl(0, "GitSignsStagedDelete", { fg = get_color("GitSignsStagedDelete", "fg"), bg = color })
+      vim.api.nvim_set_hl(0, "GitSignsStagedTopdelete", { fg = get_color("GitSignsStagedTopdelete", "fg"), bg = color })
+      vim.api.nvim_set_hl(0, "GitSignsStagedChangedelete", { fg = get_color("GitSignsStagedChangedelete", "fg"), bg = color })
     end,
   },
 

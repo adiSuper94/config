@@ -32,10 +32,8 @@ return {
     end,
   },
 
-  {
-    "stevearc/dressing.nvim",
-    opts = {},
-  },
+  { "stevearc/dressing.nvim", enabled = false, opts = {} }, -- I'll use this if I remove find a telescope less workflow
+
   {
     "folke/which-key.nvim",
     event = "VeryLazy",

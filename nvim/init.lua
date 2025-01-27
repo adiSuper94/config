@@ -64,6 +64,15 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   command = [[%s/\s\+$//e]],
 })
 
+vim.opt.grepprg = "rg --vimgrep --smart-case"
+vim.keymap.set("n", "<leader>/", function()
+  local pattern = vim.fn.input("rg: ")
+  if pattern ~= "" then
+    vim.cmd("silent grep! " .. pattern)
+    vim.cmd("copen")
+  end
+end, { desc = "raw-dog: Live grep" })
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
