@@ -1,6 +1,6 @@
 [general]
 import = [
-  "~/.config/alacritty/themes/gruvbox-dark-hard.toml"
+  "~/.config/alacritty/themes/gruber-darker.toml"
 ]
 
 [env]

@@ -29,7 +29,7 @@ configuration {
   yaru-yellow-accent: #C88800;
   yaru-wartybrown-accent: #B39169;
 
-  selected-bg: #070707;
+  selected-bg: #111111;
   base:#131313;
 
   bg: @base;

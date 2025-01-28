@@ -31,7 +31,6 @@ vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣" }
 vim.opt.splitbelow = true -- open new split windows below the current window
 vim.opt.splitright = true -- open new split windows to the right of the current wind
 
-
 vim.keymap.set("n", "<leader>l", "<cmd>set list! <CR>", { desc = "Toggle blank line chars" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 vim.keymap.set("n", "<right>", "<cmd>bn<CR>", { desc = "Next buffer" })
@@ -105,7 +104,8 @@ require("lazy").setup({
     },
   },
 })
+if vim.g.colors_name ~= "gruber-darker" then -- gruber-darker has a nice brown color for comments
+  vim.cmd([[ highlight @comment guifg=#afafaf ]]) --comments are important AFAFAF
+end
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
-vim.cmd([[ highlight Normal guibg=NONE ctermbg=NONE ]])
-vim.cmd([[ highlight @comment guifg=#afafaf ]]) --comments are important AFAFAF

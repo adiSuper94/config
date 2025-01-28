@@ -1,24 +1,24 @@
 [colors]
   [colors.primary]
-  background = '#181818'
-  foreground = '#e4e4ef'
+  background = "#181818"
+  foreground = "#E4E4E4"
 
   [colors.normal]
-  black =   '#000000'
-  red =     '#f43841'
-  green =   '#73c936'
-  yellow =  '#ffdd33'
-  blue =    '#5f627f'
-  magenta = '#9e95c7'
-  cyan =    '#5f627f'
-  white =   '#ffffff'
+  black   = "#181818"
+  red     = "#F43841"
+  green   = "#73D936"
+  yellow  = "#FFDD33"
+  blue    = "#96A6C8"
+  magenta = "#9E95C7"
+  cyan    = "#95A99F"
+  white   = "#E4E4E4"
 
   [colors.bright]
-  black =   '#282828'
-  red =     '#ff4f58'
-  green =   '#73c936'
-  yellow =  '#ffdd33'
-  blue =    '#96a6c8'
-  magenta = '#9e95c7'
-  cyan =    '#96a6c8'
-  white =   '#ffffff'
+  black   = "#52494E"
+  red     = "#FF4F58"
+  green   = "#73D936"
+  yellow  = "#FFDD33"
+  blue    = "#96A6C8"
+  magenta = "#AFAFD7"
+  cyan    = "#95A99F"
+  white   = "#F5F5F5"

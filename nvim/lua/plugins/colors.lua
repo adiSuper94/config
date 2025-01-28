@@ -1,38 +1,68 @@
 -- if true then return {} end
 
 return {
-  -- {'wincent/base16-nvim', lazy = false, config = function() vim.cmd.colorscheme('gruvbox-dark-hard') end},
-  -- Both grubers have issues, with gitgutter color, and inlay hint colors :(
-  -- {'thimc/gruber-darker.nvim', lazy= false, config = function() require('gruber-darker').setup({ transparent = true }) vim.cmd.colorscheme('gruber-darker') end },
-  -- {'blazkowolf/gruber-darker.nvim', lazy= false, config = function() vim.cmd.colorscheme('gruber-darker') end },
-
   {
-    "ellisonleao/gruvbox.nvim",
+    "thimc/gruber-darker.nvim",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme("gruvbox")
+      require("gruber-darker").setup({ transparent = true })
+      vim.cmd.colorscheme("gruber-darker")
     end,
   },
 
-  -- {
-  --   'Shatur/neovim-ayu',
-  --   lazy = false,
+  --  {
+  --   "ellisonleao/gruvbox.nvim",
+  --   priority = 1000,
   --   config = function()
-  --     require('ayu').setup({
-  --       overrides = {
-  --         -- Normal = { bg = "None" }
-  --       }
+  --     require("gruvbox").setup({
+  --       transparent_mode = true,
   --     })
-  --     vim.cmd.colorscheme('ayu-dark')
-  --   end
+  --     vim.cmd.colorscheme("gruvbox")
+  --   end,
+  -- },
+
+  -- {
+  --   "Shatur/neovim-ayu",
+  --   priority = 1000,
+  --   config = function()
+  --     require("ayu").setup({
+  --       overrides = {
+  --         Normal = { bg = "None" }
+  --       },
+  --     })
+  --     vim.cmd.colorscheme("ayu-dark")
+  --   end,
+  -- },
+
+  -- {
+  --   "folke/tokyonight.nvim",
+  --   priority = 1000,
+  --   opts = {},
+  --   config = function()
+  --     require("tokyonight").setup({
+  --       transparent = true,
+  --     })
+  --     vim.cmd.colorscheme("tokyonight")
+  --   end,
+  -- },
+
+  -- {
+  --   "RRethy/base16-nvim",
+  --   priority = 1000,
+  --   config = function()
+  --     require("base16-colorscheme").with_config({
+  --       telescope_borders = true,
+  --     })
+  --     vim.cmd.colorscheme("base16-gruvbox-dark-hard")
+  --   end,
   -- },
 
   {
     "catgoose/nvim-colorizer.lua",
-    ft = { "css", "sass", "rasi" },
+    ft = { "css", "sass", "rasi", "toml" },
     config = function()
       require("colorizer").setup({
-        filetypes = { "css", "sass", "rasi" },
+        filetypes = { "css", "sass", "rasi", "toml" },
       })
     end,
   },
