@@ -1,4 +1,4 @@
-local searcher = "raw-dog" --- "telescope" | "raw-dog"
+local searcher = "telescope" --- "telescope" | "raw-dog"
 if searcher == "raw-dog" then
   vim.opt.grepprg = "rg --vimgrep --smart-case"
   vim.keymap.set("n", "<leader>/", function()
@@ -21,7 +21,7 @@ if searcher == "raw-dog" then
       vim.fn.feedkeys(":find " .. pattern .. "\t", "t")
     end
   end
-  vim.keymap.set("n", "<C-p>", find_files, { desc = "raw-dog: Project Files" })
+  vim.keymap.set("n", "<C-p>", find_files, { desc = "raw-dog: Project Files" }) -- Still very slow in mac
 end
 
 return {
@@ -74,7 +74,7 @@ return {
 
       vim.keymap.set("n", "<leader>tj", builtin.builtin, { desc = "Telescope builtins" })
       vim.keymap.set("n", "<leader>tf", builtin.find_files, { desc = "Telescope find files" })
-      vim.keymap.set("n", "<leader>t/", builtin.live_grep, { desc = "Telescope live grep" })
+      vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "Telescope live grep" })
       vim.keymap.set("n", "<leader>th", builtin.help_tags, { desc = "Telescope help tags" })
       vim.keymap.set("n", "<leader>c", function()
         builtin.git_files({ cwd = "~/.config/nvim/" })

@@ -70,7 +70,6 @@ else
           -- noinsert: Do not insert text until a selection is made
           -- noselect: Do not select, force user to select one from the menu
           completion = {
-            autocomplete = false,
             completeopt = "menu,menuone,noinsert,noselect",
           },
           mapping = cmp.mapping.preset.insert({

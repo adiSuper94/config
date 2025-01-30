@@ -97,6 +97,8 @@ require("lazy").setup({
 })
 if vim.g.colors_name ~= "gruber-darker" then -- gruber-darker has a nice brown color for comments
   vim.cmd([[ highlight @comment guifg=#afafaf ]]) --comments are important AFAFAF
+else
+  vim.cmd([[ highlight LspInlayHint guifg=#40443d ]]) -- grubber-darker has consfusing colors for inlay hints
 end
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
