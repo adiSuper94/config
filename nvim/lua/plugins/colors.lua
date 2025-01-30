@@ -201,6 +201,8 @@ return {
               ["iF"] = "@function.inner",
               ["aa"] = "@parameter.outer",
               ["ia"] = "@parameter.inner",
+              ["ic"] = "@class.inner",
+              ["ac"] = "@class.outer",
               ["al"] = "@loop.outer",
               ["il"] = "@loop.inner",
               ["ad"] = "@conditional.outer",

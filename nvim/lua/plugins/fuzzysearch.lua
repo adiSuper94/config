@@ -1,11 +1,27 @@
-
-local searcher = "telescope" --- "telescope" | "raw-dog"
+local searcher = "raw-dog" --- "telescope" | "raw-dog"
 if searcher == "raw-dog" then
+  vim.opt.grepprg = "rg --vimgrep --smart-case"
+  vim.keymap.set("n", "<leader>/", function()
+    local pattern = vim.fn.input("rg: ")
+    if pattern ~= "" then
+      vim.cmd("silent grep! " .. pattern)
+      vim.cmd("copen")
+    end
+  end, { desc = "raw-dog: Live grep" })
+
   vim.opt.path:append("**") -- search in subdirectories
-  vim.opt.wildignore:append("**/node_modules/**")
-  vim.opt.wildignore:append("**/build/**")
-  vim.opt.wildignore:append("**/target/**")
-  vim.keymap.set("n", "<C-p>", ":find *", { desc = "raw-dog: Project Files" }) -- This is better than start between every char, but its still kinda slow
+  vim.opt.wildignore:append("*/node_modules/**")
+  vim.opt.wildignore:append("*/build/**")
+  vim.opt.wildignore:append("*/target/**")
+  vim.opt.wildignore:append("*/.git/**")
+  local find_files = function()
+    local pattern = vim.fn.input("Find: ")
+    pattern = pattern:gsub(".", "%1*")
+    if pattern ~= "" then
+      vim.fn.feedkeys(":find " .. pattern .. "\t", "t")
+    end
+  end
+  vim.keymap.set("n", "<C-p>", find_files, { desc = "raw-dog: Project Files" })
 end
 
 return {
