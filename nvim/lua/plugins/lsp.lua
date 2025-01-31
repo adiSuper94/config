@@ -39,10 +39,7 @@ return {
           client.server_capabilities.semanticTokensProvider = nil
           -- Buffer local mappings.
           -- See `:help vim.lsp.*` for documentation on any of the below functions
-          local enabled_inaly_hints_lang = { "rust_analyzer", "gopls" }
-          if vim.tbl_contains(enabled_inaly_hints_lang, client.name) then
-            vim.lsp.inlay_hint.enable(true)
-          end
+          vim.lsp.inlay_hint.enable(true)
           local map = function(keys, func, desc, mode)
             mode = mode or "n"
             vim.keymap.set(mode, keys, func, { buffer = ev.buf, desc = "LSP: " .. desc })
@@ -153,25 +150,9 @@ return {
 
   -- have to wait for https://github.com/neovim/neovim/issues/28261 to be resolved
   {
-    "lvimuser/lsp-inlayhints.nvim",
-    dependencies = { "neovim/nvim-lspconfig" },
-    ft = { "javascript" },
-    config = function()
-      require("lsp-inlayhints").setup()
-      vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-      vim.api.nvim_create_autocmd("LspAttach", {
-        group = "LspAttach_inlayhints",
-        callback = function(args)
-          if not (args.data and args.data.client_id) then
-            return
-          end
-          local bufnr = args.buf
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          require("lsp-inlayhints").on_attach(client, bufnr)
-        end,
-      })
-      -- vim.api.nvim_set_hl can set the entire highlight group, not partialy update it
-    end,
+    "felpafel/inlay-hint.nvim",
+    ft = { "typescript", "javascript" },
+    config = true,
   },
 
   {
