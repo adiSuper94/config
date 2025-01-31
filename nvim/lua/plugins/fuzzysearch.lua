@@ -9,19 +9,17 @@ if searcher == "raw-dog" then
     end
   end, { desc = "raw-dog: Live grep" })
 
-  vim.opt.path:append("**") -- search in subdirectories
-  vim.opt.wildignore:append("*/node_modules/**")
-  vim.opt.wildignore:append("*/build/**")
-  vim.opt.wildignore:append("*/target/**")
-  vim.opt.wildignore:append("*/.git/**")
-  local find_files = function()
-    local pattern = vim.fn.input("Find: ")
-    pattern = pattern:gsub(".", "%1*")
-    if pattern ~= "" then
-      vim.fn.feedkeys(":find " .. pattern .. "\t", "t")
+  function Fd(file_pattern, _)
+    -- if first char is * then fuzzy search
+    if file_pattern:sub(1, 1) == "*" then
+      file_pattern = file_pattern:gsub(".", ".*%0") .. ".*"
     end
+    local cmd = 'fd  --color=never --full-path --type file --hidden --exclude=".git" "' .. file_pattern .. '"'
+    local result = vim.fn.systemlist(cmd)
+    return result
   end
-  vim.keymap.set("n", "<C-p>", find_files, { desc = "raw-dog: Project Files" }) -- Still very slow in mac
+  vim.opt.findfunc = "v:lua.Fd"
+  vim.keymap.set("n", "<C-p>", ":find ", { desc = "raw-dog: Project Files" })
 end
 
 return {
