@@ -111,41 +111,6 @@ return {
 
   { "hiphish/rainbow-delimiters.nvim" },
 
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    enabled = false, -- colored brackets are useful, but scope line seems unnecessary right now.
-    opts = {},
-    dependencies = { "hiphish/rainbow-delimiters.nvim" },
-    config = function()
-      local highlight = {
-        "RainbowDelimiterYellow",
-        "RainbowDelimiterGreen",
-        "RainbowDelimiterBlue",
-        "RainbowDelimiterOrange",
-        "RainbowDelimiterViolet",
-        "RainbowDelimiterCyan",
-        "RainbowDelimiterRed",
-      }
-      local hooks = require("ibl.hooks")
-      -- create the highlight groups in the highlight setup hook, so they are reset
-      -- every time the colorscheme changes
-      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-        vim.api.nvim_set_hl(0, "RainbowDelimiterYellow", { fg = "#E5C07B" })
-        vim.api.nvim_set_hl(0, "RainbowDelimiterBlue", { fg = "#61AFEF" })
-        vim.api.nvim_set_hl(0, "RainbowDelimiterOrange", { fg = "#D19A66" })
-        vim.api.nvim_set_hl(0, "RainbowDelimiterGreen", { fg = "#98C379" })
-        vim.api.nvim_set_hl(0, "RainbowDelimiterViolet", { fg = "#C678DD" })
-        vim.api.nvim_set_hl(0, "RainbowDelimiterCyan", { fg = "#56B6C2" })
-        vim.api.nvim_set_hl(0, "RainbowDelimiterRed", { fg = "#E06C75" })
-      end)
-
-      vim.g.rainbow_delimiters = { highlight = highlight }
-      require("ibl").setup({ scope = { highlight = highlight } })
-      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
-    end,
-  },
-
   { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = "nvim-treesitter/nvim-treesitter" }, -- not really used for colors, but this is here cuz treesitter is here.
   {
     "nvim-treesitter/nvim-treesitter",

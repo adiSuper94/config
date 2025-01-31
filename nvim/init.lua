@@ -10,9 +10,9 @@ vim.opt.smartcase = true -- ignore case if search pattern is all lowercase
 vim.opt.signcolumn = "yes" -- For Git Gutter to not flicker
 vim.opt.timeoutlen = 500 -- time to wait for a mapped sequence to complete
 vim.opt.cursorline = true -- highlight current line
-vim.opt.breakindent = true -- indent wrapped lines. This does not reformate the text, just visually indents it
+vim.opt.breakindent = true -- indent wrapped lines. This does not reformat the text, just visually indents it
 vim.opt.scrolloff = 5 -- keep n lines above and below the cursor
-vim.opt.autoindent = true -- enable autoindent (default is true, but just to be sure)
+vim.opt.autoindent = true -- enable auto indent (default is true, but just to be sure)
 vim.opt.autoread = true -- auto read file when changed outside of vim
 vim.opt.wrap = true -- wrap lines, (default is true, but just to be sure)
 vim.opt.linebreak = true -- wrap lines at convenient points
@@ -22,7 +22,7 @@ vim.opt.colorcolumn = "100" -- highlight column width
 vim.opt.expandtab = true -- insert spaces instead of tabs
 vim.opt.softtabstop = 2 -- number of spaces that that is removed or added when tab or backspace is pressed
 vim.opt.tabstop = 2 -- I honestly don't know how this is different from softtabstop
-vim.opt.shiftwidth = 2 -- witdth used for indetation commands (<<, >>)
+vim.opt.shiftwidth = 2 -- width used for indentation commands (<<, >>)
 vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣" }
@@ -98,7 +98,7 @@ require("lazy").setup({
 if vim.g.colors_name ~= "gruber-darker" then -- gruber-darker has a nice brown color for comments
   vim.cmd([[ highlight @comment guifg=#afafaf ]]) --comments are important AFAFAF
 else
-  vim.cmd([[ highlight LspInlayHint guifg=#40443d ]]) -- grubber-darker has consfusing colors for inlay hints
+  vim.cmd([[ highlight LspInlayHint guifg=#40443d ]]) -- grubber-darker has confusing colors for inlay hints
 end
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion

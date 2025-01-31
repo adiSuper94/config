@@ -1,0 +1,14 @@
+config
+hrsh7th
+menuone
+noinsert
+noselect
+completeopt
+popup
+rafamadriz
+whitespace
+nvim
+netrwPlugin
+cuz
+treesitter
+filetype

@@ -151,6 +151,7 @@ return {
   -- have to wait for https://github.com/neovim/neovim/issues/28261 to be resolved
   {
     "felpafel/inlay-hint.nvim",
+    branch = "nightly",
     ft = { "typescript", "javascript" },
     config = true,
   },

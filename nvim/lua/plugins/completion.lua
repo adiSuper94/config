@@ -1,8 +1,9 @@
-local cmp_plugin = "hrsh7th" -- [hrsh7th | blink | raw-dog] default is hrsh7th
+local cmp_plugin = "blink" -- [hrsh7th | blink | raw-dog] default is hrsh7th
 -- blink is the new cool kid on the block, has easier config for snippets and signature help.
--- But my hrsh7th setup is fairly simple as I dont use snippets. Wouldn't mind signature help.
+-- But my hrsh7th setup is fairly simple as I don't use snippets. Wouldn't mind signature help.
 -- is hrsh7th + ray signature help better than blink ? Don't know.
 -- Might move to this if gets better (for me) than hrsh7th.
+-- Noticed that blink completion is perceivably faster than hrsh7th.
 if cmp_plugin == "raw-dog" then
   return {}
 end
