@@ -32,7 +32,7 @@ return {
     end,
   },
 
-  { "stevearc/dressing.nvim", enabled = false, opts = {} }, -- I'll use this if I remove find a telescope less workflow
+  { "stevearc/dressing.nvim", opts = {} }, -- I'll use this if I remove find a telescope less workflow
 
   {
     "folke/which-key.nvim",

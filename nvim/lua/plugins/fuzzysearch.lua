@@ -20,7 +20,6 @@ if searcher == "raw-dog" then
   end
   vim.opt.findfunc = "v:lua.Fd"
   vim.keymap.set("n", "<C-p>", ":find ", { desc = "raw-dog: Project Files" })
-  vim.keymap.set("n", "<leader>c", ":e ~/.config/nvim/init.lua<CR>", { desc = "Open nvim init.lua" })
   return {}
 end
 

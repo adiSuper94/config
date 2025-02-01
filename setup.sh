@@ -13,7 +13,6 @@ PROFILE_FILE="$DOTFILES/.profile"
 RC_FILE="$DOTFILES/.rc"
 BREW_PREFIX="/opt/homebrew/bin"
 apt="apt-get -qqy"
-install="install"
 
 ask(){
   if [[ $YES = true ]]; then
@@ -203,7 +202,7 @@ ensure_zsh() {
     if ask "Do you want to change default shell to zsh"; then
       if ! command -v zsh &> /dev/null; then
           if ask "Do you want to install zsh"; then
-            sudo "$apt $install" zsh
+            sudo "$apt install" zsh
             printf "Tried installing zsh."
           fi
       fi
@@ -271,7 +270,7 @@ install_alacritty(){
     return 0
   fi
   printf "\nInstalling alacritty dependencies\n."
-  eval "sudo $apt $install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 gzip scdoc"
+  eval "sudo $apt install cmake g++ pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 gzip scdoc"
   errno=$?
   check_last_cmd $errno 1
   if ! ask "Installed dependencies. Continue with installation?"; then
@@ -381,7 +380,7 @@ common_setup(){
 
 minimal_setup_linux(){
   sudo "$apt" update
-  sudo "$apt $install" coreutils gcc vim curl zsh ripgrep fzf
+  sudo "$apt install" coreutils gcc vim curl zsh ripgrep fzf
   if [ ! -d "$HOME/nutter-tools" ]; then
     mkdir -p "$HOME/nutter-tools/bin"
     post_install_config nutter-tools
@@ -433,7 +432,7 @@ install_regolith(){
       ;;
   esac
   pretty_exec "sudo $apt update"
-  pretty_exec "sudo $apt $install regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default"
+  pretty_exec "sudo $apt install regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default"
 
   sudo rm -f "/usr/share/regolith/i3/config.d/60_config_keybindings"
   sudo rm -f "/usr/share/regolith/common/config.d/30_navigation"
@@ -595,7 +594,7 @@ fonts=(
   # "UbuntuSans=ubuntu-sans"
 )
 
-ubuntu_install_fonts(){
+linux_install_fonts(){
   version='3.3.0'
   fonts_dir="$HOME/.local/share/fonts"
   if [[ ! -d "$fonts_dir" ]]; then
@@ -647,7 +646,7 @@ install_fonts(){
     return 1
   fi
   case $os in
-    linux) ubuntu_install_fonts ;;
+    linux) linux_install_fonts ;;
     darwin) macos_install_fonts ;;
   esac
 }
@@ -656,7 +655,7 @@ ubuntu_setup(){
   printf "'nala' package manager like apt, it is a front end to apt-get.\nIt has a better signal/noise ratio than using plain apt/apt-get\n\n"
   eval "sudo $apt update"
   if  ask "Do you want to install nala?"; then
-    pretty_exec "sudo $apt $install nala"
+    pretty_exec "sudo $apt install nala"
     apt="nala"
     if [[ $YES = true ]]; then
       install="install --assume-yes"
@@ -667,11 +666,11 @@ ubuntu_setup(){
   if ! ask "Do you want to and continue ?"; then
     exit 1
   fi
-  pretty_exec "sudo $apt $install coreutils gcc curl wget build-essential"
+  pretty_exec "sudo $apt install coreutils gcc curl wget build-essential"
   install_regolith
   install_brew_pkgs
   brew remove ripgrep # brew packages are available only in the shell
-  eval "sudo $apt $install ripgrep rofi"
+  eval "sudo $apt install ripgrep rofi"
   ubuntu_purge_snap
 }
 
@@ -743,10 +742,10 @@ unsetup() {
   exit 0
 }
 
-ubuntu_bootstrap(){
+linux_bootstrap(){
   printf "installing git and zsh\n"
   pretty_exec "sudo $apt update"
-  pretty_exec "sudo $apt $install zsh git"
+  pretty_exec "sudo $apt install zsh git"
   if [[ $SHELL != *"zsh"* ]]; then
     sudo chsh -s "$(which zsh)"
   fi
@@ -784,7 +783,7 @@ bootstrap(){
     setup
   fi
   case $os in
-    linux) ubuntu_bootstrap ;;
+    linux) linux_bootstrap ;;
     darwin) macos_bootstrap ;;
     *)
       printf "Unknown OS, aborting...\n"

@@ -19,6 +19,11 @@ return {
       },
     },
     config = function()
+      vim.keymap.del({ "n", "x" }, "gra")
+      vim.keymap.del("n", "gri")
+      vim.keymap.del("n", "grn")
+      vim.keymap.del("n", "grr")
+      vim.keymap.del("n", "gO")
       local nvim_lsp = require("lspconfig")
       -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization
       local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
@@ -48,6 +53,7 @@ return {
           map("gd", vim.lsp.buf.definition, "[G]oto [d]efinition")
           map("gr", vim.lsp.buf.references, "[G]oto [r]eferences")
           map("K", vim.lsp.buf.hover, "Show hover")
+          map("gO", vim.lsp.buf.document_symbol, "Object QFList")
           map("gi", vim.lsp.buf.implementation, "[G]oto [i]mplementation")
           map("gs", vim.lsp.buf.signature_help, "Show signature help")
           map("<space>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder")
@@ -170,12 +176,12 @@ return {
     },
     init = function()
       vim.g.db_ui_use_nerd_fonts = 1
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "sql,mysql,plsql",
-        callback = function()
-          require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
-        end,
-      })
+      -- vim.api.nvim_create_autocmd("FileType", {
+      --   pattern = "sql,mysql,plsql",
+      --   callback = function()
+      --     require("cmp").setup.buffer({ sources = { { name = "vim-dadbod-completion" } } })
+      --   end,
+      -- })
     end,
   },
 }
