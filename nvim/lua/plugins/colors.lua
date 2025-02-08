@@ -137,7 +137,7 @@ return {
           -- disable = { "rust" },
           -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
           disable = function(lang, buf)
-            local highlight_disable_languages = { "rust", "bash" }
+            local highlight_disable_languages = { }
             for _, hd_lang in ipairs(highlight_disable_languages) do
               if hd_lang == lang then
                 return true

@@ -32,13 +32,13 @@ if cmp_plugin == "blink" then
           nerd_font_variant = "mono",
         },
         sources = {
-          default = { "lsp", "path", "buffer", "dadbod" }, -- "snippets" },
+          default = { "lsp", "path", "dadbod" }, --"buffer", "snippets" },
           providers = {
             dadbod = { name = "Dadbod", module = "vim_dadbod_completion.blink" },
           },
         },
         completion = {
-          list = { selection = { preselect = false, auto_insert = false } },
+          list = { selection = { preselect = false, auto_insert = true } },
           menu = {
             auto_show = function(ctx)
               return ctx.mode ~= "cmdline"

@@ -2,6 +2,7 @@
 return {
   {
     "github/copilot.vim",
+    enabled = false,
     config = function()
       vim.api.nvim_set_keymap("i", "<C-k>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
       vim.g.copilot_no_tab_map = true
