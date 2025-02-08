@@ -3,9 +3,28 @@ return {
   -- { "j-hui/fidget.nvim", opts = {}, ft = { "rust" } }, -- disabling this if in favour of mini.notify. But still keeping this around in case I change my mind
 
   {
+    "nvim-java/nvim-java",
+    config = function()
+      require("java").setup({
+        java_test = {
+          enable = false,
+        },
+        java_debug_adapter = {
+          enable = false,
+        },
+        spring_boot_tools = {
+          enable = false,
+        },
+        notifications = { dap = false },
+      })
+    end,
+  },
+
+  {
     "neovim/nvim-lspconfig",
     dependencies = {
       {
+        "nvim-java/nvim-java",
         "williamboman/mason.nvim",
         opts = {
           ui = {
@@ -130,6 +149,7 @@ return {
           settings = settings,
         })
       end
+      nvim_lsp.jdtls.setup({})
     end,
   },
 
