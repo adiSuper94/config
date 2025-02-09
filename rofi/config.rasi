@@ -4,7 +4,7 @@ configuration {
   display-window: "Windows:";
   drun-display-format: "{name}";
   font: "JetBrainsMono Nerd Font Medium 11.5";
-  modi: "window,run,drun,emoji,filebrowser";
+  modi: "window,run,drun,filebrowser";
   show-icons: true;
 }
 

@@ -1,0 +1,52 @@
+alias top=htop
+alias vim=nvim
+alias man=batman
+alias cat=bat
+alias diff=batdiff
+alias g=git
+alias lg=lazygit
+alias j=z
+alias ls=eza
+
+
+# Ctrl-e open cli in nvim
+export EDITOR=nvim
+autoload edit-command-line
+zle -N edit-command-line
+bindkey "^E" edit-command-line
+
+PATH="$HOME/nutter-tools/bin:$PATH"
+PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
+
+PATH="$PATH:$HOME/.local/share/fnm:$HOME/.local/bin"
+eval "$(fnm env --use-on-cd --shell zsh)"
+eval "$(batpipe)"
+eval "$(fzf --zsh)"
+eval "$(zoxide init zsh)"
+
+# fzf config
+export FZF_DEFAULT_COMMAND="fd --type file --color=always"
+export FZF_DEFAULT_OPTS=--ansi
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# zsh config
+
+
+. ~/powerlevel10k/powerlevel10k.zsh-theme
+. ~/.zsh/fzf-tab/fzf-tab.plugin.zsh # Replace zsh's default tab completion selection menu with fzf
+. ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh # Inline autosuggestions, like fish
+. ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Syntax highlighting, like fish
+. ~/.zsh/zsh-abbr/zsh-abbr.zsh # replace command abbreviations with full commands, like fish
+
+HISTFILE=~/.zsh_history
+HISTSIZE=2048
+SAVEHIST=2048
+setopt autocd extendedglob
+bindkey -e # Use emacs keybindings even if our EDITOR is set to vi
+zstyle :compinstall filename '~/.zshrc'
+fpath+=~/.zsh/zfunc
+fpath+=~/.zsh/zsh-completions/src
+autoload -Uz compinit
+compinit
+
+abbr import-aliases --quiet ## Run this command once

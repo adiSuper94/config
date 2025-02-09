@@ -96,10 +96,10 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym Mod1+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym Mod1+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -197,8 +197,7 @@ bar {
 exec_always $HOME/.screenlayout/alt-dual-screen-setup.sh
 # exec_always $HOME/.screenlayout/dual-screen-setup.sh
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-bindsym Shift+space exec "rofi -show drun"
-bindsym F1 exec "sh ~/dev/config/kutti-scripts/bluetooth-widget.sh"
+bindsym $mod+space exec "rofi -show drun"
 #bindsym $mod+x exec i3lock -f -i /home/adisuper/Pictures/Wallpapers/startlord2.png
 bindsym $mod+x move workspace to output next
 bindsym $mod+v exec copyq toggle
@@ -216,12 +215,7 @@ exec "redshift -l 29.6172:-82.3877 -t 6500:3500 &"
 
 exec --no-startup-id "compton -f&"
 exec --no-startup-id "copyq &"
-exec --no-startup-id "/usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &"
-exec --no-startup-id "gnome-keyring-daemon --start &"
-exec "bluetoothctl power off"
-exec setxkbmap -option "ctrl:swapcaps"
 exec "rclone mount --vfs-cache-mode minimal dropbox: ~/Documents/dropbox/ &"
-# exec --no-startup-id i3-msg 'workspace $ws1; exec alacritty'
 set $mode_power [l]ogoff | [s]hutdown
 bindsym $mod+Shift+e mode "$mode_power"
 mode "$mode_power" {
