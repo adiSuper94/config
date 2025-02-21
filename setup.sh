@@ -73,7 +73,7 @@ ubuntu_purge_snap(){
     printf "Yayy! Loooks like snap is not installed\n"
     return 0
   fi
-  if ask "Do you want to remove all snap pakages, and disable snap competely ?"; then
+  if ask "Do you want to remove all snap pakages, and disable snap competely ? This might break ubuntu ui"; then
     echo "Removing all Snap packages ..."
   else
     echo "You chose not to remove Snap packages. Exiting ..."
@@ -117,16 +117,18 @@ os_specific_setup(){
           ubuntu_purge_snap
           sudo apt update
           sudo apt install build-essential
-          sudo apt install coreutils gcc curl wget unzip tmux htop jq rofi copyq redshift maim
-          sudo apt install fd-find ripgrep eza bat
+          sudo apt install coreutils gcc curl wget unzip clang
+          sudo apt install tmux htop jq rofi copyq redshift maim
+          sudo apt install fd-find ripgrep eza bat kdiff3 variety
           sudo mv /usr/bin/fdfind /usr/bin/fd
           sudo mv /usr/bin/batcat /usr/bin/bat
           ;;
         "fedora")
           sudo dnf update
           sudo dnf group install development-tools c-development
-          sudo dnf install coreutils gcc curl wget unzip tmux htop jq rofi copyq redshift maim
-          sudo dnf install bat ripgrep fd-find eza
+          sudo dnf install coreutils gcc curl wget unzip clang
+          sudo dnf install tmux htop jq rofi copyq redshift maim
+          sudo dnf install bat ripgrep fd-find eza kdiff3 variety
           ;;
         *)
           printf "No OS specific setup for %s:%s\n" "$os" "$flavour"
@@ -142,6 +144,7 @@ os_specific_setup(){
       export HOMEBREW_NO_ENV_HINTS=TRUE
       brew install --quiet  tmux unzip htop jq wget bat bat-extras fnm zoxide fd ripgrep eza neovim
       brew install --cask nikitabobko/tap/aerospace
+      brew install --cask kdfiff3
       brew install --cask copyq
     ;;
     *)
@@ -152,7 +155,7 @@ os_specific_setup(){
 }
 
 sym_link(){
-  for pkg_config in nvim alacritty i3 tmux rofi regolith3 ghostty git helix rofi aerospace; do
+  for pkg_config in nvim alacritty i3 tmux rofi regolith3 git helix rofi aerospace; do
     if [[ -d "$HOME"/.config/$pkg_config ]]; then
       if [[ -L "$HOME"/.config/$pkg_config ]]; then
         rm -rf "$HOME"/.config/$pkg_config
