@@ -4,7 +4,7 @@ if searcher == "raw-dog" then
   vim.keymap.set("n", "<leader>/", function()
     local pattern = vim.fn.input("rg: ")
     if pattern ~= "" then
-      vim.cmd("silent grep! " .. pattern)
+      vim.cmd('silent grep! "' .. pattern ..'"')
       vim.cmd("copen")
     end
   end, { desc = "raw-dog: Live grep" })

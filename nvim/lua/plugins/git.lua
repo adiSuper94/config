@@ -59,8 +59,8 @@ return {
 
           map("n", "<leader>hQ", function()
             gitsigns.setqflist("all")
-          end, { desc = "Set QF List" })
-          map("n", "<leader>hq", gitsigns.setqflist, { desc = "Set QF List" })
+          end, { desc = "Set Repo QF List" })
+          map("n", "<leader>hq", gitsigns.setqflist, { desc = "Set Buffer QF List" })
 
           -- Text object
           map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })

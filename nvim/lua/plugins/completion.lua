@@ -20,11 +20,9 @@ if cmp_plugin == "blink" then
           -- Maybe fixed when 93541e4e45ddd06cd7efa9d65840936dff557fb3 is merged
           -- else create an issue
           ["<C-k>"] = { "fallback" },
-          cmdline = {
-            preset = "enter",
-            ["<Tab>"] = { "show", "select_next", "fallback" },
-            ["<S-Tab>"] = { "select_prev", "fallback" },
-          },
+        },
+        cmdline = {
+          enabled = false,
         },
         appearance = {
           use_nvim_cmp_as_default = false,

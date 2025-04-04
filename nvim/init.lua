@@ -26,6 +26,7 @@ vim.opt.shiftwidth = 2 -- width used for indentation commands (<<, >>)
 vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣" }
+vim.opt.winborder = "rounded"
 
 -- Why did I not know about this earlier??!
 vim.opt.splitbelow = true -- open new split windows below the current window
@@ -95,11 +96,46 @@ require("lazy").setup({
     },
   },
 })
+
 if vim.g.colors_name ~= "gruber-darker" then -- gruber-darker has a nice brown color for comments
   vim.cmd([[ highlight @comment guifg=#afafaf ]]) --comments are important AFAFAF
 else
   vim.cmd([[ highlight LspInlayHint guifg=#40443d ]]) -- grubber-darker has confusing colors for inlay hints
 end
 
-
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
+
+-- LSP setup
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    client.server_capabilities.semanticTokensProvider = nil
+    vim.lsp.inlay_hint.enable(true)
+    -- if client:supports_method("textDocument/completion") then
+    --   vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
+    -- end
+    local map = function(keys, func, desc, mode)
+      mode = mode or "n"
+      vim.keymap.set(mode, keys, func, { buffer = ev.buf, desc = "LSP: " .. desc })
+    end
+    map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+    map("gd", vim.lsp.buf.definition, "[G]oto [d]efinition")
+    map("<C-s>", vim.lsp.buf.signature_help, "Show signature help")
+    map("gi", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+    map("gr", vim.lsp.buf.references, "[G]oto [R]eferences")
+    map("<space>r", vim.lsp.buf.rename, "[R]ename")
+    map("<space>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+    -- map("<space>D", vim.lsp.buf.type_definition, "Show type definition")
+    map("<space>e", function()
+      vim.diagnostic.config({
+        virtual_lines = not vim.diagnostic.config().virtual_lines,
+      })
+    end, "Show diagnostics")
+    map("<space>q", vim.diagnostic.setloclist, "Open Diagnostic [Q]uickfix list")
+    -- map("<C-space>", vim.lsp.completion.get, "Trigger Completions", "i")
+  end,
+})
+vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "luals", "clangd", "bashls", "jsonls" })
