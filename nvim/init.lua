@@ -138,4 +138,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
     -- map("<C-space>", vim.lsp.completion.get, "Trigger Completions", "i")
   end,
 })
+
 vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "luals", "clangd", "bashls", "jsonls" })

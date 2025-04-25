@@ -1,7 +1,13 @@
 return {
   cmd = { "deno", "lsp" },
-  root_markers = { "deno.json", "deno.jsonc" },
-  filetypes = { "typescript" },
+  root_dir = function(_, callback)
+    local root_dir = vim.fs.root(0, { "deno.json", "deno.jsonc" })
+    if root_dir then
+      callback(root_dir)
+    end
+  end,
+  filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+  single_file_support = false,
   settings = {
     deno = {
       inlayHints = {

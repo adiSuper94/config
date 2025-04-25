@@ -46,7 +46,7 @@ bindkey -e # Use emacs keybindings even if our EDITOR is set to vi
 zstyle :compinstall filename '~/.zshrc'
 fpath+=~/.zsh/zfunc
 fpath+=~/.zsh/zsh-completions/src
-autoload -Uz compinit
+autoload compinit
 compinit
 
 # abbr import-aliases --quiet ## Run this command once

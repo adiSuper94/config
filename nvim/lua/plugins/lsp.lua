@@ -28,11 +28,21 @@ return {
     cmd = { "ConformInfo" },
     opts = {
       formatters_by_ft = {
-        javascript = { "prettierd", "prettier", stop_after_first = true },
-        typescript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { "deno_fmt", "prettierd", "prettier", stop_after_first = true },
+        typescript = { "deno_fmt", "prettierd", "prettier", stop_after_first = true },
         javascriptreact = { "prettierd", "prettier", stop_after_first = true },
         typescriptreact = { "prettierd", "prettier", stop_after_first = true },
         lua = { "stylua" },
+      },
+      formatters = {
+        deno_fmt = {
+          command = "deno",
+          args = { "fmt", "-" },
+          stdin = true,
+          condition = function(ctx)
+            return vim.fs.root(0, { "deno.json", "deno.jsonc" })
+          end,
+        },
       },
       default_format_opts = { lsp_format = "fallback" },
     },

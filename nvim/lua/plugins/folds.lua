@@ -1,6 +1,6 @@
 vim.opt.foldlevelstart = 99
 vim.opt.foldlevel = 99
-vim.opt.foldcolumn = "1"
+vim.opt.foldcolumn = "0"
 local fold_method = "raw-dog" -- ["raw-dog" | "ufo"]
 if fold_method == "raw-dog" then
   vim.opt.foldmethod = "expr"
