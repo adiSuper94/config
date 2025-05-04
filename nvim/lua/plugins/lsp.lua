@@ -32,6 +32,7 @@ return {
         typescript = { "deno_fmt", "prettierd", "prettier", stop_after_first = true },
         javascriptreact = { "prettierd", "prettier", stop_after_first = true },
         typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+        css = { "prettierd", "prettier", stop_after_first = true },
         lua = { "stylua" },
       },
       formatters = {
@@ -51,7 +52,7 @@ return {
   -- have to wait for https://github.com/neovim/neovim/issues/28261 to be resolved
   {
     "felpafel/inlay-hint.nvim",
-    ft = { "typescript", "javascript" },
+    ft = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
     config = true,
   },
 

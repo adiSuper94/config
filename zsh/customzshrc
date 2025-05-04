@@ -1,12 +1,12 @@
-alias top=htop
-alias vim=nvim
-alias man=batman
-alias cat=bat
-alias diff=batdiff
-alias g=git
-alias lg=lazygit
-alias j=z
-alias ls=eza
+# alias top=htop
+# alias vim=nvim
+# alias man=batman
+# alias cat=bat
+# alias diff=batdiff
+# alias g=git
+# alias lg=lazygit
+# alias j=z
+# alias ls=eza
 
 
 # Ctrl-e open cli in nvim

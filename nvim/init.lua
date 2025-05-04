@@ -27,6 +27,7 @@ vim.opt.undofile = true
 vim.opt.updatetime = 250
 vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣" }
 vim.opt.winborder = "rounded"
+vim.opt.diffopt:append("iwhite")
 
 -- Why did I not know about this earlier??!
 vim.opt.splitbelow = true -- open new split windows below the current window
@@ -134,6 +135,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         virtual_lines = not vim.diagnostic.config().virtual_lines,
       })
     end, "Show diagnostics")
+    map("<space>E", vim.diagnostic.open_float, "Show [E]rror")
     map("<space>q", vim.diagnostic.setloclist, "Open Diagnostic [Q]uickfix list")
     -- map("<C-space>", vim.lsp.completion.get, "Trigger Completions", "i")
   end,
