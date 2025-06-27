@@ -34,6 +34,7 @@ return {
         typescriptreact = { "prettierd", "prettier", stop_after_first = true },
         css = { "prettierd", "prettier", stop_after_first = true },
         lua = { "stylua" },
+        python = { "ruff_format" },
       },
       formatters = {
         deno_fmt = {
