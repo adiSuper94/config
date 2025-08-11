@@ -122,6 +122,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
       mode = mode or "n"
       vim.keymap.set(mode, keys, func, { buffer = ev.buf, desc = "LSP: " .. desc })
     end
+    if client:supports_method("textDocument/foldingRange") then
+      local win = vim.api.nvim_get_current_win()
+      vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
+    end
     map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
     map("gd", vim.lsp.buf.definition, "[G]oto [d]efinition")
     map("<C-s>", vim.lsp.buf.signature_help, "Show signature help")
