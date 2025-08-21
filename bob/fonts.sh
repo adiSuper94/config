@@ -35,7 +35,7 @@ fonts=(
 )
 
 linux_install_fonts(){
-  version='3.3.0'
+  version='3.4.0'
   fonts_dir="$HOME/.local/share/fonts"
   if [[ ! -d "$fonts_dir" ]]; then
       mkdir -p "$fonts_dir"
@@ -101,6 +101,6 @@ case $1 in
     ;;
   *)
     printf "Unknown command: %s\n" "$1"
-    echo "I can only install or uninstall golang."
+    echo "I can only install or uninstall fonts."
     ;;
 esac
