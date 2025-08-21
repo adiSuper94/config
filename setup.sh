@@ -127,8 +127,8 @@ os_specific_setup(){
           sudo dnf update
           sudo dnf group install development-tools c-development
           sudo dnf install coreutils gcc curl wget unzip clang
-          sudo dnf install tmux htop jq rofi copyq redshift maim
-          sudo dnf install bat ripgrep fd-find eza kdiff3 variety
+          sudo dnf install tmux htop jq rofi-wayland copyq redshift maim
+          sudo dnf install bat ripgrep fd-find kdiff3 variety fzf
           ;;
         *)
           printf "No OS specific setup for %s:%s\n" "$os" "$flavour"
@@ -155,7 +155,7 @@ os_specific_setup(){
 }
 
 sym_link(){
-  for pkg_config in nvim alacritty i3 tmux rofi regolith3 git helix rofi aerospace; do
+  for pkg_config in nvim alacritty i3 tmux rofi regolith3 git rofi aerospace; do
     if [[ -d "$HOME"/.config/$pkg_config ]]; then
       if [[ -L "$HOME"/.config/$pkg_config ]]; then
         rm -rf "$HOME"/.config/$pkg_config

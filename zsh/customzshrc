@@ -16,7 +16,7 @@ zle -N edit-command-line
 bindkey "^E" edit-command-line
 
 PATH="$HOME/nutter-tools/bin:$PATH"
-# PATH="$PATH:/usr/local/go/bin:$HOME/go/bin" ## Add this to zshenv
+PATH="$PATH:/usr/local/go/bin:$HOME/go/bin" ## Add this to zshenv
 
 PATH="$PATH:$HOME/.local/share/fnm:$HOME/.local/bin"
 eval "$(fnm env --use-on-cd --shell zsh)"

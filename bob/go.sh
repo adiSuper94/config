@@ -5,7 +5,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 read -r os _arch arch_alt _flavour _release < <(os_info)
 
 install(){
-  GO_VERSION=1.23.5
+  GO_VERSION=1.25.0
   curl -o "$HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz" -L "https://golang.org/dl/go$GO_VERSION.$os-$arch_alt.tar.gz"
   sudo rm -rf /usr/local/go
   sudo tar -C /usr/local -xzf "$HOME/nutter-tools/go-$GO_VERSION.$os-$arch_alt.tar.gz"

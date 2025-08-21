@@ -70,7 +70,7 @@ esac
 
 arg=$2
 case $arg in
-  "go"|"rust"|"alacritty"|"fonts"|"regolith"|"i3")
+  "go"|"rust"|"alacritty"|"fonts"|"regolith"|"i3"|"bat-extras")
     if ask "Are you sure you want to $cmd $arg?"; then
       "${SCRIPT_DIR}/${arg}.sh" "$cmd"
     else
@@ -113,13 +113,6 @@ case $2 in
       install_go_pkgs
     else
       printf "Not installing go packages\n"
-    fi
-    ;;
-  "pkgs")
-    if ask "Are you sure you want to install all packages?"; then
-      install_pkg
-    else
-      printf "Not installing all packages\n"
     fi
     ;;
   *)
