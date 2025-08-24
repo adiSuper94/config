@@ -1,12 +1,12 @@
-# alias top=htop
-# alias vim=nvim
-# alias man=batman
-# alias cat=bat
-# alias diff=batdiff
-# alias g=git
-# alias lg=lazygit
-# alias j=z
-# alias ls=eza
+alias top=htop
+alias vim=nvim
+alias man=batman
+alias cat=bat
+alias diff=batdiff
+alias g=git
+alias lg=lazygit
+alias j=z
+alias ls=eza
 
 
 # Ctrl-e open cli in nvim
@@ -17,7 +17,7 @@ zle -N edit-command-line
 bindkey "^E" edit-command-line
 
 PATH="$PATH:$HOME/nutter-tools/bin"
-PATH="$PATH:/usr/local/go/bin:$HOME/go/bin" ## Add this to zshenv
+PATH="$PATH:/usr/local/go/bin:$HOME/go/bin" ##If fzf is installed as ago bin, add this to zshenv
 PATH="$PATH:$HOME/.local/share/fnm:$HOME/.local/bin"
 eval "$(fnm env --use-on-cd --shell zsh)"
 eval "$(batpipe)"
@@ -49,4 +49,4 @@ fpath+=~/.zsh/zsh-completions/src
 autoload compinit
 compinit
 
-# abbr import-aliases --quiet ## Run this command once
+abbr import-aliases --quiet ## Run this command once
