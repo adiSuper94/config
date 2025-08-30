@@ -119,7 +119,7 @@ os_specific_setup(){
           sudo apt install build-essential
           sudo apt install coreutils gcc curl wget unzip clang
           sudo apt install tmux htop jq rofi copyq redshift maim
-          sudo apt install fd-find ripgrep eza bat kdiff3 variety
+          sudo apt install fd-find ripgrep eza bat kdiff3 variety sshfs pass
           sudo mv /usr/bin/fdfind /usr/bin/fd
           sudo mv /usr/bin/batcat /usr/bin/bat
           ;;
@@ -128,7 +128,7 @@ os_specific_setup(){
           sudo dnf group install development-tools c-development
           sudo dnf install coreutils gcc curl wget unzip clang
           sudo dnf install tmux htop jq rofi-wayland gammastep copyq maim
-          sudo dnf install bat ripgrep fd-find kdiff3 variety fzf
+          sudo dnf install bat ripgrep fd-find kdiff3 variety fzf sshfs pass
           ;;
         *)
           printf "No OS specific setup for %s:%s\n" "$os" "$flavour"
@@ -142,10 +142,14 @@ os_specific_setup(){
       printf "Homebrew installation should also trigger Xcode CLI tools installation. Please follow the prompts\n\n"
       install_homebrew
       export HOMEBREW_NO_ENV_HINTS=TRUE
-      brew install --quiet  tmux unzip htop jq wget bat bat-extras fnm zoxide fd ripgrep eza neovim
+      brew install --quiet tmux unzip htop jq wget bat bat-extras fnm zoxide fd ripgrep eza neovim pass
       brew install --cask nikitabobko/tap/aerospace
       brew install --cask kdfiff3
       brew install --cask copyq
+      brew install --cask macfuse
+      curl -Lo ssh-3.7.3.pkg https://github.com/libfuse/sshfs/releases/download/sshfs-3.7.3/sshfs-3.7.3-ccb6821.pkg
+      sudo installer -pkg ssh-3.7.3.pkg -target /
+      rm -f ssh-3.7.3.pkg
     ;;
     *)
       printf "No OS specific setup for %s\n" "$os"
@@ -165,10 +169,11 @@ sym_link(){
     fi
     ln -s "$DOTFILES/$pkg_config" "$HOME/.config/$pkg_config"
   done
+  ln -s "$DOTFILES/ssh/config" "$HOME/.ssh/config"
   rm -f "$HOME/nutter-tools/bin/irg" 2> /dev/null
-  rm -f "$HOME/nutter-tools/bin/kbd" 2> /dev/null
+  rm -f "$HOME/nutter-tools/bin/hpg" 2> /dev/null
   ln -s "$DOTFILES/kutti-scripts/irg" "$HOME/nutter-tools/bin/"
-  ln -s "$DOTFILES/kutti-scripts/kbd" "$HOME/nutter-tools/bin/"
+  ln -s "$DOTFILES/kutti-scripts/hpg" "$HOME/nutter-tools/bin/"
 }
 
 setup() {
