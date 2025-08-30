@@ -1,0 +1,38 @@
+#!/bin/bash
+
+cmd=$1
+
+if ! command -v sshfs &> /dev/null; then
+  echo "ERROR: sshfs could not be found, please install it first."
+  exit 1
+fi
+
+if ! command -v fusermount &> /dev/null && ! command -v umount &> /dev/null ; then
+  echo "ERROR: fusermount/umount could not be found, please install it first."
+  exit 1
+fi
+
+unmount_cmd="sudo umount"
+unmount_flg="-f"
+
+if command -v fusermount &> /dev/null ; then
+  unmount_cmd="fusermount"
+  unmount_flg="-uz"
+fi
+
+case $cmd in
+  "start"|"connect"|"mount")
+    mkdir -p ~/ssh/hpg
+    mkdir -p ~/ssh/pubcomor1
+    sshfs pubcomor:/pubapps/com-or/ ~/ssh/pubcomor1
+    sshfs hpg:/home/aditya.subramani/ ~/ssh/hpg
+    ;;
+  "stop"|"disconnect"|"unmount")
+    $unmount_cmd $unmount_flg ~/ssh/hpg
+    $unmount_cmd $unmount_flg ~/ssh/pubcomor1
+    ;;
+  *)
+    echo "Usage: hpg {mount|unmount}"
+    echo "Description: Mount or unmount HPG and pubcomor directories via SSHFS."
+    ;;
+esac

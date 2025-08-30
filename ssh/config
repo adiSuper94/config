@@ -1,0 +1,21 @@
+Host *
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/id_ed25519
+  # UseKeychain yes # Uncomment this line on macOS
+
+Host hpg
+  HostName hpg.rc.ufl.edu
+  User aditya.subramani
+  port 2222
+  ControlPath ~/.ssh/cm_-%r@%l-%h:%p
+  ControlMaster auto
+  ControlPersist 8h
+
+Host pubcomor
+  HostName pubcomor1.ufhpc
+  User com-or
+  ProxyJump hpg
+  ControlPath ~/.ssh/cm_-%r@%l-%h:%p
+  ControlMaster auto
+  ControlPersist 4h
+  IdentityFile ~/.ssh/hpg_id_rsa
