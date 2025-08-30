@@ -22,6 +22,7 @@ install(){
     printf "Downloading Neovim...%s" "$url"
     curl -o "$HOME/nutter-tools/nvim-${os}-${arch}.tar.gz" -L "$url"
     tar -xvf "$HOME/nutter-tools/nvim-${os}-${arch}.tar.gz" --directory "$HOME"/nutter-tools/
+    rm -rf "$HOME/nutter-tools/nvim-${os}-${arch}/"
     ln -s "$HOME/nutter-tools/nvim-${os}-${arch}/bin/nvim" "$HOME"/nutter-tools/bin/nvim
     rm "$HOME/nutter-tools/nvim-${os}-${arch}.tar.gz"
   fi
