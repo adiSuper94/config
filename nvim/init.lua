@@ -145,4 +145,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "luals", "clangd", "bashls", "jsonls", "pyright" })
+vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "lua_ls", "clangd", "bashls", "jsonls", "pyright" })

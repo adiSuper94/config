@@ -49,4 +49,4 @@ fpath+=~/.zsh/zsh-completions/src
 autoload compinit
 compinit
 
-abbr import-aliases --quiet ## Run this command once
+# abbr import-aliases --quiet ## Run this command once
