@@ -3,56 +3,67 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 . "$SCRIPT_DIR/utils.sh"
 read -r os _arch _arch_alt flavour release < <(os_info)
+distro_codename=""
 
-ensure_ubuntu(){
-case $os in
-  "linux")
-  case $flavour in
-    "ubuntu")
-      case $release in
-        "22.04"|"24.04")
+os_check(){
+  case $os in
+    "linux")
+      case $flavour in
+        "ubuntu")
+          case $release in
+            "22.04")
+              distro_codename="jammy"
+              ;;
+            "24.04")
+              distro_codename="noble"
+              ;;
+            *)
+              printf "ERROR: This OS is using $os release %s\n" "$release"
+              printf "ERROR: This script support installing Regolith only on Ubuntu 22.04 and 24.04. Aborting.\n"
+              exit 1
+              ;;
+          esac
+          ;;
+        "debian")
+          case $release in
+            "12")
+              distro_codename="bookworm"
+              ;;
+            *)
+              printf "ERROR: This OS is using $os release %s\n" "$release"
+              printf "ERROR: This script support installing Regolith only on Debian 12. Aborting.\n"
+              exit 1
+              ;;
+          esac
           ;;
         *)
-        printf "ERROR: This OS is using ubuntu release %s\n" "$release"
-        printf "ERROR: This script support installing Regolith only on Ubuntu 22.04 and 24.04. Aborting.\n"
-        exit 1
+          printf "ERROR: This OS is using ubuntu release %s\n" "$release"
+          printf "ERROR: Regolith only is meant for Ubuntu/Debian based systems. Aborting.\n"
+          exit 1
           ;;
       esac
       ;;
     *)
-    printf "ERROR: Regolith only is meant for Ubuntu based systems. Aborting.\n"
-    exit 1
+      printf "ERROR: This OS is using ubuntu release %s\n" "$release"
+      printf "ERROR: Regolith only is meant for Linux(Ubuntu/Debian) based systems. Aborting.\n"
+      exit 1
       ;;
   esac
-    ;;
-  *)
-    printf "ERROR: Regolith only is meant for Ubuntu based systems. Aborting.\n"
-    exit 1
-    ;;
-esac
 }
 
 install(){
   printf "\nInstalling Regolith\n"
   keyring="/usr/share/keyrings/regolith-archive-keyring.gpg"
   apt_source_file="/etc/apt/sources.list.d/regolith.list"
-  curl -s https://regolith-desktop.org/regolith.key | \
+  wget -qO - https://archive.regolith-desktop.com/regolith.key | \
     gpg --dearmor | sudo tee $keyring > /dev/null
   printf "tee-ing the following to /etc/apt/sources.list.d/regolith.list :\n"
-  case $release in
-    "22.04")
-      echo deb "[arch=amd64 signed-by=$keyring] \
-        https://regolith-desktop.org/release-3_2-ubuntu-jammy-amd64 jammy main" | \
-      sudo tee $apt_source_file
-      ;;
-    "24.04")
-      echo deb "[arch=amd64 signed-by=$keyring] \
-        https://regolith-desktop.org/release-3_2-ubuntu-noble-amd64 noble main" | \
-      sudo tee $apt_source_file
-      ;;
-  esac
+
+  echo deb "[arch=amd64 signed-by=$keyring] \
+    https://archive.regolith-desktop.com/$flavour/stable $distro_codename v3.3" | \
+  sudo tee $apt_source_file
   sudo apt update
-  sudo apt install regolith-desktop regolith-session-flashback regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default
+  sudo apt install regolith-desktop regolith-session-flashback regolith-session-sway regolith-look-lascaille regolith-look-gruvbox regolith-look-i3-default
 
   sudo rm -f "/usr/share/regolith/i3/config.d/60_config_keybindings"
   sudo rm -f "/usr/share/regolith/common/config.d/30_navigation"
