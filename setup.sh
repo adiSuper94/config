@@ -128,7 +128,8 @@ os_specific_setup(){
           sudo dnf group install development-tools c-development
           sudo dnf install coreutils gcc curl wget unzip clang
           sudo dnf install tmux htop jq rofi-wayland gammastep copyq maim
-          sudo dnf install bat ripgrep fd-find kdiff3 variety fzf sshfs pass
+          sudo dnf install bat ripgrep fd-find kdiff3 fzf sshfs pass
+          sudo dnf install variety yaru-gtk4-theme yaru-icon-theme
           ;;
         *)
           printf "No OS specific setup for %s:%s\n" "$os" "$flavour"
@@ -137,6 +138,7 @@ os_specific_setup(){
       esac
       curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
       curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+      sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
       ;;
     "darwin")
       printf "Homebrew installation should also trigger Xcode CLI tools installation. Please follow the prompts\n\n"

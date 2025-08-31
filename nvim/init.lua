@@ -25,9 +25,10 @@ vim.opt.tabstop = 2 -- I honestly don't know how this is different from softtabs
 vim.opt.shiftwidth = 2 -- width used for indentation commands (<<, >>)
 vim.opt.undofile = true
 vim.opt.updatetime = 250
-vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣", space = "·" }
 vim.opt.winborder = "rounded"
-vim.opt.diffopt:append("iwhite")
+vim.opt.diffopt:append("iwhite") -- ignore whitespace when diffing
+vim.opt.completeopt = { "menu", "menuone", "noselect", "popup" }
 
 -- Why did I not know about this earlier??!
 vim.opt.splitbelow = true -- open new split windows below the current window
@@ -145,4 +146,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "luals", "clangd", "bashls", "jsonls", "pyright" })
+vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "lua_ls", "clangd", "bashls", "jsonls", "pyright" })
