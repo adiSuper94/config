@@ -1,5 +1,3 @@
--- if true then return {} end
-
 return {
   {
     "thimc/gruber-darker.nvim",
@@ -111,6 +109,17 @@ return {
 
   { "hiphish/rainbow-delimiters.nvim" },
 
+  { "prichrd/netrw.nvim", opts = {} },
+
+  -- {
+  --   "OXY2DEV/markview.nvim",
+  --   lazy = false,
+  --   priority = 49,
+  --   -- dependencies = {
+  --   --   "saghen/blink.cmp",
+  --   -- },
+  -- },
+
   { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = "nvim-treesitter/nvim-treesitter" }, -- not really used for colors, but this is here cuz treesitter is here.
   {
     "nvim-treesitter/nvim-treesitter",
@@ -125,7 +134,7 @@ return {
         auto_install = true,
 
         -- List of parsers to ignore installing (or "all")
-        ignore_install = {"gitignore", "tmux" },
+        ignore_install = { "gitignore", "tmux" },
         ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
         -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
         highlight = {
@@ -137,7 +146,7 @@ return {
           -- disable = { "rust" },
           -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
           disable = function(lang, buf)
-            local highlight_disable_languages = { }
+            local highlight_disable_languages = {}
             for _, hd_lang in ipairs(highlight_disable_languages) do
               if hd_lang == lang then
                 return true

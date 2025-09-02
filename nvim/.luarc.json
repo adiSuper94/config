@@ -1,5 +1,15 @@
 {
-    "diagnostics.globals": [
-        "vim"
-    ]
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "diagnostics":{
+    "globals": ["vim"],
+    "disable": ["missing-fields"]
+  },
+  "workspace": {
+    "library": [
+      "$VIMRUNTIME/lua",
+      "${3rd}/luv/library",
+    ],
+    "maxPreload": 1000,
+    "preloadFileSize": 1000
+  }
 }

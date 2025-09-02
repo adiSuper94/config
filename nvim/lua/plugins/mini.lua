@@ -5,6 +5,7 @@ return {
     config = function()
       require("mini.surround").setup()
       require("mini.pairs").setup()
+      require("mini.icons").setup()
       local notify = require("mini.notify")
       notify.setup()
       vim.notify = notify.make_notify({

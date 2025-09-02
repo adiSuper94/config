@@ -8,6 +8,12 @@ if [[ $os != "linux" ]]; then
   exit 1
 fi
 
+uninstall(){
+  rm -rf "$HOME/nutter-tools/nvim-${os}-${arch}"
+  rm "$HOME/nutter-tools/bin/nvim"
+  echo "Neovim uninstalled"
+}
+
 install(){
   nightly="false"
   if [[ "$1" == "nightly" ]]; then
@@ -19,20 +25,15 @@ install(){
     else
       url="https://github.com/neovim/neovim/releases/latest/download/nvim-${os}-${arch}.tar.gz"
     fi
-    printf "Downloading Neovim...%s" "$url"
+    uninstall
+    printf "Downloading Neovim...%s\n" "$url"
     curl -o "$HOME/nutter-tools/nvim-${os}-${arch}.tar.gz" -L "$url"
     tar -xvf "$HOME/nutter-tools/nvim-${os}-${arch}.tar.gz" --directory "$HOME"/nutter-tools/
-    rm -rf "$HOME/nutter-tools/nvim-${os}-${arch}/"
     ln -s "$HOME/nutter-tools/nvim-${os}-${arch}/bin/nvim" "$HOME"/nutter-tools/bin/nvim
     rm "$HOME/nutter-tools/nvim-${os}-${arch}.tar.gz"
   fi
 }
 
-uninstall(){
-  rm -rf "$HOME/nutter-tools/nvim-${os}-${arch}"
-  rm "$HOME/nutter-tools/bin/nvim"
-  echo "Neovim uninstalled"
-}
 
 case $1 in
   "build"|"install")
