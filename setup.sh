@@ -120,6 +120,10 @@ os_specific_setup(){
           sudo apt install coreutils gcc curl wget unzip clang
           sudo apt install tmux htop jq rofi copyq redshift maim
           sudo apt install fd-find ripgrep eza bat kdiff3 variety sshfs pass
+          curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
+          echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
+          sudo apt install wezterm
+          sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
           sudo mv /usr/bin/fdfind /usr/bin/fd
           sudo mv /usr/bin/batcat /usr/bin/bat
           ;;
@@ -129,7 +133,9 @@ os_specific_setup(){
           sudo dnf install coreutils gcc curl wget unzip clang
           sudo dnf install tmux htop jq rofi-wayland gammastep copyq maim
           sudo dnf install bat ripgrep fd-find kdiff3 fzf sshfs pass
-          sudo dnf install variety yaru-gtk4-theme yaru-icon-theme
+          sudo dnf install variety yaru-gtk4-theme yaru-icon-theme foot
+          sudo dnf copr enable wezfurlong/wezterm-nightly
+          sudo dnf install wezterm
           ;;
         *)
           printf "No OS specific setup for %s:%s\n" "$os" "$flavour"
@@ -149,6 +155,7 @@ os_specific_setup(){
       brew install --cask kdfiff3
       brew install --cask copyq
       brew install --cask macfuse
+      brew install --cask wezterm
       curl -Lo ssh-3.7.3.pkg https://github.com/libfuse/sshfs/releases/download/sshfs-3.7.3/sshfs-3.7.3-ccb6821.pkg
       sudo installer -pkg ssh-3.7.3.pkg -target /
       rm -f ssh-3.7.3.pkg
@@ -161,7 +168,7 @@ os_specific_setup(){
 }
 
 sym_link(){
-  for pkg_config in nvim alacritty sway i3 tmux rofi regolith3 git rofi aerospace waybar; do
+  for pkg_config in nvim alacritty wezterm foot tmux sway i3 aerospace regolith3 rofi waybar git; do
     if [[ -d "$HOME"/.config/$pkg_config ]]; then
       if [[ -L "$HOME"/.config/$pkg_config ]]; then
         rm -rf "$HOME"/.config/$pkg_config

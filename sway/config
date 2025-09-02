@@ -4,7 +4,7 @@
 # Logo key = Mod4
 # Alt key = Mod1
 set $mod Mod4
-set $term alacritty
+set $term foot
 set $menu rofi -show drun
 
 

@@ -39,4 +39,6 @@ tat() {
       switch_session
   fi
 }
-. <(fzf --zsh) && tat
+if [[ $TERM == "alacritty" || $TERM == "foot" ]]; then
+  . <(fzf --zsh) && tat
+fi
