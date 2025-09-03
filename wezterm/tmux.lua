@@ -32,15 +32,21 @@ M.tmux_bindings = function(act, config)
       mods = "LEADER",
       action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
     },
+    -- Wezterm default bindings, ish
     {
       key = "z",
       mods = "LEADER",
       action = act.TogglePaneZoomState,
     },
     {
-      key = "x",
+      key = "w",
       mods = "LEADER",
       action = act.CloseCurrentPane({ confirm = true }),
+    },
+    {
+      key = "t",
+      mods = "LEADER",
+      action = act.SpawnTab("CurrentPaneDomain"),
     },
   }
 

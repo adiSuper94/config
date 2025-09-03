@@ -32,21 +32,31 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # zsh config
 
 
-. ~/powerlevel10k/powerlevel10k.zsh-theme
-. ~/.zsh/fzf-tab/fzf-tab.plugin.zsh # Replace zsh's default tab completion selection menu with fzf
-. ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh # Inline autosuggestions, like fish
-. ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Syntax highlighting, like fish
-. ~/.zsh/zsh-abbr/zsh-abbr.zsh # replace command abbreviations with full commands, like fish
+case "$OSTYPE" in
+  darwin*)
+    . "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
+    export PATH="$HOME/nutter-tools/bin:/Applications/Postgres.app/Contents/Versions/16/bin:$PATH"
+    ;;
+  linux*)
+    . "$HOME/powerlevel10k/powerlevel10k.zsh-theme"
+    ;;
+esac
+. "$HOME/.zsh/fzf-tab/fzf-tab.plugin.zsh" # Replace zsh's default tab completion selection menu with fzf
+. "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" # Inline autosuggestions, like fish
+. "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" # Syntax highlighting, like fish
+. "$HOME/.zsh/zsh-abbr/zsh-abbr.zsh" # replace command abbreviations with full commands, like fish
 
 HISTFILE=~/.zsh_history
 HISTSIZE=2048
 SAVEHIST=2048
 setopt autocd extendedglob
 bindkey -e # Use emacs keybindings even if our EDITOR is set to vi
-zstyle :compinstall filename '~/.zshrc'
+zstyle :compinstall filename "$HOME/.zshrc"
 fpath+=~/.zsh/zfunc
 fpath+=~/.zsh/zsh-completions/src
 autoload compinit
 compinit
 
 # abbr import-aliases --quiet ## Run this command once
+
+# /* vim: ft=bash

@@ -1,4 +1,10 @@
 -- if true then return {} end
+local term = os.getenv("TERM")
+local is_tmux = false
+if term == "alacritty" or term == "foot" or term == "tmux-256color" or term == "screen-256color" then
+  is_tmux = true
+end
+
 return {
   {
     "github/copilot.vim",
@@ -13,6 +19,7 @@ return {
 
   {
     "christoomey/vim-tmux-navigator",
+    enabled = is_tmux,
     cmd = {
       "TmuxNavigateLeft",
       "TmuxNavigateDown",

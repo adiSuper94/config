@@ -2,9 +2,10 @@
 
 post_build(){
   mkdir -p "$HOME/.zsh/zfunc"
+  . "$HOME/.cargo/env"
   rustup completions zsh > "$HOME/.zsh/zfunc/_rustup"
   rustup completions zsh cargo > "$HOME/.zsh/zfunc/_cargo"
-  . "$HOME/.cargo/env"
+  rustup component add rust-analyzer
 }
 
 install(){
