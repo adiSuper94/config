@@ -24,8 +24,8 @@ case $cmd in
   "start"|"connect"|"mount")
     mkdir -p ~/ssh/hpg
     mkdir -p ~/ssh/pubcomor1
-    sshfs pubcomor:/pubapps/com-or/ ~/ssh/pubcomor1
     sshfs hpg:/home/aditya.subramani/ ~/ssh/hpg
+    sshfs pubcomor:/pubapps/com-or/ ~/ssh/pubcomor1
     ;;
   "stop"|"disconnect"|"unmount")
     $unmount_cmd $unmount_flg ~/ssh/hpg
