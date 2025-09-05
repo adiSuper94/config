@@ -1,6 +1,5 @@
 local M = {}
 M.tmux_bindings = function(act, config)
-  config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
   local tmux_bindngs = {
     {
       key = "h",
@@ -32,29 +31,13 @@ M.tmux_bindings = function(act, config)
       mods = "LEADER",
       action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
     },
-    -- Wezterm default bindings, ish
-    {
-      key = "z",
-      mods = "LEADER",
-      action = act.TogglePaneZoomState,
-    },
-    {
-      key = "w",
-      mods = "LEADER",
-      action = act.CloseCurrentPane({ confirm = true }),
-    },
-    {
-      key = "t",
-      mods = "LEADER",
-      action = act.SpawnTab("CurrentPaneDomain"),
-    },
   }
 
   if config.keys == nil then
     config.keys = {}
   end
-  for key, value in pairs(tmux_bindngs) do
-    config.keys[key] = value
+  for _, value in pairs(tmux_bindngs) do
+    table.insert(config.keys, value)
   end
   for i = 1, 9 do
     table.insert(config.keys, {
