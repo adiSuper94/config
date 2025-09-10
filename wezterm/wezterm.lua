@@ -63,7 +63,7 @@ if is_darwin then
   }
 elseif is_linux then
   os_specific_config = {
-    font_size = 12,
+    font_size = 11,
     font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular" }),
     window_decorations = "NONE",
     front_end = "WebGpu",

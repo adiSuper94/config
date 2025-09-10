@@ -25,7 +25,6 @@ if cmp_plugin == "blink" then
           enabled = false,
         },
         appearance = {
-          use_nvim_cmp_as_default = false,
           -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
           nerd_font_variant = "mono",
         },

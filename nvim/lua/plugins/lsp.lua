@@ -54,7 +54,7 @@ return {
   -- have to wait for https://github.com/neovim/neovim/issues/28261 to be resolved
   {
     "felpafel/inlay-hint.nvim",
-    ft = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+    ft = { "typescript", "javascript", "javascriptreact", "typescriptreact", "c" },
     config = true,
   },
 
