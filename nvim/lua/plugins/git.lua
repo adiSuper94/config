@@ -97,20 +97,4 @@ return {
       vim.g.rooter_patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn" } --, 'Makefile', 'package.json'
     end,
   },
-
-  -- { "tpope/vim-fugitive" },
-
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim", -- required
-      "folliehiyuki/diffview.nvim", -- optional - Diff integration
-    },
-  },
-
-  {
-    "folliehiyuki/diffview.nvim",
-    branch = "mini-icons",
-    cmd = { "DiffviewOpen" },
-  },
 }

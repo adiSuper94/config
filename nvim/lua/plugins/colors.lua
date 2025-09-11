@@ -82,11 +82,32 @@ return {
           },
         },
         component_function = {
-          gitbranch = "FugitiveHead",
+          gitbranch = "v:lua.LightlineGitBranch",
           filename = "v:lua.LightlineFilename",
+          gitdiff = "v:lua.LightlineGitDiff"
         },
       }
-      function LightlineFilename(opts)
+      function LightlineGitDiff()
+        if vim.b.gitsigns_status_dict then
+          local status = vim.b.gitsigns_status_dict
+          local added = status.added and status.added > 0 and ("+" .. status.added) or ""
+          local changed = status.changed and status.changed > 0 and ("~" .. status.changed) or ""
+          local removed = status.removed and status.removed > 0 and ("-" .. status.removed) or ""
+          return table.concat({ added, changed, removed }, " ")
+        else
+          return ""
+        end
+      end
+
+      function LightlineGitBranch()
+        if vim.b.gitsigns_head and vim.b.gitsigns_head ~= "" then
+          return " " .. vim.b.gitsigns_head
+        else
+          return ""
+        end
+      end
+
+      function LightlineFilename()
         local git_root = vim.b.git_dir
         if not git_root then
           return vim.fn.expand("%")
@@ -96,7 +117,7 @@ return {
           git_root = vim.fn.fnamemodify(vim.b.git_dir, ":h")
         else
           git_root = vim.fn.fnamemodify(vim.b.git_dir, ":h:h")
-          branch = vim.fn.FugitiveHead() .. "/"
+          branch = vim.b.gitsigns_status_dict.head .. "/"
         end
         local path = vim.fn.expand("%:p")
         if git_root and path:sub(1, #git_root) == git_root then
