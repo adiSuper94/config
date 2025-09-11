@@ -82,7 +82,11 @@ return {
       vim.api.nvim_set_hl(0, "GitSignsStagedChange", { fg = get_color("GitSignsStagedChange", "fg"), bg = color })
       vim.api.nvim_set_hl(0, "GitSignsStagedDelete", { fg = get_color("GitSignsStagedDelete", "fg"), bg = color })
       vim.api.nvim_set_hl(0, "GitSignsStagedTopdelete", { fg = get_color("GitSignsStagedTopdelete", "fg"), bg = color })
-      vim.api.nvim_set_hl(0, "GitSignsStagedChangedelete", { fg = get_color("GitSignsStagedChangedelete", "fg"), bg = color })
+      vim.api.nvim_set_hl(
+        0,
+        "GitSignsStagedChangedelete",
+        { fg = get_color("GitSignsStagedChangedelete", "fg"), bg = color }
+      )
     end,
   },
 
@@ -94,10 +98,19 @@ return {
     end,
   },
 
-  { "tpope/vim-fugitive" },
+  -- { "tpope/vim-fugitive" },
 
   {
-    "sindrets/diffview.nvim",
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim", -- required
+      "folliehiyuki/diffview.nvim", -- optional - Diff integration
+    },
+  },
+
+  {
+    "folliehiyuki/diffview.nvim",
+    branch = "mini-icons",
     cmd = { "DiffviewOpen" },
   },
 }
