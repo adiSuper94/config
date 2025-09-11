@@ -1,10 +1,4 @@
 -- if true then return {} end
-local term = os.getenv("TERM")
-local is_tmux = false
-if term == "alacritty" or term == "foot" or term == "tmux-256color" or term == "screen-256color" then
-  is_tmux = true
-end
-
 return {
   {
     "github/copilot.vim",
@@ -18,25 +12,13 @@ return {
   },
 
   {
-    "christoomey/vim-tmux-navigator",
-    enabled = is_tmux,
-    cmd = {
-      "TmuxNavigateLeft",
-      "TmuxNavigateDown",
-      "TmuxNavigateUp",
-      "TmuxNavigateRight",
-      "TmuxNavigatePrevious",
-      "TmuxNavigatorProcessList",
-    },
-    keys = {
-      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
-    },
+    "mrjones2014/smart-splits.nvim",
     config = function()
-      vim.keymap.set("n", "∂", "<Plug>NetrwRefresh") -- mapping random key to NetrwRefresh, so window navigation is easier
+      vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left)
+      vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
+      vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
+      vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
+      vim.keymap.set("n", "<C-\\>", require("smart-splits").move_cursor_previous)
     end,
   },
 
