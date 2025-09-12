@@ -35,6 +35,7 @@ vim.opt.pumheight = 10
 vim.opt.splitbelow = true -- open new split windows below the current window
 vim.opt.splitright = true -- open new split windows to the right of the current wind
 
+
 vim.keymap.set("n", "<leader>l", "<cmd>set list! <CR>", { desc = "Toggle blank line chars" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 vim.keymap.set("n", "<A-x>", "<cmd>bd <CR>", { desc = "Close buffer and window" })
@@ -79,6 +80,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+vim.cmd.colorscheme("gruber-darker")
 
 require("lazy").setup({
   ui = { border = "rounded" },
@@ -98,12 +100,6 @@ require("lazy").setup({
     },
   },
 })
-
-if vim.g.colors_name ~= "gruber-darker" then -- gruber-darker has a nice brown color for comments
-  vim.cmd([[ highlight @comment guifg=#afafaf ]]) --comments are important AFAFAF
-else
-  vim.cmd([[ highlight LspInlayHint guifg=#40443d ]]) -- grubber-darker has confusing colors for inlay hints
-end
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
 
