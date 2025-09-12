@@ -1,61 +1,5 @@
 return {
   {
-    "thimc/gruber-darker.nvim",
-    priority = 1000,
-    config = function()
-      require("gruber-darker").setup({ transparent = true })
-      vim.cmd.colorscheme("gruber-darker")
-    end,
-  },
-
-  --  {
-  --   "ellisonleao/gruvbox.nvim",
-  --   priority = 1000,
-  --   config = function()
-  --     require("gruvbox").setup({
-  --       transparent_mode = true,
-  --     })
-  --     vim.cmd.colorscheme("gruvbox")
-  --   end,
-  -- },
-
-  -- {
-  --   "Shatur/neovim-ayu",
-  --   priority = 1000,
-  --   config = function()
-  --     require("ayu").setup({
-  --       overrides = {
-  --         Normal = { bg = "None" }
-  --       },
-  --     })
-  --     vim.cmd.colorscheme("ayu-dark")
-  --   end,
-  -- },
-
-  -- {
-  --   "folke/tokyonight.nvim",
-  --   priority = 1000,
-  --   opts = {},
-  --   config = function()
-  --     require("tokyonight").setup({
-  --       transparent = true,
-  --     })
-  --     vim.cmd.colorscheme("tokyonight")
-  --   end,
-  -- },
-
-  -- {
-  --   "RRethy/base16-nvim",
-  --   priority = 1000,
-  --   config = function()
-  --     require("base16-colorscheme").with_config({
-  --       telescope_borders = true,
-  --     })
-  --     vim.cmd.colorscheme("base16-gruvbox-dark-hard")
-  --   end,
-  -- },
-
-  {
     "catgoose/nvim-colorizer.lua",
     ft = { "css", "sass", "rasi", "toml" },
     config = function()
@@ -132,14 +76,6 @@ return {
 
   { "prichrd/netrw.nvim", opts = {} },
 
-  -- {
-  --   "OXY2DEV/markview.nvim",
-  --   lazy = false,
-  --   priority = 49,
-  --   -- dependencies = {
-  --   --   "saghen/blink.cmp",
-  --   -- },
-  -- },
 
   { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = "nvim-treesitter/nvim-treesitter" }, -- not really used for colors, but this is here cuz treesitter is here.
   {

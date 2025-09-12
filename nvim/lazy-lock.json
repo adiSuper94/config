@@ -4,7 +4,6 @@
   "copilot.vim": { "branch": "release", "commit": "c2c435419e081a87e909e8979c66d874e75e4155" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
   "gitsigns.nvim": { "branch": "main", "commit": "6e3c66548035e50db7bd8e360a29aec6620c3641" },
-  "gruber-darker.nvim": { "branch": "main", "commit": "1793c0929ca965430410f7ec578272a4af9226ee" },
   "inlay-hint.nvim": { "branch": "main", "commit": "ee8aa9806d1e160a2bc08b78ae60568fb6d9dbce" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "lightline.vim": { "branch": "master", "commit": "e358557e1a9f9fc860416c8eb2e34c0404078155" },
