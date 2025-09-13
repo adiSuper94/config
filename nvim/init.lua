@@ -35,7 +35,6 @@ vim.opt.pumheight = 10
 vim.opt.splitbelow = true -- open new split windows below the current window
 vim.opt.splitright = true -- open new split windows to the right of the current wind
 
-
 vim.keymap.set("n", "<leader>l", "<cmd>set list! <CR>", { desc = "Toggle blank line chars" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 vim.keymap.set("n", "<A-x>", "<cmd>bd <CR>", { desc = "Close buffer and window" })
@@ -68,72 +67,48 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 })
 
 -- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-vim.cmd.colorscheme("gruber-darker")
+-- local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+-- if not (vim.uv or vim.loop).fs_stat(lazypath) then
+-- vim.fn.system({
+--   "git",
+--   "clone",
+--   "--filter=blob:none",
+--   "https://github.com/folke/lazy.nvim.git",
+--   "--branch=stable", -- latest stable release
+--   lazypath,
+-- })
+-- end
+-- vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-  ui = { border = "rounded" },
-  spec = "plugins",
-  change_detection = { notify = false },
-  performance = {
-    rtp = {
-      disabled_plugins = {
-        "tohtml",
-        "gzip",
-        "rplugin",
-        "tarPlugin",
-        -- "netrwPlugin",
-        "zipPlugin",
-        "tutor",
-      },
-    },
-  },
-})
+-- require("lazy").setup({
+--   ui = { border = "rounded" },
+--   spec = "plugins",
+--   change_detection = { notify = false },
+--   performance = {
+--     rtp = {
+--       disabled_plugins = {
+--         "tohtml",
+--         "gzip",
+--         "rplugin",
+--         "tarPlugin",
+--         -- "netrwPlugin",
+--         "zipPlugin",
+--         "tutor",
+--       },
+--     },
+--   },
+-- })
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
 
--- LSP setup
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
-  callback = function(ev)
-    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if not client then
-      return
-    end
-    client.server_capabilities.semanticTokensProvider = nil
-    vim.lsp.inlay_hint.enable(true)
-    local map = function(keys, func, desc, mode)
-      mode = mode or "n"
-      vim.keymap.set(mode, keys, func, { buffer = ev.buf, desc = "LSP: " .. desc })
-    end
-    if client:supports_method("textDocument/foldingRange") then
-      local win = vim.api.nvim_get_current_win()
-      vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
-    end
-    if client:supports_method("textDocument/declaration") then
-      map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-    end
-    -- if client:supports_method("textDocument/completion") then
-    --   vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
-    -- end
-    map("<space>e", function()
-      vim.diagnostic.config({
-        virtual_lines = not vim.diagnostic.config().virtual_lines,
-      })
-    end, "Show diagnostics")
-    map("<space>q", vim.diagnostic.setloclist, "Open Diagnostic [Q]uickfix list")
-  end,
-})
-
-vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "lua_ls", "clangd", "bashls", "jsonls", "pyright" })
+vim.cmd.colorscheme("gruber-darker")
+require("plugins.colors")
+require("plugins.file-explorer")
+require("plugins.file-navigation")
+require("plugins.floaterminal")
+require("plugins.folds")
+require("plugins.fuzzysearch")
+require("plugins.git")
+require("plugins.mini")
+require("plugins.misc")
+require("lsp")
