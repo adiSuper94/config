@@ -9,7 +9,7 @@ after-login-command = []
 # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = []
+after-startup-command = ['layout tiles']
 
 # Start AeroSpace at login
 start-at-login = false
@@ -98,7 +98,7 @@ alt-slash = 'layout tiles horizontal vertical'
 alt-comma = 'layout accordion horizontal vertical'
 
 # See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
-alt-enter = '''exec-and-forget "/Applications/Alacritty.app/Contents/MacOS/alacritty"'''
+alt-enter = '''exec-and-forget "/Applications/WezTerm.app/Contents/MacOS/wezterm"'''
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 # i3 wraps focus by default

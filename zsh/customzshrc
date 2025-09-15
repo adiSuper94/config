@@ -45,6 +45,7 @@ esac
 . "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" # Inline autosuggestions, like fish
 . "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" # Syntax highlighting, like fish
 . "$HOME/.zsh/zsh-abbr/zsh-abbr.zsh" # replace command abbreviations with full commands, like fish
+. "$HOME/.deno/env"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=2048

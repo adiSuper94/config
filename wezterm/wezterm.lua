@@ -75,6 +75,18 @@ for k, v in pairs(os_specific_config) do
   config[k] = v
 end
 
+-- This maybe slow, but without this the tab name is too noisy
+local function basename(s)
+  return string.gsub(s, "(.*[/\\])(.*)", "%2")
+end
+
+wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
+  local pane = tab.active_pane
+  return {
+    { Text = " " .. tab.tab_index + 1 .. ": " .. basename(pane.foreground_process_name) .. " "},
+  }
+end)
+
 wezterm.on("update-right-status", function(window, pane)
   window:set_right_status(window:active_workspace())
 end)

@@ -22,28 +22,29 @@ install_homebrew() {
   fi
 }
 
-## check if default shell is zsh
-ensure_zsh() {
-  if [[ $SHELL != *"zsh"* ]]; then
+## check if default shell is zsh/fish
+ensure_sh() {
+  ISHELL=$1
+  if [[ $SHELL != *"$ISHELL"* ]]; then
     printf "Current shell is set to %s\n" "$SHELL"
-    printf "This script needs to run with zsh as default shell.\n"
-    if ask "Do you want to change default shell to zsh"; then
-      if ! command -v zsh &> /dev/null; then
-          if ask "Do you want to install zsh"; then
-            sudo "$apt" "$install" zsh
-            printf "Tried installing zsh."
+    printf "This script needs to run with %s as default shell.\n" "$ISHELL"
+    if ask "Do you want to change default shell to $ISHELL"; then
+      if ! command -v "$ISHELL" &> /dev/null; then
+          if ask "Do you want to install $ISHELL"; then
+            sudo "$apt" "$install" "$ISHELL"
+            printf "Tried installing %s." "$ISHELL"
           fi
       fi
-      if ! command -v zsh &> /dev/null; then
-        printf "Can't find zsh in PATH. Please install zsh and run the script again.\nExiting...\n"
+      if ! command -v "$ISHELL" &> /dev/null; then
+        printf "Can't find %s in PATH. Please install %s and run the script again.\nExiting...\n" "$ISHELL" "$ISHELL"
         exit 1
       fi
-      chsh -s "$(which zsh)"
-      printf "I have tried to set the default shell to zsh.\n"
+      chsh -s "$(which "$ISHELL")"
+      printf "I have tried to set the default shell to %s.\n" "$ISHELL"
       printf "You might need to restart the terminal, or even your machine for this to take effect.\n"
       exit 1
     else
-      printf "Please change default shell to zsh and run the script again.\n"
+      printf "Please change default shell to %s and run the script again.\n" "$ISHELL"
       exit 1
     fi
   fi
@@ -143,6 +144,7 @@ os_specific_setup(){
           ;;
       esac
       curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+      curl -fsSL https://deno.land/install.sh | sh
       curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
       sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
       ;;
@@ -150,7 +152,7 @@ os_specific_setup(){
       printf "Homebrew installation should also trigger Xcode CLI tools installation. Please follow the prompts\n\n"
       install_homebrew
       export HOMEBREW_NO_ENV_HINTS=TRUE
-      brew install --quiet tmux unzip htop jq wget bat bat-extras fnm zoxide fd ripgrep eza neovim pass
+      brew install --quiet tmux unzip htop jq wget bat bat-extras fnm zoxide fd ripgrep eza neovim pass deno
       brew install --cask nikitabobko/tap/aerospace
       brew install --cask kdfiff3
       brew install --cask copyq
@@ -186,7 +188,7 @@ sym_link(){
 }
 
 setup() {
-  ensure_zsh
+  ensure_sh "fish"
   os_specific_setup
   echo "Setting up basic tools"
   if [ ! -d "$HOME/nutter-tools" ]; then

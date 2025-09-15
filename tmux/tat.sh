@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 not_in_tmux() {
   [ -z "$TMUX" ]
 }
@@ -40,5 +40,5 @@ tat() {
   fi
 }
 if [[ $TERM == "alacritty" || $TERM == "foot" ]]; then
-  . <(fzf --zsh) && tat
+  . <(fzf --bash) && tat
 fi

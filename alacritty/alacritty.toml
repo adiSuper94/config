@@ -6,11 +6,6 @@ import = [
 [env]
 WINIT_X11_SCALE_FACTOR = "1"
 
-[terminal]
-  [terminal.shell]
-  program = "/bin/zsh"
-
-
 [window]
 option_as_alt = "OnlyLeft"
 opacity = 0.95
