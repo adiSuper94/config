@@ -1,19 +1,4 @@
 return {
-  -- { "j-hui/fidget.nvim", opts = {}, ft = { "rust" } }, -- disabling this if in favour of mini.notify. But still keeping this around in case I change my mind
-
-  {
-    "williamboman/mason.nvim",
-    opts = {
-      ui = {
-        icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗",
-        },
-      },
-    },
-  },
-
   {
     "stevearc/conform.nvim",
     keys = {

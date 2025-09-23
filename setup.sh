@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 TAT=false
 
@@ -147,6 +147,7 @@ os_specific_setup(){
       curl -fsSL https://deno.land/install.sh | sh
       curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
       sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+      curl -LsSf https://astral.sh/uv/install.sh | sh
       ;;
     "darwin")
       printf "Homebrew installation should also trigger Xcode CLI tools installation. Please follow the prompts\n\n"
@@ -161,6 +162,7 @@ os_specific_setup(){
       curl -Lo ssh-3.7.3.pkg https://github.com/libfuse/sshfs/releases/download/sshfs-3.7.3/sshfs-3.7.3-ccb6821.pkg
       sudo installer -pkg ssh-3.7.3.pkg -target /
       rm -f ssh-3.7.3.pkg
+      curl -LsSf https://astral.sh/uv/install.sh | sh
     ;;
     *)
       printf "No OS specific setup for %s\n" "$os"
@@ -185,6 +187,7 @@ sym_link(){
   rm -f "$HOME/nutter-tools/bin/hpg" 2> /dev/null
   ln -s "$DOTFILES/kutti-scripts/irg" "$HOME/nutter-tools/bin/"
   ln -s "$DOTFILES/kutti-scripts/hpg" "$HOME/nutter-tools/bin/"
+  ln -s "$DOTFILES/lsp" "$HOME/nutter-tools/bin/"
 }
 
 setup() {
