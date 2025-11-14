@@ -41,6 +41,14 @@ install_luals(){
   esac
 }
 
+install_js_dap(){
+  local version="v1.105.0"
+  local file_name="js-dap-${version}.tar.gz"
+  curl -Lo "${file_name}" "https://github.com/microsoft/vscode-js-debug/releases/download/${version}/js-debug-dap-${version}.tar.gz"
+  tar -xvf "${file_name}" --directory "$HOME/nutter-tools/js-dap"
+  rm "${file_name}"
+}
+
 uninstall_luals(){
   case $os in
     "linux")
@@ -197,6 +205,7 @@ for server in "${servers[@]}"; do
         "typescript")
           npm uninstall -g "typescript-language-server" "typescript"
           npm uninstall -g @fsouza/prettierd
+          install_js_dap
           ;;
         "vscode-langservers-extracted"|"json"|"html"|"css"|"markdown")
           npm uninstall -g "vscode-langservers-extracted"
