@@ -71,6 +71,36 @@ return {
         program = "./${relativeFileDirname}",
       },
     }
+    dap.adapters["pwa-node"] = {
+      type = "server",
+      host = "localhost",
+      port = "${port}",
+      executable = {
+        command = "node",
+        args = {
+          os.getenv("HOME") .. "/nutter-tools/js-debug/src/dapDebugServer.js",
+          "${port}",
+        },
+      },
+    }
+    dap.configurations.javascript = {
+      {
+        type = "pwa-node",
+        request = "launch",
+        name = "Launch Program",
+        program = "${file}",
+        cwd = vim.fn.getcwd(),
+        skipFiles = { "<node_internals>/**" },
+      },
+      {
+        type = "pwa-node",
+        request = "attach",
+        name = "Attach to process",
+        processId = require("dap.utils").pick_process,
+        cwd = vim.fn.getcwd(),
+        skipFiles = { "<node_internals>/**" },
+      },
+    }
 
     dapui.setup()
     dap.listeners.after.event_initialized["dapui_config"] = function()
