@@ -172,7 +172,7 @@ os_specific_setup(){
 }
 
 sym_link(){
-  for pkg_config in nvim alacritty wezterm foot tmux sway i3 aerospace regolith3 rofi waybar git; do
+  for pkg_config in nvim alacritty wezterm foot tmux sway i3 aerospace regolith3 rofi waybar git lazygit; do
     if [[ -d "$HOME"/.config/$pkg_config ]]; then
       if [[ -L "$HOME"/.config/$pkg_config ]]; then
         rm -rf "$HOME"/.config/$pkg_config
