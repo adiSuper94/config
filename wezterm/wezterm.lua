@@ -42,7 +42,7 @@ config = {
       action = workspace_switcher.switch_to_prev_workspace(),
     },
   },
-  color_scheme = "Gruber (base16)",
+  color_scheme = "Everblush",
   window_padding = { bottom = 0, left = 0, right = 0 },
   max_fps = 120,
 }

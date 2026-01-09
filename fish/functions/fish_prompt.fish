@@ -1,5 +1,5 @@
 function fish_prompt
-  set_color yellow
+  set_color cyan
   set -l curr_dir (string replace -- "$HOME" "~" "$PWD")
   echo -n $curr_dir
   set_color normal

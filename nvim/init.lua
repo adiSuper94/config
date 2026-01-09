@@ -80,7 +80,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-vim.cmd.colorscheme("gruber-darker")
 
 require("lazy").setup({
   ui = { border = "rounded" },
@@ -102,6 +101,7 @@ require("lazy").setup({
 })
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
+vim.cmd.colorscheme("evergreen")
 
 -- LSP setup
 vim.api.nvim_create_autocmd("LspAttach", {
