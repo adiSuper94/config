@@ -1,14 +1,14 @@
 return {
   {
     "catgoose/nvim-colorizer.lua",
-    ft = { "css", "sass", "rasi", "toml" },
+
+    ft = { "css", "sass", "rasi", "toml", "lua" },
     config = function()
       require("colorizer").setup({
-        filetypes = { "css", "sass", "rasi", "toml" },
+        filetypes = { "css", "sass", "rasi", "toml", "lua" },
       })
     end,
   },
-
   {
     "itchyny/lightline.vim",
     lazy = false,
@@ -16,7 +16,7 @@ return {
       vim.g.lightline = {
         active = {
           left = {
-            { "mode", "paste" },
+            { "mode",      "paste" },
             { "gitbranch", "readonly", "filename", "modified" },
           },
           right = {
@@ -64,22 +64,20 @@ return {
 
   { "hiphish/rainbow-delimiters.nvim" },
 
-  { "prichrd/netrw.nvim", opts = {} },
+  { "prichrd/netrw.nvim",                          opts = {} },
 
 
-  { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = "nvim-treesitter/nvim-treesitter" }, -- not really used for colors, but this is here cuz treesitter is here.
+  { "nvim-treesitter/nvim-treesitter-textobjects", dependencies = "nvim-treesitter/nvim-treesitter", branch = "master" }, -- not really used for colors, but this is here cuz treesitter is here.
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    branch = "master",
+    lazy = false,
     config = function()
       require("nvim-treesitter.configs").setup({
-        -- A list of parser names, or "all" (the five listed parsers should always be installed)
         ensure_installed = { "go", "typescript", "javascript", "rust", "vim", "vimdoc" },
-        -- Install parsers synchronously (only applied to `ensure_installed`)
         sync_install = false,
-
-        auto_install = true,
-
+        auto_install = false,
         -- List of parsers to ignore installing (or "all")
         ignore_install = { "gitignore", "tmux" },
         ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
