@@ -28,14 +28,26 @@ vim.opt.updatetime = 250
 vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣", space = "·" }
 vim.opt.winborder = "rounded"
 vim.opt.diffopt:append("iwhite") -- ignore whitespace when diffing
-vim.opt.completeopt = { "menu", "menuone", "noselect", "popup", "fuzzy" }
-vim.opt.pumheight = 10
+vim.opt.completeopt = { "menu", "menuone", "noselect", "fuzzy", "popup" }
+vim.opt.pumheight = 15
+vim.opt.pummaxwidth = 60
+vim.opt.pumborder = "rounded"
+-- Fold Settings
+vim.opt.foldlevelstart = 99
+vim.opt.foldlevel = 99
+vim.opt.foldcolumn = "0"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- Why did I not know about this earlier??!
 vim.opt.splitbelow = true -- open new split windows below the current window
 vim.opt.splitright = true -- open new split windows to the right of the current wind
 
+-- Netrw opts
+vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3
 
+vim.keymap.set("n", "-", "<CMD>Explore<CR>", { desc = "raw-dog: Toggle Netrw" })
 vim.keymap.set("n", "<leader>l", "<cmd>set list! <CR>", { desc = "Toggle blank line chars" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 vim.keymap.set("n", "<A-x>", "<cmd>bd <CR>", { desc = "Close buffer and window" })
@@ -60,6 +72,16 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank({ timeout = 500 })
   end,
 })
+-- Disable arrow keys in netrw
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "netrw",
+  callback = function()
+    vim.api.nvim_buf_set_keymap(0, "n", "<up>", "<nop>", { desc = "Up arrow disabled" })
+    vim.api.nvim_buf_set_keymap(0, "n", "<down>", "<nop>", { desc = "Down arrow disabled" })
+    vim.api.nvim_buf_set_keymap(0, "n", "<left>", "<nop>", { desc = "Up arrow disabled" })
+    vim.api.nvim_buf_set_keymap(0, "n", "<right>", "<nop>", { desc = "Down arrow disabled" })
+  end,
+})
 
 -- Remove trailing whitespace
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
@@ -67,38 +89,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   command = [[%s/\s\+$//e]],
 })
 
--- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup({
-  ui = { border = "rounded" },
-  spec = "plugins",
-  change_detection = { notify = false },
-  performance = {
-    rtp = {
-      disabled_plugins = {
-        "tohtml",
-        "gzip",
-        "rplugin",
-        "tarPlugin",
-        -- "netrwPlugin",
-        "zipPlugin",
-        "tutor",
-      },
-    },
-  },
-})
+require("plugins.basic")
+require("plugins.git")
+require("plugins.fuzzysearch")
+require("plugins.lsp")
+require("plugins.dap")
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
 vim.cmd.colorscheme("evergreen")
@@ -124,9 +119,13 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method("textDocument/declaration") then
       map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
     end
-    -- if client:supports_method("textDocument/completion") then
-    --   vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
-    -- end
+    if client:supports_method("textDocument/completion") then
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+    end
+
+    if client:supports_method('textDocument/inlayHint') then
+      vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+    end
     map("<space>e", function()
       vim.diagnostic.config({
         virtual_lines = not vim.diagnostic.config().virtual_lines,

@@ -1,0 +1,95 @@
+{
+  "plugins": {
+    "conform.nvim": {
+      "rev": "c2526f1cde528a66e086ab1668e996d162c75f4f",
+      "src": "https://github.com/stevearc/conform.nvim"
+    },
+    "copilot.vim": {
+      "rev": "a12fd5672110c8aa7e3c8419e28c96943ca179be",
+      "src": "https://github.com/github/copilot.vim"
+    },
+    "dressing.nvim": {
+      "rev": "2d7c2db2507fa3c4956142ee607431ddb2828639",
+      "src": "https://github.com/stevearc/dressing.nvim"
+    },
+    "fff.nvim": {
+      "rev": "c9137b19b6b86de2bc3c978fb64fe6e78ddeb0b4",
+      "src": "https://github.com/dmtrKovalenko/fff.nvim"
+    },
+    "gitsigns.nvim": {
+      "rev": "9f3c6dd7868bcc116e9c1c1929ce063b978fa519",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "inlay-hint.nvim": {
+      "rev": "868e7bb12370f2e6cabab1ff56effd1a5b7fb1da",
+      "src": "https://github.com/felpafel/inlay-hint.nvim",
+      "version": "'nightly'"
+    },
+    "lightline.vim": {
+      "rev": "e358557e1a9f9fc860416c8eb2e34c0404078155",
+      "src": "https://github.com/itchyny/lightline.vim"
+    },
+    "mini.nvim": {
+      "rev": "4ca988557786c9a4e41d5e5b6e31b4c9d7379f53",
+      "src": "https://github.com/echasnovski/mini.nvim"
+    },
+    "netrw.nvim": {
+      "rev": "90501c62b9b816ed3ed1e912ae9db9af5671a1b2",
+      "src": "https://github.com/prichrd/netrw.nvim"
+    },
+    "nvim-colorizer.lua": {
+      "rev": "338409dd8a6ed74767bad3eb5269f1b903ffb3cf",
+      "src": "https://github.com/catgoose/nvim-colorizer.lua"
+    },
+    "nvim-dap": {
+      "rev": "db321947bb289a2d4d76a32e76e4d2bd6103d7df",
+      "src": "https://github.com/mfussenegger/nvim-dap"
+    },
+    "nvim-dap-ui": {
+      "rev": "cf91d5e2d07c72903d052f5207511bf7ecdb7122",
+      "src": "https://github.com/rcarriga/nvim-dap-ui"
+    },
+    "nvim-nio": {
+      "rev": "21f5324bfac14e22ba26553caf69ec76ae8a7662",
+      "src": "https://github.com/nvim-neotest/nvim-nio"
+    },
+    "nvim-treesitter": {
+      "rev": "42fc28ba918343ebfd5565147a42a26580579482",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
+      "version": "'master'"
+    },
+    "nvim-treesitter-textobjects": {
+      "rev": "5ca4aaa6efdcc59be46b95a3e876300cfead05ef",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+      "version": "'master'"
+    },
+    "rainbow-delimiters.nvim": {
+      "rev": "d6b802552cbe7d643a3b6b31f419c248d1f1e220",
+      "src": "https://github.com/hiphish/rainbow-delimiters.nvim"
+    },
+    "smart-splits.nvim": {
+      "rev": "b9d563ea52c4926a4d91e5e795c68bb8f89f8ba0",
+      "src": "https://github.com/mrjones2014/smart-splits.nvim"
+    },
+    "vim-dadbod": {
+      "rev": "6d1d41da4873a445c5605f2005ad2c68c99d8770",
+      "src": "https://github.com/tpope/vim-dadbod"
+    },
+    "vim-dadbod-completion": {
+      "rev": "a8dac0b3cf6132c80dc9b18bef36d4cf7a9e1fe6",
+      "src": "https://github.com/kristijanhusak/vim-dadbod-completion"
+    },
+    "vim-dadbod-ui": {
+      "rev": "07e92e22114cc5b1ba4938d99897d85b58e20475",
+      "src": "https://github.com/kristijanhusak/vim-dadbod-ui"
+    },
+    "vim-rooter": {
+      "rev": "51402fb77c4d6ae94994e37dc7ca13bec8f4afcc",
+      "src": "https://github.com/airblade/vim-rooter"
+    },
+    "which-key.nvim": {
+      "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
+      "src": "https://github.com/folke/which-key.nvim"
+    }
+  }
+}
