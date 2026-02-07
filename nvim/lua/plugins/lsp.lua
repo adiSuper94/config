@@ -13,8 +13,8 @@ return {
     cmd = { "ConformInfo" },
     opts = {
       formatters_by_ft = {
-        javascript = { "deno_fmt", "prettierd", "prettier", stop_after_first = true },
-        typescript = { "deno_fmt", "prettierd", "prettier", stop_after_first = true },
+        javascript = { "oxfmt", "deno_fmt", "prettierd", "prettier", stop_after_first = true },
+        typescript = { "oxfmt", "deno_fmt", "prettierd", "prettier", stop_after_first = true },
         javascriptreact = { "prettierd", "prettier", stop_after_first = true },
         typescriptreact = { "prettierd", "prettier", stop_after_first = true },
         json = { "prettierd", "prettier", stop_after_first = true },
@@ -46,7 +46,7 @@ return {
   {
     "kristijanhusak/vim-dadbod-ui",
     dependencies = {
-      { "tpope/vim-dadbod", lazy = true },
+      { "tpope/vim-dadbod",                     lazy = true },
       { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
     },
     cmd = {

@@ -161,6 +161,7 @@ for server in "${servers[@]}"; do
         "typescript")
           npm install -g "typescript-language-server" "typescript"
           npm install -g @fsouza/prettierd
+          npm install -g oxfmt
           install_js_dap
           ;;
         "vscode-langservers-extracted"|"json"|"html"|"css"|"markdown")
@@ -207,6 +208,7 @@ for server in "${servers[@]}"; do
         "typescript")
           npm uninstall -g "typescript-language-server" "typescript"
           npm uninstall -g @fsouza/prettierd
+          npm uninstall -g oxfmt
           rm -rf "$HOME/nutter-tools/js-debug"
           ;;
         "vscode-langservers-extracted"|"json"|"html"|"css"|"markdown")
