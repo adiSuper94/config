@@ -1,4 +1,4 @@
-local searcher = "fff" --- "telescope" | "raw-dog" | "fff"
+local searcher = "fff" --- "raw-dog" | "fff"
 
 vim.opt.grepprg = "rg --vimgrep --smart-case"
 function Rg()
@@ -21,101 +21,33 @@ end
 
 vim.opt.findfunc = "v:lua.Fd"
 vim.api.nvim_create_user_command('Rg', Rg, {})
+vim.keymap.set("n", "<leader>/", ":Rg<CR>", { desc = "raw-dog: grep" })
 
 if searcher == "raw-dog" then
   vim.keymap.set("n", "<C-p>", ":find ", { desc = "raw-dog: Project Files" })
-  vim.keymap.set("n", "<leader>/", ":Rg<CR>", { desc = "raw-dog: Live grep" })
-  return {}
-end
+elseif searcher == "fff" then
+  vim.pack.add({ 'https://github.com/dmtrKovalenko/fff.nvim' })
 
-if searcher == "telescope" then
-  return {
-    {
-      "nvim-telescope/telescope.nvim",
-      enabled = searcher == "telescope",
-      tag = "v0.2.0",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-        "nvim-telescope/telescope-ui-select.nvim",
-      },
-      config = function()
-        local default_theme = "dropdown"
-        require("telescope").setup({
-          pickers = {
-            find_files = {
-              theme = default_theme,
-              previewer = false,
-            },
-            git_files = {
-              theme = default_theme,
-              previewer = false,
-            },
-            builtin = {
-              theme = default_theme,
-              previewer = false,
-            },
-            current_buffer_fuzzy_find = {
-              previewer = false,
-            },
-          },
-          extensions = {
-            ["ui-select"] = {
-              require("telescope.themes").get_ivy(),
-            },
-          },
-        })
-        local utils = require("telescope.utils")
-        local builtin = require("telescope.builtin")
-        local project_files = function()
-          local _, ret, _ = utils.get_os_command_output({ "git", "rev-parse", "--is-inside-work-tree" })
-          if ret == 0 then
-            builtin.git_files()
-          else
-            builtin.find_files()
-          end
-        end
-        vim.keymap.set("n", "<C-p>", project_files, { desc = "Project Files" })
-
-        vim.keymap.set("n", "<leader>tj", builtin.builtin, { desc = "Telescope builtins" })
-        vim.keymap.set("n", "<leader>tf", builtin.find_files, { desc = "Telescope find files" })
-        vim.keymap.set("n", "<leader>/", builtin.live_grep, { desc = "Telescope live grep" })
-        vim.keymap.set("n", "<leader>th", builtin.help_tags, { desc = "Telescope help tags" })
-        vim.keymap.set("n", "<leader>c", function()
-          builtin.git_files({ cwd = "~/.config/nvim/" })
-        end, { desc = "Open nvim init.lua" })
-
-        require("telescope").load_extension("fzf")
-        require("telescope").load_extension("ui-select")
-      end,
-    },
-  }
-end
-
-if searcher == "fff" then
-  vim.keymap.set("n", "<leader>/", ":Rg<CR>", { desc = "raw-dog: Live grep" })
-  return
-  {
-    'dmtrKovalenko/fff.nvim',
-    build = function()
-      -- this will download prebuild binary or try to use existing rustup toolchain to build from source
-      -- (if you are using lazy you can use gb for rebuilding a plugin if needed)
-      require("fff.download").download_or_build_binary()
+  vim.api.nvim_create_autocmd('PackChanged', {
+    callback = function(event)
+      if event.data.updated then
+        require('fff.download').download_or_build_binary()
+      end
     end,
-    opts = {                -- (optional)
-      debug = {
-        enabled = false ,     -- we expect your collaboration at least during the beta
-        show_scores = false, -- to help us optimize the scoring system, feel free to share your scores!
-      },
+  })
+
+  vim.g.fff = {
+    lazy_sync = true, -- start syncing only when the picker is open
+    debug = {
+      enabled = true,
+      show_scores = true,
     },
-    -- No need to lazy-load with lazy.nvim, this plugin initializes itself lazily.
-    lazy = false,
-    keys = {
-      {
-        "<C-p>",
-        function() require('fff').find_files() end,
-        desc = 'FFFind files',
-      }
-    }
   }
+
+  vim.keymap.set(
+    'n',
+    '<C-p>',
+    function() require('fff').find_files() end,
+    { desc = 'FFFind files' }
+  )
 end
