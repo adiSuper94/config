@@ -36,8 +36,6 @@ vim.opt.pumborder = "rounded"
 vim.opt.foldlevelstart = 99
 vim.opt.foldlevel = 99
 vim.opt.foldcolumn = "0"
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
 -- Why did I not know about this earlier??!
 vim.opt.splitbelow = true -- open new split windows below the current window
@@ -53,9 +51,7 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highl
 vim.keymap.set("n", "<A-x>", "<cmd>bd <CR>", { desc = "Close buffer and window" })
 vim.keymap.set("n", "<leader>x", "<cmd>bp | bd # <CR>", { desc = "Close Buffer" })
 vim.keymap.set("n", "<C-n>", "<cmd>tabnew <CR>", { desc = "New tab" })
-vim.keymap.set("n", "<leader>z", "<cmd>wincmd | | wincmd _<CR>", { desc = "Maximize current window" })
-vim.keymap.set("n", "<leader>=", "<cmd>wincmd = <CR>", { desc = "Equalize window size" })
-vim.keymap.set("n", "≈", "<cmd>bd <CR>", { desc = "Close buffer and window (Mac)" })
+vim.keymap.set("n", "<C-w>z", "<cmd>wincmd | | wincmd _<CR>", { desc = "Maximize current window" })
 
 -- disable arrow keys in insert mode
 vim.keymap.set("i", "<up>", "<nop>", { desc = "Up arrow disabled" })
@@ -72,16 +68,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank({ timeout = 500 })
   end,
 })
--- Disable arrow keys in netrw
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "netrw",
-  callback = function()
-    vim.api.nvim_buf_set_keymap(0, "n", "<up>", "<nop>", { desc = "Up arrow disabled" })
-    vim.api.nvim_buf_set_keymap(0, "n", "<down>", "<nop>", { desc = "Down arrow disabled" })
-    vim.api.nvim_buf_set_keymap(0, "n", "<left>", "<nop>", { desc = "Up arrow disabled" })
-    vim.api.nvim_buf_set_keymap(0, "n", "<right>", "<nop>", { desc = "Down arrow disabled" })
-  end,
-})
 
 -- Remove trailing whitespace
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
@@ -89,11 +75,26 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   command = [[%s/\s\+$//e]],
 })
 
-require("plugins.basic")
+require("statusline")
+require("fuzzysearch")
 require("plugins.git")
-require("plugins.fuzzysearch")
+require("plugins.basic")
+require("plugins.treesitter")
+require("plugins.mini")
 require("plugins.lsp")
-require("plugins.dap")
+
+vim.api.nvim_create_user_command("DBUI", function()
+  vim.api.nvim_del_user_command("DBUI")
+  require("plugins.db")
+  print("DBUI Lazy Loaded")
+  vim.api.nvim_command("DBUI")
+end, { desc = "Initialize DBUI" })
+
+vim.keymap.set("n", "<leader>b", function()
+  require("plugins.dap")
+  print("DAP Lazy Loaded")
+  vim.keymap.del("n", "<leader>b")
+end, { desc = "Debugger: Lazy load" })
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
 vim.cmd.colorscheme("evergreen")
