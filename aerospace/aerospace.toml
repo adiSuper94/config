@@ -102,10 +102,10 @@ alt-enter = '''exec-and-forget "/Applications/WezTerm.app/Contents/MacOS/wezterm
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
 # i3 wraps focus by default
-alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
-alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
-alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
-alt-l = 'focus --boundaries-action wrap-around-the-workspace right'
+cmd-h = 'focus --boundaries-action wrap-around-the-workspace left'
+cmd-j = 'focus --boundaries-action wrap-around-the-workspace down'
+cmd-k = 'focus --boundaries-action wrap-around-the-workspace up'
+cmd-l = 'focus --boundaries-action wrap-around-the-workspace right'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move
 alt-shift-h = 'move left'
