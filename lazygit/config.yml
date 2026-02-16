@@ -22,3 +22,5 @@ gui:
 
   authorColors:
   '*': '#96b4aa'
+git:
+  overrideGpg: true

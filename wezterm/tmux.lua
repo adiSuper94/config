@@ -1,21 +1,9 @@
 local M = {}
 M.tmux_bindings = function(act, config)
-  local tmux_bindngs = {
-    {
-      key = "g",
-      mods = "LEADER",
-      action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
-    },
-    {
-      key = "v",
-      mods = "LEADER",
-      action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
-    },
-  }
-
   if config.keys == nil then
     config.keys = {}
   end
+  local tmux_bindngs = {}
   for _, value in pairs(tmux_bindngs) do
     table.insert(config.keys, value)
   end
