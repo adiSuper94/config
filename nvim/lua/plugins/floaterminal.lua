@@ -57,5 +57,3 @@ vim.api.nvim_create_autocmd("TermOpen", {
 })
 vim.keymap.set("t", "<esc><esc>", "<C-\\><C-n>")
 vim.keymap.set({ "t", "n" }, "<leader>tt", "<CMD>:Floaterminal<CR>", { desc = "Toggle Floating Terminal" })
-
-return {}

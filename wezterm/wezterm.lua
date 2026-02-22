@@ -15,6 +15,17 @@ config = {
       mods = "CTRL|SHIFT",
       action = act.CloseCurrentPane({ confirm = true }),
     },
+    -- vim like splits
+    {
+      key = "v",
+      mods = "LEADER",
+      action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
+    },
+    {
+      key = "s",
+      mods = "LEADER",
+      action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
+    },
     -- Wezterm default bindings,
     {
       key = "z",
@@ -32,12 +43,12 @@ config = {
       action = act.SpawnTab("CurrentPaneDomain"),
     },
     {
-      key = "s",
+      key = "h",
       mods = "LEADER",
       action = workspace_switcher.switch_workspace(),
     },
     {
-      key = "S",
+      key = "H",
       mods = "LEADER",
       action = workspace_switcher.switch_to_prev_workspace(),
     },
