@@ -15,7 +15,7 @@ local ts = require("nvim-treesitter")
 ts.setup({
   install_dir = vim.fn.stdpath('data') .. '/site'
 })
-ts.install({ "go", "typescript", "javascript", "rust", "vim", "vimdoc" }):wait(5 * 60 * 1000)
+ts.install({ "go", "typescript", "javascript", "rust" }):wait(5 * 60 * 1000)
 require("nvim-treesitter-textobjects").setup {
   select = {
     lookahead = true,

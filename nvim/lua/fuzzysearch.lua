@@ -31,6 +31,23 @@ vim.api.nvim_create_autocmd("DirChanged", {
   end,
 })
 
+vim.api.nvim_create_autocmd({ 'CmdlineChanged', 'CmdlineLeave' }, {
+  pattern = { '*' },
+  group = vim.api.nvim_create_augroup('CmdlineAutocompletion', { clear = true }),
+  callback = function(ev)
+    local function should_enable_autocomplete()
+      local cmdline_cmd = vim.fn.split(vim.fn.getcmdline(), ' ')[1]
+      return cmdline_cmd == 'find' or cmdline_cmd == 'help' or cmdline_cmd == 'h'
+    end
+    if ev.event == 'CmdlineChanged' and should_enable_autocomplete() then
+      vim.opt.wildmode = 'noselect:lastused,full'
+      vim.fn.wildtrigger()
+    elseif ev.event == 'CmdlineLeave' then
+      vim.opt.wildmode = 'full'
+    end
+  end
+})
+
 
 vim.opt.grepprg = "rg --vimgrep --smart-case"
 vim.opt.findfunc = "v:lua.CachedFd"

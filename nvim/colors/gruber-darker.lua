@@ -25,6 +25,15 @@ local colors = {
 
 local highlights = {
   Normal = { bg = colors.background, fg = colors.foreground },
+
+  StatusLine = { bg = colors.brightblack, fg = colors.foreground },
+  StatusLineModeNormal = { bg = colors.green, fg = colors.black, bold = true },
+  StatusLineModeInsert = { bg = "#00a1ff", fg = colors.black, bold = true },
+  StatusLineModeVisual = { bg = "#FFB86C", fg = colors.black, bold = true },
+  StatusLineModeReplace = { bg = colors.white, fg = colors.black, bold = true },
+  StatusLineGit = { bg = colors.yellow, fg = colors.black },
+  StatusLineDiff = { bg = colors.brightcyan, fg = colors.black },
+  StatusLineInfo = { bg = colors.brightblack, fg = colors.colour_4 },
   SpecialComment = { fg = colors.green },
 
   Comment = { fg = colors.brown },
