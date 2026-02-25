@@ -1,3 +1,4 @@
+---@type vim.lsp.Config
 return {
   cmd = { "deno", "lsp" },
   root_dir = function(_, callback)

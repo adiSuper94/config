@@ -154,6 +154,7 @@ for server in "${servers[@]}"; do
         "pyright")
           npm install -g "pyright"
           uv tool install ruff@latest
+          uv tool install ty@latest
           ;;
         "rust-analyzer")
           rustup component add rust-analyzer
@@ -201,6 +202,7 @@ for server in "${servers[@]}"; do
         "pyright")
           npm uninstall -g "pyright"
           uv tool uninstall ruff
+          uv tool uninstall ty
           ;;
         "rust-analyzer")
           rustup component remove rust-analyzer

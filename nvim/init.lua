@@ -83,6 +83,7 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 
 require("statusline")
 require("fuzzysearch")
+require("floaterminal")
 require("plugins.git")
 require("plugins.basic")
 require("plugins.treesitter")
@@ -103,7 +104,7 @@ vim.keymap.set("n", "<leader>b", function()
 end, { desc = "Debugger: Lazy load" })
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
-vim.cmd.colorscheme("evergreen")
+vim.cmd.colorscheme("sundarban")
 
 -- LSP setup
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -133,7 +134,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method('textDocument/inlayHint') then
       vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
     end
-    map("<space>e", function()
+    map("grd", function()
       vim.diagnostic.config({
         virtual_lines = not vim.diagnostic.config().virtual_lines,
       })
@@ -142,4 +143,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "lua_ls", "clangd", "bashls", "jsonls", "pyright" })
+vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "lua_ls", "clangd", "bashls", "jsonls", "ty" })
