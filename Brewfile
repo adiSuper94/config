@@ -12,6 +12,7 @@ brew "eza"
 brew "neovim"
 brew "pass"
 brew "deno"
+brew "pnpm"
 
 cask "nikitabobko/tap/aerospace"
 cask "kdiff3"

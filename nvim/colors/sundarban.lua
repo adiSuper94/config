@@ -22,10 +22,10 @@ local colors = {
 
 local highlights = {
   Normal = { bg = colors.background, fg = colors.foreground },
-  StatusLine = { bg = colors.brightblack, fg = colors.foreground },
-  StatusLineModeNormal = { bg = colors.colour_1, fg = colors.black, bold = true },
   StatusLineModeInsert = { bg = "#00a1ff", fg = colors.black, bold = true },
   StatusLineModeVisual = { bg = "#FFB86C", fg = colors.black, bold = true },
+  StatusLine = { bg = colors.brightblack, fg = colors.foreground },
+  StatusLineModeNormal = { bg = colors.colour_1, fg = colors.black, bold = true },
   StatusLineModeReplace = { bg = colors.white, fg = colors.black, bold = true },
   StatusLineGit = { bg = colors.colour_2, fg = colors.black },
   StatusLineDiff = { bg = colors.colour_3, fg = colors.black },
@@ -47,12 +47,6 @@ local highlights = {
   Typedef = { fg = colors.colour_1 },
   Todo = { fg = colors.magenta },
   LspInlayHint = { fg = colors.brightblack },
-
-  -- netrwBak = { fg = colors.colour_4 },
-  -- Directory = { fg = colors.colour_2 },
-  -- netrwDir = { fg = colors.colour_2 },
-  -- netrwExe = { fg = colors.colour_3 },
-  -- netrwLink = { fg = colors.colour_1 },
 }
 
 function hl_links(colors)

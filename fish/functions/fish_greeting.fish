@@ -1,5 +1,5 @@
 function fish_greeting
-  set -l TODO_DIR "$HOME/work/todo/"
+  set -l TODO_DIR "$HOME/todo/"
   set -l todos (rg "^- \[ \]" --no-line-number --color=never --max-depth 1 --no-filename "$TODO_DIR" | sort -R)
   set -l done (rg "^- \[x\]" --no-line-number --color=never --max-depth 1 --no-filename "$TODO_DIR" | sort -R)
   set_color yellow

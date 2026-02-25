@@ -59,7 +59,7 @@ vim.keymap.set({ "x", "o" }, "id", function()
 end)
 vim.keymap.set("n", "<leader>a", function()
   require("nvim-treesitter-textobjects.swap").swap_next "@parameter.inner"
-end)
+end, { desc = "Swap next parameter" })
 vim.keymap.set("n", "<leader>A", function()
   require("nvim-treesitter-textobjects.swap").swap_previous "@parameter.outer"
-end)
+end, { desc = "Swap previous parameter" })

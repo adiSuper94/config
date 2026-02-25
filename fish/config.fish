@@ -7,6 +7,7 @@ abbr g git
 abbr lg lazygit
 abbr j z
 abbr ls eza
+abbr pn pnpm
 
 fish_add_path $HOME/nutter-tools/bin
 fish_add_path /usr/local/go/bin
@@ -52,3 +53,13 @@ if status is-interactive
   zoxide init fish | source
   fnm env --use-on-cd --shell fish | source
 end
+
+# opencode
+fish_add_path $HOME/.opencode/bin
+
+# pnpm
+set -gx PNPM_HOME "$HOME/.local/share/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end

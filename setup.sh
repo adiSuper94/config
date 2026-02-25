@@ -147,6 +147,7 @@ os_specific_setup(){
       curl -fsSL https://deno.land/install.sh | sh
       curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
       sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+      curl -fsSL https://get.pnpm.io/install.sh | sh -
       curl -LsSf https://astral.sh/uv/install.sh | sh
       ;;
     "darwin")

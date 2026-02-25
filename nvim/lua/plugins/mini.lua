@@ -18,10 +18,10 @@ vim.notify = notify.make_notify({
 local hipatterns = require('mini.hipatterns')
 hipatterns.setup({
   highlighters = {
-    fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
-    hack  = { pattern = '%f[%w]()HACK()%f[%W]',  group = 'MiniHipatternsHack'  },
-    todo  = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
-    note  = { pattern = '%f[%w]()NOTE()%f[%W]',  group = 'MiniHipatternsNote'  },
+    fixme     = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+    hack      = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
+    todo      = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+    note      = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
 
     hex_color = hipatterns.gen_highlighter.hex_color(), -- Highlight hex strings (`#rrggbb`)
   },
@@ -41,6 +41,9 @@ miniclue.setup({
     { mode = { 'i', 'c' }, keys = '<C-r>' },
     { mode = 'n',          keys = '<C-w>' },
     { mode = { 'n', 'x' }, keys = 'z' },
+  },
+  window = {
+    delay = 300,
   },
   clues = {
     miniclue.gen_clues.square_brackets(),
