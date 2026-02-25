@@ -4,6 +4,7 @@ vim.pack.add({
   "https://github.com/mrjones2014/smart-splits.nvim",
   "https://github.com/stevearc/dressing.nvim",
   "https://github.com/github/copilot.vim",
+  { src = "https://github.com/felpafel/inlay-hint.nvim", version = "nightly" },
 });
 
 vim.api.nvim_set_keymap("i", "<C-k>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
@@ -20,4 +21,5 @@ vim.keymap.set("n", "<C-\\>", require("smart-splits").move_cursor_previous)
 
 require("netrw").setup({})
 
-
+-- have to wait for https://github.com/neovim/neovim/issues/28261 to be resolved
+require('inlay-hint').setup()

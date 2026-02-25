@@ -1,10 +1,7 @@
 vim.pack.add({
   "https://github.com/stevearc/conform.nvim",
-  { src = "https://github.com/felpafel/inlay-hint.nvim", version = "nightly" },
 })
 
--- have to wait for https://github.com/neovim/neovim/issues/28261 to be resolved
-require('inlay-hint').setup()
 
 require("conform").setup({
   formatters_by_ft = {
