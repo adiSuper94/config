@@ -87,7 +87,7 @@ require("plugins.git")
 require("plugins.basic")
 require("plugins.treesitter")
 require("plugins.mini")
-require("plugins.lsp")
+require("plugins.format")
 
 vim.api.nvim_create_user_command("DBUI", function()
   vim.api.nvim_del_user_command("DBUI")
