@@ -7,7 +7,7 @@ vim.pack.add({
 local dap, dapui = require("dap"), require("dapui")
 dap.adapters.lldb = {
   type = "executable",
-  command = "/usr/bin/lldb-vscode-17",   -- adjust as needed, must be absolute path
+  command = "/usr/bin/lldb-vscode-17", -- adjust as needed, must be absolute path
   name = "lldb",
 }
 dap.configurations.cpp = {
@@ -58,7 +58,7 @@ dap.configurations.go = {
   },
   {
     type = "delve",
-    name = "Debug test",   -- configuration for debugging test files
+    name = "Debug test", -- configuration for debugging test files
     request = "launch",
     mode = "test",
     program = "${file}",
@@ -102,6 +102,7 @@ dap.configurations.javascript = {
     skipFiles = { "<node_internals>/**" },
   },
 }
+dap.configurations.typescript = dap.configurations.javascript
 
 dapui.setup()
 dap.listeners.after.event_initialized["dapui_config"] = function()
