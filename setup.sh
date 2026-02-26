@@ -153,12 +153,7 @@ os_specific_setup(){
       printf "Homebrew installation should also trigger Xcode CLI tools installation. Please follow the prompts\n\n"
       install_homebrew
       export HOMEBREW_NO_ENV_HINTS=TRUE
-      brew install --quiet tmux unzip htop jq wget bat bat-extras fnm zoxide fd ripgrep eza neovim pass deno
-      brew install --cask nikitabobko/tap/aerospace
-      brew install --cask kdfiff3
-      brew install --cask copyq
-      brew install --cask macfuse
-      brew install --cask wezterm
+      brew bundle --file="$SCRIPT_DIR"/Brewfile
       curl -Lo ssh-3.7.3.pkg https://github.com/libfuse/sshfs/releases/download/sshfs-3.7.3/sshfs-3.7.3-ccb6821.pkg
       sudo installer -pkg ssh-3.7.3.pkg -target /
       rm -f ssh-3.7.3.pkg

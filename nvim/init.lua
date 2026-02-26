@@ -28,31 +28,45 @@ vim.opt.updatetime = 250
 vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣", space = "·" }
 vim.opt.winborder = "rounded"
 vim.opt.diffopt:append("iwhite") -- ignore whitespace when diffing
-vim.opt.completeopt = { "menu", "menuone", "noselect", "popup", "fuzzy" }
-vim.opt.pumheight = 10
+vim.opt.completeopt = { "menu", "menuone", "noselect", "fuzzy", "popup" }
+vim.opt.pumheight = 15
+vim.opt.pummaxwidth = 60
+vim.opt.pumborder = "rounded"
+-- Fold Settings
+vim.opt.foldlevelstart = 99
+vim.opt.foldlevel = 99
+vim.opt.foldcolumn = "0"
 
 -- Why did I not know about this earlier??!
 vim.opt.splitbelow = true -- open new split windows below the current window
 vim.opt.splitright = true -- open new split windows to the right of the current wind
 
+-- Netrw opts
+vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3
 
+vim.keymap.set("n", "-", "<CMD>Explore<CR>", { desc = "raw-dog: Toggle Netrw" })
 vim.keymap.set("n", "<leader>l", "<cmd>set list! <CR>", { desc = "Toggle blank line chars" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 vim.keymap.set("n", "<A-x>", "<cmd>bd <CR>", { desc = "Close buffer and window" })
 vim.keymap.set("n", "<leader>x", "<cmd>bp | bd # <CR>", { desc = "Close Buffer" })
 vim.keymap.set("n", "<C-n>", "<cmd>tabnew <CR>", { desc = "New tab" })
-vim.keymap.set("n", "<leader>z", "<cmd>wincmd | | wincmd _<CR>", { desc = "Maximize current window" })
-vim.keymap.set("n", "<leader>=", "<cmd>wincmd = <CR>", { desc = "Equalize window size" })
-vim.keymap.set("n", "≈", "<cmd>bd <CR>", { desc = "Close buffer and window (Mac)" })
+vim.keymap.set("n", "<C-w>z", "<cmd>wincmd | | wincmd _<CR>", { desc = "Maximize current window" })
 
--- disable arrow keys in insert mode
-vim.keymap.set("i", "<up>", "<nop>", { desc = "Up arrow disabled" })
-vim.keymap.set("i", "<down>", "<nop>", { desc = "Down arrow disabled" })
--- disable arrow keys in insert mode
-vim.keymap.set("n", "<right>", "<nop>", { desc = "Next buffer" })
-vim.keymap.set("n", "<left>", "<nop>", { desc = "Previous buffer" })
-vim.keymap.set("n", "<up>", "<nop>", { desc = "Up arrow disabled" })
-vim.keymap.set("n", "<down>", "<nop>", { desc = "Down arrow disabled" })
+
+-- Move lines up or down
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
+vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
+vim.keymap.set("i", "<A-k>", "<Esc>:m .-2<CR>==gi", { desc = "Move line up" })
+vim.keymap.set("i", "<A-j>", "<Esc>:m .+1<CR>==gi", { desc = "Move line down" })
+vim.keymap.set("v", "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move lines up" })
+vim.keymap.set("v", "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move lines down" })
+
+-- disable arrow keys
+vim.keymap.set("n", "<right>", "<nop>", { desc = "Right arrow disabled" })
+vim.keymap.set("n", "<left>", "<nop>", { desc = "Left arrow disabled" })
+vim.keymap.set({ "n", "i" }, "<up>", "<nop>", { desc = "Up arrow disabled" })
+vim.keymap.set({ "n", "i" }, "<down>", "<nop>", { desc = "Down arrow disabled" })
 
 vim.api.nvim_create_autocmd("VimResized", { command = "wincmd =" })
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -67,41 +81,30 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   command = [[%s/\s\+$//e]],
 })
 
--- Bootstrap lazy.nvim
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
+require("statusline")
+require("fuzzysearch")
+require("floaterminal")
+require("plugins.git")
+require("plugins.basic")
+require("plugins.treesitter")
+require("plugins.mini")
+require("plugins.format")
 
-require("lazy").setup({
-  ui = { border = "rounded" },
-  spec = "plugins",
-  change_detection = { notify = false },
-  performance = {
-    rtp = {
-      disabled_plugins = {
-        "tohtml",
-        "gzip",
-        "rplugin",
-        "tarPlugin",
-        -- "netrwPlugin",
-        "zipPlugin",
-        "tutor",
-      },
-    },
-  },
-})
+vim.api.nvim_create_user_command("DBUI", function()
+  vim.api.nvim_del_user_command("DBUI")
+  require("plugins.db")
+  print("DBUI Lazy Loaded")
+  vim.api.nvim_command("DBUI")
+end, { desc = "Initialize DBUI" })
+
+vim.keymap.set("n", "<leader>b", function()
+  require("plugins.dap")
+  print("DAP Lazy Loaded")
+  vim.keymap.del("n", "<leader>b")
+end, { desc = "Debugger: Lazy load" })
 
 vim.cmd([[ set shortmess +=c ]]) -- Avoid showing extra messages when using completion
-vim.cmd.colorscheme("evergreen")
+vim.cmd.colorscheme("sundarban")
 
 -- LSP setup
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -124,10 +127,14 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method("textDocument/declaration") then
       map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
     end
-    -- if client:supports_method("textDocument/completion") then
-    --   vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = false })
-    -- end
-    map("<space>e", function()
+    if client:supports_method("textDocument/completion") then
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+    end
+
+    if client:supports_method('textDocument/inlayHint') then
+      vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+    end
+    map("grd", function()
       vim.diagnostic.config({
         virtual_lines = not vim.diagnostic.config().virtual_lines,
       })
@@ -136,4 +143,4 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "lua_ls", "clangd", "bashls", "jsonls", "pyright" })
+vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "lua_ls", "clangd", "bashls", "jsonls", "ty" })
