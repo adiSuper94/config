@@ -79,7 +79,6 @@ elseif is_linux then
     window_decorations = "NONE",
     front_end = "WebGpu",
   }
-  workspace_switcher.zoxide_path = "$HOME/.local/bin/zoxide"
 end
 
 for k, v in pairs(os_specific_config) do

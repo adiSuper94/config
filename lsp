@@ -12,33 +12,8 @@ help(){
   printf "  uninstall (lsp-server)                Uninstall specified LSP server(s)\n"
   printf "  help, -h, --help                      Show this help message\n"
   printf "Supported LSP servers:\n"
-  printf "  bash, clangd, gopls, pyright, rust-analyzer, typescript, json, css, html, markdown \n"
+  printf "  clangd, lua, typescript \n"
   printf "  all (installs/uninstalls all supported LSP servers)\n"
-}
-
-install_luals(){
-  local luals_version="3.15.0"
-  case $os in
-    "linux")
-      if [[ "$arch" != "x86_64" ]]; then
-        printf "Unsupported architecture for lua-language-server installation. Please install it manually.\n"
-        return 1
-      fi
-      local url="https://github.com/LuaLS/lua-language-server/releases/download/${luals_version}/lua-language-server-${luals_version}-linux-x64.tar.gz"
-    curl -o "$HOME/nutter-tools/luals-${os}-${arch}.tar.gz" -L "$url"
-    mkdir -p "$HOME/nutter-tools/luals-${luals_version}"
-    tar -xvf "$HOME/nutter-tools/luals-${os}-${arch}.tar.gz" --directory "$HOME"/nutter-tools/luals-${luals_version}
-    ln -s "$HOME/nutter-tools/luals-${luals_version}/bin/lua-language-server" "$HOME/nutter-tools/bin"
-    rm "$HOME/nutter-tools/luals-${os}-${arch}.tar.gz"
-    ;;
-  "darwin")
-    brew install lua-language-server
-    ;;
-  *)
-    printf "Unsupported OS for lua-language-server installation. Please install it manually.\n"
-    return
-    ;;
-  esac
 }
 
 install_js_dap(){
@@ -48,22 +23,6 @@ install_js_dap(){
   mkdir -p "$HOME/nutter-tools"
   tar -xvf "${file_name}" --directory "$HOME/nutter-tools"
   rm "${file_name}"
-}
-
-uninstall_luals(){
-  case $os in
-    "linux")
-      rm -rf "$HOME/nutter-tools/luala-3.15.0"
-      rm "$HOME/nutter-tools/bin/lua-language-server"
-      ;;
-    "darwin")
-      brew uninstall lua-language-server
-      ;;
-    *)
-      printf "Unsupported OS for lua-language-server uninstallation. Please uninstall it manually.\n"
-      return
-      ;;
-  esac
 }
 
 case $1 in
@@ -83,31 +42,13 @@ esac
 
 case $2 in
   "all")
-    servers=("bash" "clangd" "gopls" "lua" "pyright" "rust-analyzer" "typescript" "vscode-langservers-extracted")
-    ;;
-  "bash")
-    servers=("bash")
+    servers=("clangd" "typescript")
     ;;
   "clangd"|"c"|"cpp")
     servers=("clangd")
     ;;
-  "gopls"|"go")
-    servers=("gopls")
-    ;;
-  "lua")
-    servers=("lua")
-    ;;
-  "pyright"|"python")
-    servers=("pyright")
-    ;;
-  "rust-analyzer"|"rust")
-    servers=("rust-analyzer")
-    ;;
   "typescript"|"javascript"|"ts"|"js")
     servers=("typescript")
-    ;;
-  "json"|"html"|"css"|"markdown")
-    servers=("vscode-langservers-extracted")
     ;;
   *)
     printf "Invalid or missing server. Use 'lsp help' for usage information.\n"
@@ -121,9 +62,6 @@ for server in "${servers[@]}"; do
     "install")
       printf "Installing %s LSP server...\n" "$server"
       case $server in
-        "bash")
-          npm install -g "bash-language-server"
-          ;;
         "clangd")
           case $os in
             "linux")
@@ -144,38 +82,14 @@ for server in "${servers[@]}"; do
               ;;
           esac
           ;;
-        "gopls")
-          go install golang.org/x/tools/gopls@latest
-          ;;
-        "lua")
-          install_luals
-          npm install -g  "@johnnymorganz/stylua-bin"
-          ;;
-        "pyright")
-          npm install -g "pyright"
-          uv tool install ruff@latest
-          uv tool install ty@latest
-          ;;
-        "rust-analyzer")
-          rustup component add rust-analyzer
-          ;;
         "typescript")
-          npm install -g "typescript-language-server" "typescript"
-          npm install -g @fsouza/prettierd
-          npm install -g oxfmt
           install_js_dap
-          ;;
-        "vscode-langservers-extracted"|"json"|"html"|"css"|"markdown")
-          npm install -g "vscode-langservers-extracted"
           ;;
       esac
       ;;
     "uninstall")
       printf "Uninstalling %s LSP server...\n" "$server"
       case $server in
-        "bash")
-          npm uninstall -g "bash-language-server"
-          ;;
         "clangd")
           case $os in
             "ubuntu"|"debian")
@@ -192,29 +106,8 @@ for server in "${servers[@]}"; do
               ;;
           esac
           ;;
-        "gopls")
-          rm -f "$GOPATH/bin/gopls"
-          ;;
-        "lua")
-          uninstall_luals
-          npm uninstall -g  "@johnnymorganz/stylua-bin"
-          ;;
-        "pyright")
-          npm uninstall -g "pyright"
-          uv tool uninstall ruff
-          uv tool uninstall ty
-          ;;
-        "rust-analyzer")
-          rustup component remove rust-analyzer
-          ;;
         "typescript")
-          npm uninstall -g "typescript-language-server" "typescript"
-          npm uninstall -g @fsouza/prettierd
-          npm uninstall -g oxfmt
           rm -rf "$HOME/nutter-tools/js-debug"
-          ;;
-        "vscode-langservers-extracted"|"json"|"html"|"css"|"markdown")
-          npm uninstall -g "vscode-langservers-extracted"
           ;;
       esac
       ;;

@@ -1,0 +1,1 @@
+bat --completion fish | source
