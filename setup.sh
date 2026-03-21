@@ -69,71 +69,27 @@ configure_zsh() {
   echo "To recompile zsh-completions run: 'rm -f ~/.zcompdump; compinit'"
 }
 
-ubuntu_purge_snap(){
-  if ! command -v snap &> /dev/null; then
-    printf "Yayy! Loooks like snap is not installed\n"
-    return 0
-  fi
-  if ask "Do you want to remove all snap pakages, and disable snap competely ? This might break ubuntu ui"; then
-    echo "Removing all Snap packages ..."
-  else
-    echo "You chose not to remove Snap packages. Exiting ..."
-    return 1
-  fi
-  while true; do
-    snap_packages=$(snap list 2> /dev/null| awk 'NR>1 {print $1}')
-    if [[ -z "$snap_packages" ]]; then
-      echo "All Snap packages have been removed."
-      break
-    fi
-    # Try to remove each package
-    for snap_package in $snap_packages; do
-      echo "Attempting to remove Snap package: $snap_package"
-      sudo snap remove --purge "$snap_package" || echo "Failed to remove $snap_package. Will retry."
-    done
-  done
-  sudo systemctl stop snapd
-  sudo systemctl disable snapd
-  sudo systemctl mask snapd
-  sudo apt purge snapd
-  sudo apt-mark hold snapd
-  sudo rm -rf ~/snap
-  sudo rm -rf /snap
-  sudo rm -rf /var/snap
-  sudo rm -rf /var/lib/snapd
-  echo "Blocking Snap installation ..."
-  sudo cat <<EOF | sudo tee /etc/apt/preferences.d/nosnap.pref
-Package: snapd
-Pin: release a=*
-Pin-Priority: -10
-EOF
-  printf "Congratulations! You have Thanos snapped 🫰 Snap out of existence.\n\n"
-}
 
 os_specific_setup(){
   case $os in
     "linux")
       case $flavour in
         "ubuntu")
-          ubuntu_purge_snap
-          sudo apt update
+          sudo apt update -y
           sudo apt install build-essential
           sudo apt install coreutils gcc curl wget unzip clang
-          sudo apt install tmux htop jq rofi copyq redshift maim
-          sudo apt install fd-find ripgrep eza bat kdiff3 variety sshfs pass
+          sudo apt install rofi copyq redshift maim kdiff3 variety sshfs pass
           curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
           echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
-          sudo apt install wezterm
           sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
-          sudo mv /usr/bin/fdfind /usr/bin/fd
-          sudo mv /usr/bin/batcat /usr/bin/bat
+          sudo apt update -y
+          sudo apt install -y wezterm-nightly
           ;;
         "fedora")
           sudo dnf update
           sudo dnf group install development-tools c-development
           sudo dnf install coreutils gcc curl wget unzip clang
-          sudo dnf install tmux htop jq rofi-wayland gammastep copyq maim
-          sudo dnf install bat ripgrep fd-find kdiff3 fzf sshfs pass
+          sudo dnf install rofi-wayland gammastep copyq maim kdiff3 sshfs pass
           sudo dnf install variety yaru-gtk4-theme yaru-icon-theme foot
           sudo dnf copr enable wezfurlong/wezterm-nightly
           sudo dnf install wezterm
@@ -143,12 +99,7 @@ os_specific_setup(){
           return 1
           ;;
       esac
-      curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
-      curl -fsSL https://deno.land/install.sh | sh
-      curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
       sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
-      curl -fsSL https://get.pnpm.io/install.sh | sh -
-      curl -LsSf https://astral.sh/uv/install.sh | sh
       ;;
     "darwin")
       printf "Homebrew installation should also trigger Xcode CLI tools installation. Please follow the prompts\n\n"
@@ -158,7 +109,6 @@ os_specific_setup(){
       curl -Lo ssh-3.7.3.pkg https://github.com/libfuse/sshfs/releases/download/sshfs-3.7.3/sshfs-3.7.3-ccb6821.pkg
       sudo installer -pkg ssh-3.7.3.pkg -target /
       rm -f ssh-3.7.3.pkg
-      curl -LsSf https://astral.sh/uv/install.sh | sh
     ;;
     *)
       printf "No OS specific setup for %s\n" "$os"
@@ -168,7 +118,7 @@ os_specific_setup(){
 }
 
 sym_link(){
-  for pkg_config in nvim alacritty wezterm foot tmux sway i3 aerospace regolith3 rofi waybar git lazygit; do
+  for pkg_config in nvim alacritty wezterm foot tmux sway i3 aerospace regolith3 rofi waybar git lazygit mise; do
     if [[ -d "$HOME"/.config/$pkg_config ]]; then
       if [[ -L "$HOME"/.config/$pkg_config ]]; then
         rm -rf "$HOME"/.config/$pkg_config
@@ -197,6 +147,7 @@ setup() {
   configure_zsh
   printf "\nInstalling brave browser\n\n"
   curl -fsS https://dl.brave.com/install.sh | sh
+  curl https://mise.run | sh
   sym_link
   printf "Basic setup complete\n. Use Bob to install more packages\n"
   exit 0

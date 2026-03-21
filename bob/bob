@@ -3,14 +3,6 @@
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 . "$SCRIPT_DIR/utils.sh"
 
-install_go_pkgs(){
-  echo "Installing go packages..."
-  while read -r line; do
-    echo "Installing go package: $line"
-    go install "$line"
-  done < "$SCRIPT_DIR/pkgs/go/pkgs"
-}
-
 help(){
   printf "Usage: bob (command)\n"
   printf "\nCommands:\n"
@@ -22,18 +14,10 @@ help(){
 
 build_all(){
   if ask "Are you sure you want to build all?"; then
-    "${SCRIPT_DIR}/rust.sh" build
-    "${SCRIPT_DIR}/go.sh" build
     "${SCRIPT_DIR}/alacritty.sh" build
     "${SCRIPT_DIR}/fonts.sh" build
     "${SCRIPT_DIR}/regolith.sh" build
     "${SCRIPT_DIR}/i3.sh" build
-    "${SCRIPT_DIR}/bat-extras.sh" build
-    "${SCRIPT_DIR}/neovim.sh" build
-    PATH="$PATH:/usr/local/go/bin:$HOME/go/bin"
-    . "$HOME/.cargo/env"
-    install_rust_pkgs
-    install_go_pkgs
   else
     printf "Not building all\n"
   fi
@@ -70,7 +54,7 @@ esac
 
 arg=$2
 case $arg in
-  "go"|"rust"|"alacritty"|"fonts"|"regolith"|"i3"|"bat-extras")
+  "alacritty"|"fonts"|"regolith"|"i3")
     if ask "Are you sure you want to $cmd $arg?"; then
       "${SCRIPT_DIR}/${arg}.sh" "$cmd"
     else
@@ -83,18 +67,6 @@ case $arg in
       printf "Bob can't uninstall these packages for you\n"
       exit 1
     fi
-    ;;
-  "neovim")
-    nvim_version=$3
-    if [[ $nvim_version != "nightly" ]]; then
-      nvim_version="stable"
-    fi
-    if ask "Are you sure you want to neovim?"; then
-      "${SCRIPT_DIR}/neovim.sh" "$cmd" "$nvim_version"
-    else
-      printf "Not %sing neovim\n" "$cmd"
-    fi
-    exit 0
     ;;
   "")
     printf "Bob needs a package to %s\n" "$cmd"

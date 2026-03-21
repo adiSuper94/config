@@ -53,7 +53,6 @@ vim.keymap.set("n", "<leader>x", "<cmd>bp | bd # <CR>", { desc = "Close Buffer" 
 vim.keymap.set("n", "<C-n>", "<cmd>tabnew <CR>", { desc = "New tab" })
 vim.keymap.set("n", "<C-w>z", "<cmd>wincmd | | wincmd _<CR>", { desc = "Maximize current window" })
 
-
 -- Move lines up or down
 vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
 vim.keymap.set("n", "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
@@ -124,23 +123,20 @@ vim.api.nvim_create_autocmd("LspAttach", {
       local win = vim.api.nvim_get_current_win()
       vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
     end
-    if client:supports_method("textDocument/declaration") then
-      map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-    end
     if client:supports_method("textDocument/completion") then
       vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
     end
 
-    if client:supports_method('textDocument/inlayHint') then
+    if client:supports_method("textDocument/inlayHint") then
       vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
     end
     map("grd", function()
       vim.diagnostic.config({
         virtual_lines = not vim.diagnostic.config().virtual_lines,
       })
-    end, "Show diagnostics")
+    end, "Toggle diagnostics")
     map("<space>q", vim.diagnostic.setloclist, "Open Diagnostic [Q]uickfix list")
   end,
 })
 
-vim.lsp.enable({ "denols", "ts_ls", "rust_analyzer", "gopls", "lua_ls", "clangd", "bashls", "jsonls", "ty" })
+vim.lsp.enable({ "denols", "ts_ls", "oxlint", "rust_analyzer", "gopls", "lua_ls", "clangd", "bashls", "jsonls", "ty" })

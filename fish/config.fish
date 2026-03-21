@@ -1,17 +1,6 @@
-abbr top htop
-abbr vim nvim
-abbr man batman
-abbr cat bat
-abbr diff batdiff
-abbr g git
-abbr lg lazygit
-abbr j z
-abbr ls eza
-abbr pn pnpm
+set -l os (uname)
 
 fish_add_path $HOME/nutter-tools/bin
-fish_add_path /usr/local/go/bin
-fish_add_path $HOME/.local/share/fnm
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/go/bin
 
@@ -20,10 +9,26 @@ if test -d /opt/homebrew
 end
 
 if status is-interactive
+  if test "$os" != "Darwin"
+    abbr top htop
+  else
+    abbr top btop
+  end
+
+  abbr vim nvim
+  abbr man batman
+  abbr cat bat
+  abbr diff batdiff
+  abbr g git
+  abbr lg lazygit
+  abbr j z
+  abbr ls eza
+  abbr pn pnpm
+
   setenv XDG_CONFIG_HOME $HOME/.config
   bash ~/.config/tmux/tat.sh
   setenv EDITOR nvim
-  setenv SUDO_EDITOR $HOME/nutter-tools/bin/nvim
+  setenv SUDO_EDITOR "$(mise which nvim)"
   setenv FZF_DEFAULT_COMMAND 'fd --type file --follow'
   setenv FZF_CTRL_T_COMMAND 'fd --type file --follow'
   setenv FZF_DEFAULT_OPTS '--height 20% --ansi'
@@ -48,18 +53,10 @@ if status is-interactive
   set __fish_git_prompt_char_upstream_equal ''
   set __fish_git_prompt_char_stashstate '*'
   set __fish_git_prompt_char_cleanstate ''
-
+  $HOME/.local/bin/mise activate fish | source
   fzf --fish | source
   zoxide init fish | source
-  fnm env --use-on-cd --shell fish | source
-end
 
-# opencode
-fish_add_path $HOME/.opencode/bin
-
-# pnpm
-set -gx PNPM_HOME "$HOME/.local/share/pnpm"
-if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+else
+  $HOME/.local/bin/mise activate fish --shims | source
 end
-# pnpm end

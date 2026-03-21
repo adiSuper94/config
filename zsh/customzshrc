@@ -1,4 +1,4 @@
-alias top=htop
+alias top=btop
 alias vim=nvim
 alias man=batman
 alias cat=bat
@@ -11,15 +11,12 @@ alias ls=eza
 
 # Ctrl-e open cli in nvim
 export EDITOR=nvim
-export SUDO_EDITOR="$HOME/nutter-tools/bin/nvim"
+export SUDO_EDITOR="$(mise which nvim)"
 autoload edit-command-line
 zle -N edit-command-line
 bindkey "^E" edit-command-line
 
 PATH="$PATH:$HOME/nutter-tools/bin"
-PATH="$PATH:/usr/local/go/bin:$HOME/go/bin" ##If fzf is installed as ago bin, add this to zshenv
-PATH="$PATH:$HOME/.local/share/fnm:$HOME/.local/bin"
-eval "$(fnm env --use-on-cd --shell zsh)"
 eval "$(batpipe)"
 eval "$(fzf --zsh)"
 eval "$(zoxide init zsh)"
@@ -30,8 +27,6 @@ export FZF_DEFAULT_OPTS=--ansi
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # zsh config
-
-
 case "$OSTYPE" in
   darwin*)
     . "$(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme"
@@ -45,7 +40,6 @@ esac
 . "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" # Inline autosuggestions, like fish
 . "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" # Syntax highlighting, like fish
 . "$HOME/.zsh/zsh-abbr/zsh-abbr.zsh" # replace command abbreviations with full commands, like fish
-. "$HOME/.deno/env"
 
 HISTFILE=~/.zsh_history
 HISTSIZE=2048
