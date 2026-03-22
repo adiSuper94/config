@@ -4,10 +4,11 @@ local colors = {
   -- local background = "#181818"
   background = "NONE",
   foreground = "#E4E4E4",
-  colour_1 = "#39FF14",
-  colour_2 = "#00CC98",
-  colour_3 = "#C7F9AC",
-  colour_4 = "#9AA999",
+  color_1 = "#39FF14",
+  color_2 = "#00CC98",
+  color_3 = "#C7F9AC",
+  color_4 = "#9AA999",
+  color_5 = "#A3C585",
 
   magenta = "#9E95C7",
   white = "#E4E4E4",
@@ -25,26 +26,26 @@ local highlights = {
   StatusLineModeInsert = { bg = "#00a1ff", fg = colors.black, bold = true },
   StatusLineModeVisual = { bg = "#FFB86C", fg = colors.black, bold = true },
   StatusLine = { bg = colors.brightblack, fg = colors.foreground },
-  StatusLineModeNormal = { bg = colors.colour_1, fg = colors.black, bold = true },
+  StatusLineModeNormal = { bg = colors.color_1, fg = colors.black, bold = true },
   StatusLineModeReplace = { bg = colors.white, fg = colors.black, bold = true },
-  StatusLineGit = { bg = colors.colour_2, fg = colors.black },
-  StatusLineDiff = { bg = colors.colour_3, fg = colors.black },
-  StatusLineInfo = { bg = colors.brightblack, fg = colors.colour_4 },
-  SpecialComment = { fg = colors.colour_3 },
+  StatusLineGit = { bg = colors.color_2, fg = colors.black },
+  StatusLineDiff = { bg = colors.color_3, fg = colors.black },
+  StatusLineInfo = { bg = colors.brightblack, fg = colors.color_4 },
+  SpecialComment = { fg = colors.color_3 },
 
   Comment = { fg = colors.brown },
-  String = { fg = colors.colour_3 },
-  Character = { fg = colors.colour_3 },
+  String = { fg = colors.color_3 },
+  Character = { fg = colors.color_3 },
   Number = { fg = colors.white },
   Boolean = { fg = colors.white },
   Float = { fg = colors.white },
-  Constant = { fg = colors.colour_4 },
-  Function = { fg = colors.colour_2 },
-  PreProc = { fg = colors.colour_2 },
-  Keyword = { fg = colors.colour_1 },
-  Identifier = { fg = colors.brightwhite },
-  Type = { fg = colors.colour_4 },
-  Typedef = { fg = colors.colour_1 },
+  Constant = { fg = colors.color_4 },
+  Function = { fg = colors.color_2 },
+  PreProc = { fg = colors.color_2 },
+  Keyword = { fg = colors.color_1 },
+  Identifier = { fg = colors.color_5 },
+  Type = { fg = colors.color_4 },
+  Typedef = { fg = colors.color_1 },
   Todo = { fg = colors.magenta },
   LspInlayHint = { fg = colors.brightblack },
 }
@@ -54,10 +55,9 @@ function hl_links(colors)
     NormalFloat = { link = "Normal" },
     NonText = { link = "Normal" },
     SignColumn = { link = "Normal" },
-    Special = { link = "Normal" },
     SpecialChar = { link = "String" },
 
-    Operator = { link = "Normal" },
+    -- Operator = { link = "Normal" },
     DiffText = { link = "Normal" },
     DiffDelete = { fg = colors.red },
     DiffAdd = { fg = colors.green },
@@ -77,7 +77,7 @@ end
 
 highlights = vim.tbl_extend("error", hl_links(colors), highlights)
 
-vim.g.colors_name = "evergreen"
+vim.g.colors_name = "sundarban"
 vim.o.termguicolors = true
 vim.o.background = "dark"
 
