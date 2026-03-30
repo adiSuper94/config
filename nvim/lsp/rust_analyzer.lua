@@ -2,7 +2,7 @@
 return {
   cmd = { "rust-analyzer" },
   root_markers = { "Cargo.toml" },
-  filetypes = { "rust", "toml.Cargo" },
+  filetypes = { "rust" },
   setting = {
     ["rust-analyzer"] = {
       procMacro = { enable = true },

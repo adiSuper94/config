@@ -69,6 +69,10 @@ function _G.LightlineStatusline()
   table.insert(left, " " .. filename .. modified)
 
   local right = {}
+  local diagnotics = vim.diagnostic.status()
+  if diagnotics ~= "" then
+    table.insert(right, diagnotics .. " | ")
+  end
   table.insert(right, "%l:%c%*")
   table.insert(right, "| %p%%%*")
   local ft = vim.opt.filetype:get()
@@ -81,7 +85,9 @@ function _G.LightlineStatusline()
     end
   end
   local enc = vim.opt.fileencoding:get() ~= "" and vim.opt.fileencoding:get() or vim.opt.encoding:get()
-  if enc ~= "" then table.insert(right, "| " .. enc .. " %*") end
+  if enc ~= "" then
+    table.insert(right, "| " .. enc .. " %*")
+  end
 
   return table.concat(left, "") .. "%=" .. table.concat(right, " ")
 end

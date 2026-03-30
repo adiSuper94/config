@@ -1,3 +1,14 @@
+-- Disable unnecessary plugins
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_gzip = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 vim.g.mapleader = " " -- set leader to space
 vim.g.have_nerd_font = true
 vim.opt.number = true -- show line numbers
@@ -70,7 +81,7 @@ vim.keymap.set({ "n", "i" }, "<down>", "<nop>", { desc = "Down arrow disabled" }
 vim.api.nvim_create_autocmd("VimResized", { command = "wincmd =" })
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
-    vim.highlight.on_yank({ timeout = 500 })
+    vim.hl.on_yank({ timeout = 500 })
   end,
 })
 
@@ -130,6 +141,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
     if client:supports_method("textDocument/inlayHint") then
       vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
     end
+    if client:supports_method("textDocument/documentColor") then
+      vim.lsp.document_color.enable(true, { bufnr = ev.buf }, { style = "virtual" })
+    end
     map("grd", function()
       vim.diagnostic.config({
         virtual_lines = not vim.diagnostic.config().virtual_lines,
@@ -139,4 +153,19 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
-vim.lsp.enable({ "denols", "ts_ls", "oxlint", "rust_analyzer", "gopls", "lua_ls", "clangd", "bashls", "jsonls", "ty" })
+vim.lsp.enable({
+  "ts_ls",
+  "denols",
+  "oxlint",
+  "ty",
+  "rust_analyzer",
+  "gopls",
+  "clangd",
+  "lua_ls",
+  "bashls",
+  "jsonls",
+  "taplo",
+  "yamlls",
+})
+
+require("vim._core.ui2").enable({})

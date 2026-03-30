@@ -13,16 +13,16 @@
       "src": "https://github.com/stevearc/dressing.nvim"
     },
     "gitsigns.nvim": {
-      "rev": "7c4faa3540d0781a28588cafbd4dd187a28ac6e3",
+      "rev": "50c205548d8b037b7ff6378fca6d21146f0b6161",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "inlay-hint.nvim": {
-      "rev": "868e7bb12370f2e6cabab1ff56effd1a5b7fb1da",
+      "rev": "b983f3cf0cdc9f2cd8a981e70d7b6bb444d4de8d",
       "src": "https://github.com/felpafel/inlay-hint.nvim",
-      "version": "'nightly'"
+      "version": "'main'"
     },
     "mini.nvim": {
-      "rev": "28d993854bdcde7d06f0990cfe6a2c6577f3f8ab",
+      "rev": "af5f75c9ce572a4d1f0c77d6fb4ea764d16c1b3c",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "netrw.nvim": {
@@ -30,11 +30,11 @@
       "src": "https://github.com/prichrd/netrw.nvim"
     },
     "nvim-dap": {
-      "rev": "a9d8cb68ee7184111dc66156c4a2ebabfbe01bc5",
+      "rev": "4f5deb110d9ff8994d96c21df95e2271d11214f9",
       "src": "https://github.com/mfussenegger/nvim-dap"
     },
     "nvim-dap-ui": {
-      "rev": "cf91d5e2d07c72903d052f5207511bf7ecdb7122",
+      "rev": "f5b6673f374626515401c5bc51b005f784a4f252",
       "src": "https://github.com/rcarriga/nvim-dap-ui"
     },
     "nvim-nio": {
@@ -42,20 +42,20 @@
       "src": "https://github.com/nvim-neotest/nvim-nio"
     },
     "nvim-treesitter": {
-      "rev": "2b50ab5ccbcd9e5708deb351308edd738adbf84c",
+      "rev": "7caec274fd19c12b55902a5b795100d21531391f",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "4e91b5d0394329a229725b021a8ea217099826ef",
+      "rev": "93d60a475f0b08a8eceb99255863977d3a25f310",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects"
     },
     "rainbow-delimiters.nvim": {
-      "rev": "607a438d8c647a355749973fd295e33505afafde",
+      "rev": "50080ed0f44dbc18ae13b81278a01b951a06127a",
       "src": "https://github.com/hiphish/rainbow-delimiters.nvim"
     },
     "smart-splits.nvim": {
-      "rev": "82d01bb71bc051955654b3af68355f783d872fe0",
+      "rev": "12426763591f06b865c20990d8423345ea96d44f",
       "src": "https://github.com/mrjones2014/smart-splits.nvim"
     },
     "vim-dadbod": {
