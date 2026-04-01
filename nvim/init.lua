@@ -157,6 +157,8 @@ vim.lsp.enable({
   "ts_ls",
   "denols",
   "oxlint",
+  "tailwindcss",
+  "cssls",
   "ty",
   "rust_analyzer",
   "gopls",

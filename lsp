@@ -12,7 +12,7 @@ help(){
   printf "  uninstall (lsp-server)                Uninstall specified LSP server(s)\n"
   printf "  help, -h, --help                      Show this help message\n"
   printf "Supported LSP servers:\n"
-  printf "  clangd, lua, typescript \n"
+  printf "  clangd, typescript \n"
   printf "  all (installs/uninstalls all supported LSP servers)\n"
 }
 
