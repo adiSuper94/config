@@ -73,6 +73,9 @@ function _G.LightlineStatusline()
   if diagnotics ~= "" then
     table.insert(right, diagnotics .. " | ")
   end
+  if vim.bo.busy == 1 then
+    table.insert(right, "◐ |")
+  end
   table.insert(right, "%l:%c%*")
   table.insert(right, "| %p%%%*")
   local ft = vim.opt.filetype:get()

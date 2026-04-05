@@ -35,15 +35,16 @@ vim.opt.softtabstop = 2 -- number of spaces that that is removed or added when t
 vim.opt.tabstop = 2 -- I honestly don't know how this is different from softtabstop
 vim.opt.shiftwidth = 2 -- width used for indentation commands (<<, >>)
 vim.opt.undofile = true
-vim.opt.updatetime = 250
 vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣", space = "·" }
-vim.opt.winborder = "rounded"
 vim.opt.diffopt:append("iwhite") -- ignore whitespace when diffing
+vim.opt.autocomplete = true -- autotriggers completions
 vim.opt.completeopt = { "menu", "menuone", "noselect", "fuzzy", "popup" }
 vim.opt.pumheight = 15
 vim.opt.pummaxwidth = 60
 vim.opt.pumborder = "rounded"
--- Fold Settings
+vim.opt.winborder = "rounded"
+
+-- Fold Settings, Do not fold by default
 vim.opt.foldlevelstart = 99
 vim.opt.foldlevel = 99
 vim.opt.foldcolumn = "0"
