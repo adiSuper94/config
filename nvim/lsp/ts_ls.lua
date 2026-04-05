@@ -1,9 +1,8 @@
 ---@type vim.lsp.Config
 return {
   cmd = { "typescript-language-server", "--stdio" },
-  root_markers = {},
   root_dir = function(_, callback)
-    local node_root_dir = vim.fs.root(0, { "package.json" })
+    local node_root_dir = vim.fs.root(0, { "package.json", { ".git" } })
     local deno_root_dir = vim.fs.root(0, { "deno.json", "deno.jsonc" })
     if node_root_dir and not deno_root_dir then
       callback(node_root_dir)

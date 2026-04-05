@@ -154,7 +154,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.lsp.enable({
-  "ts_ls",
+  "vtsls",
   "denols",
   "oxlint",
   "tailwindcss",
