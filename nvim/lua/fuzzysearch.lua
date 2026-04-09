@@ -53,4 +53,4 @@ vim.opt.grepprg = "rg --vimgrep --smart-case"
 vim.opt.findfunc = "v:lua.CachedFd"
 vim.api.nvim_create_user_command('Rg', Rg, { desc = "raw-dog: grep" })
 vim.keymap.set("n", "<C-p>", ":find ", { desc = "raw-dog: Project Files" })
-vim.keymap.set("n", "<leader>/", ":Rg<CR>", { desc = "raw-dog: grep" })
+vim.keymap.set("n", "g/", ":Rg<CR>", { desc = "raw-dog: grep" })

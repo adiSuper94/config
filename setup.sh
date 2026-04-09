@@ -100,6 +100,7 @@ os_specific_setup(){
           ;;
       esac
       sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+      curl -f https://zed.dev/install.sh | sh
       ;;
     "darwin")
       printf "Homebrew installation should also trigger Xcode CLI tools installation. Please follow the prompts\n\n"
@@ -118,7 +119,7 @@ os_specific_setup(){
 }
 
 sym_link(){
-  for pkg_config in nvim alacritty wezterm foot tmux sway i3 aerospace regolith3 rofi waybar git lazygit mise; do
+  for pkg_config in nvim alacritty wezterm foot tmux sway i3 aerospace regolith3 rofi waybar git lazygit mise zed; do
     if [[ -d "$HOME"/.config/$pkg_config ]]; then
       if [[ -L "$HOME"/.config/$pkg_config ]]; then
         rm -rf "$HOME"/.config/$pkg_config

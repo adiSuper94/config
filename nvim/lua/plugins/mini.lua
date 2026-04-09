@@ -41,6 +41,7 @@ miniclue.setup({
     { mode = { 'i', 'c' }, keys = '<C-r>' },
     { mode = 'n',          keys = '<C-w>' },
     { mode = { 'n', 'x' }, keys = 'z' },
+    { mode = { 'n', 'v' }, keys = 'd' },
   },
   window = {
     delay = 300,
