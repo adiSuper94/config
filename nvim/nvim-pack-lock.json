@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "conform.nvim": {
-      "rev": "086a40dc7ed8242c03be9f47fbcee68699cc2395",
-      "src": "https://github.com/stevearc/conform.nvim"
-    },
     "copilot.vim": {
       "rev": "a12fd5672110c8aa7e3c8419e28c96943ca179be",
       "src": "https://github.com/github/copilot.vim"
@@ -55,7 +51,7 @@
       "src": "https://github.com/hiphish/rainbow-delimiters.nvim"
     },
     "smart-splits.nvim": {
-      "rev": "12426763591f06b865c20990d8423345ea96d44f",
+      "rev": "09796a7ad0776c92518e0afae8688ef8d7f720e6",
       "src": "https://github.com/mrjones2014/smart-splits.nvim"
     },
     "vim-dadbod": {
