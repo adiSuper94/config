@@ -37,7 +37,7 @@ vim.opt.shiftwidth = 2 -- width used for indentation commands (<<, >>)
 vim.opt.undofile = true
 vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣", space = "·" }
 vim.opt.diffopt:append("iwhite") -- ignore whitespace when diffing
-vim.opt.autocomplete = true -- autotriggers completions
+vim.opt.autocomplete = true      -- autotriggers completions
 vim.opt.completeopt = { "menu", "menuone", "noselect", "fuzzy", "popup" }
 vim.opt.pumheight = 15
 vim.opt.pummaxwidth = 60
@@ -95,6 +95,7 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
 require("statusline")
 require("fuzzysearch")
 require("floaterminal")
+require("vim_rooter")
 require("plugins.git")
 require("plugins.basic")
 require("plugins.treesitter")

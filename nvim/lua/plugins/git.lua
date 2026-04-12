@@ -1,6 +1,5 @@
 vim.pack.add({
   "https://github.com/lewis6991/gitsigns.nvim",
-  "https://github.com/airblade/vim-rooter",
 })
 
 require("gitsigns").setup({
@@ -51,5 +50,3 @@ require("gitsigns").setup({
     map({ "o", "x" }, "ah", ":<C-U>Gitsigns select_hunk<CR>", { desc = "Select Hunk" })
   end,
 })
-
-vim.g.rooter_patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn" } --, 'Makefile', 'package.json'

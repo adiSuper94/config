@@ -6,12 +6,16 @@ function Rg()
   end
 end
 
+-- vim.fn.chdir does not trigger, DirChanged. https://github.com/neovim/neovim/issues/32270
 local files_cache = {}
+local cwd = ""
 
 function CachedFd(pattern)
-  if #files_cache == 0 then
+  local current_cwd = vim.fn.getcwd()
+  if #files_cache == 0 or cwd ~= current_cwd then
     local cmd = 'fd  --color=never --full-path --type file --hidden --exclude=".git"'
     files_cache = vim.fn.systemlist(cmd)
+    cwd = current_cwd
   end
   if pattern == '' then
     return files_cache
@@ -23,13 +27,6 @@ function Fd(pattern, _)
   files_cache = {}
   return CachedFd(pattern)
 end
-
-vim.api.nvim_create_autocmd("DirChanged", {
-  pattern = "*",
-  callback = function()
-    files_cache = {}
-  end,
-})
 
 vim.api.nvim_create_autocmd({ 'CmdlineChanged', 'CmdlineLeave' }, {
   pattern = { '*' },
