@@ -1,10 +1,15 @@
 vim.pack.add({
-  "https://github.com/rcarriga/nvim-dap-ui",
   "https://github.com/mfussenegger/nvim-dap",
-  "https://github.com/nvim-neotest/nvim-nio"
+  "https://github.com/igorlfs/nvim-dap-view",
 });
 
-local dap, dapui = require("dap"), require("dapui")
+local dap = require("dap")
+local dap_view = require("dap-view").setup({
+  winbar = {
+    default_section = "scopes",
+  },
+  auto_toggle = true,
+})
 dap.adapters.lldb = {
   type = "executable",
   command = "/usr/bin/lldb-vscode-17", -- adjust as needed, must be absolute path
@@ -103,17 +108,6 @@ dap.configurations.javascript = {
   },
 }
 dap.configurations.typescript = dap.configurations.javascript
-
-dapui.setup()
-dap.listeners.after.event_initialized["dapui_config"] = function()
-  dapui.open()
-end
-dap.listeners.before.event_terminated["dapui_config"] = function()
-  dapui.close()
-end
-dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
-end
 
 -- Debug shortcuts
 
