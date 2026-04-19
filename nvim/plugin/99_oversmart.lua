@@ -1,0 +1,12 @@
+vim.api.nvim_create_user_command("DBUI", function()
+  vim.api.nvim_del_user_command("DBUI")
+  require("plugin.db")
+  print("DBUI Lazy Loaded")
+  vim.api.nvim_command("DBUI")
+end, { desc = "Initialize DBUI" })
+
+vim.keymap.set("n", "<leader>b", function()
+  require("plugin.dap")
+  print("DAP Lazy Loaded")
+  vim.keymap.del("n", "<leader>b")
+end, { desc = "Debugger: Lazy load" })
