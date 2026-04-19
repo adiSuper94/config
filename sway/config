@@ -1,31 +1,33 @@
-# Default config for sway available at ~/.config/sway/config.
 # Read `man 5 sway` for a complete reference.
 
-# Logo key = Mod4
-# Alt key = Mod1
-set $mod Mod4
+# Logo key = Mod4, Alt key = Mod1
+set $mod Mod1
+set $altmod Mod4
 set $term wezterm
 set $menu rofi -show drun
 
 
 ## Basics:
 
-# start a terminal
+# Start a terminal
 bindsym $mod+Return exec $term
 
-# kill focused window
+# Kill focused window
 bindsym $mod+Shift+q kill
 
-# start dmenu (a program launcher)
+# Start your launcher
 bindsym $mod+d exec $menu
 bindsym $mod+space exec $menu
 
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+# Despite the name, also works for non-floating windows.
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
 
-# reload the configuration file
+# Reload the configuration file
 bindsym $mod+Shift+c reload
-
 
 # logout / shutdown
 set $mode_power [l]ogoff | [s]hutdown
@@ -38,28 +40,29 @@ mode "$mode_power" {
 }
 
 
-
 ## Moving around:
+set $left h
+set $down j
+set $up k
+set $right l
 
-# change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
-
-# alternatively, you can use the cursor keys:
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+# Or use $mod+[up|down|left|right]
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
-# alternatively, you can use the cursor keys:
+# Move the focused window with the same, but add Shift
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+# Ditto, with arrow keys
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
@@ -115,7 +118,7 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 # split in horizontal orientation
-bindsym $mod+g split h
+bindsym $mod+b split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -123,11 +126,11 @@ bindsym $mod+v split v
 # enter fullscreen mode for the focused container
 bindsym $mod+z fullscreen toggle
 
-# toggle tiling / floating
-bindsym Mod1+Shift+space floating toggle
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
 
 # Swap focus between tiling / floating windows
-bindsym Mod1+space focus mode_toggle
+bindsym $altmod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
@@ -154,16 +157,14 @@ assign [class="Spotify"] $ws10
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-    # These bindings trigger as soon as you enter the resize mode
-
-    # Pressing left will shrink the window’s width.
-    # Pressing right will grow the window’s width.
-    # Pressing up will shrink the window’s height.
-    # Pressing down will grow the window’s height.
-    bindsym h resize shrink width 10 px or 10 ppt
-    bindsym j resize grow height 10 px or 10 ppt
-    bindsym k resize shrink height 10 px or 10 ppt
-    bindsym l resize grow width 10 px or 10 ppt
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
 
     # same bindings, but for the arrow keys
     bindsym Left resize shrink width 10 px or 10 ppt

@@ -46,10 +46,6 @@
       "rev": "aab6caaffd79b8def22ec4320a5344f7c42f58d2",
       "src": "https://github.com/hiphish/rainbow-delimiters.nvim"
     },
-    "smart-splits.nvim": {
-      "rev": "ba2850ff3d3b09785a7105c69d06a12117d4b97d",
-      "src": "https://github.com/mrjones2014/smart-splits.nvim"
-    },
     "vim-dadbod": {
       "rev": "6d1d41da4873a445c5605f2005ad2c68c99d8770",
       "src": "https://github.com/tpope/vim-dadbod"

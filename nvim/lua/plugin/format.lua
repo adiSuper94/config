@@ -73,8 +73,6 @@ function Fmt(opts)
     local v = vim.fn.winsaveview()
     vim.cmd.normal({ "gggqG", bang = true, mods = { silent = true } })
     vim.fn.winrestview(v)
-  else
-    vim.lsp.buf.format({ async = opts.async ~= false })
   end
 end
 

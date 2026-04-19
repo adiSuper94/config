@@ -8,6 +8,31 @@ if test -d /opt/homebrew
   /opt/homebrew/bin/brew shellenv | source
 end
 
+function tat --description "tmux all the time"
+  if test $TERM != "alacritty"; and test $TERM != "foot"
+    return
+  end
+  if test ! -z "$TMUX"
+    return
+  end
+  if test -z (tmux list-sessions 2>/dev/null)
+    tmux new-session -As "noname"
+  else
+  set selected_session (begin
+    tmux list-sessions | sed "s/:.*//"
+    echo "--new-session--"
+    echo "no tmux ;("
+  end | fzf)
+    if test "$selected_session" = "--new-session--"
+      echo "enter name of new session: "
+      read -r selected_session
+    else if test "$selected_session" = "no tmux ;("
+      return
+    end
+    tmux new-session -As "$selected_session"
+  end
+end
+
 if status is-interactive
   if test "$os" = "Darwin"
     abbr top htop
@@ -26,7 +51,6 @@ if status is-interactive
   abbr pn pnpm
 
   setenv XDG_CONFIG_HOME $HOME/.config
-  bash ~/.config/tmux/tat.sh
   setenv EDITOR nvim
   setenv SUDO_EDITOR "$(mise which nvim)"
   setenv FZF_DEFAULT_COMMAND 'fd --type file --follow'
@@ -49,6 +73,7 @@ if status is-interactive
   $HOME/.local/bin/mise activate fish | source
   fzf --fish | source
   zoxide init fish | source
+  tat
 
 else
   $HOME/.local/bin/mise activate fish --shims | source

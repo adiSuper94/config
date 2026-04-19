@@ -1,54 +1,23 @@
 local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
-local act = wezterm.action
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
+local leader_binds = wezterm.plugin.require("https://gitlab.com/adiSuper94/leader_binds.wezterm")
 config = {
   window_background_opacity = 0.95,
   use_fancy_tab_bar = false,
   tab_bar_at_bottom = true,
   leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 },
   keys = {
+    -- workspace switcher
     {
-      key = "w",
-      mods = "CTRL|SHIFT",
-      action = act.CloseCurrentPane({ confirm = true }),
-    },
-    -- vim like splits
-    {
-      key = "v",
-      mods = "LEADER",
-      action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }),
-    },
-    {
-      key = "s",
-      mods = "LEADER",
-      action = act.SplitVertical({ domain = "CurrentPaneDomain" }),
-    },
-    -- Wezterm default bindings,
-    {
-      key = "z",
-      mods = "LEADER",
-      action = act.TogglePaneZoomState,
-    },
-    {
-      key = "w",
-      mods = "LEADER",
-      action = act.CloseCurrentPane({ confirm = true }),
-    },
-    {
-      key = "t",
-      mods = "LEADER",
-      action = act.SpawnTab("CurrentPaneDomain"),
-    },
-    {
-      key = "h",
-      mods = "LEADER",
+      key = "_",
+      mods = "LEADER|SHIFT",
       action = workspace_switcher.switch_workspace(),
     },
     {
-      key = "H",
+      key = "-",
       mods = "LEADER",
       action = workspace_switcher.switch_to_prev_workspace(),
     },
@@ -57,10 +26,6 @@ config = {
   window_padding = { bottom = 0, left = 0, right = 0 },
   max_fps = 120,
 }
-local tmux = true
-if tmux then
-  require("tmux").tmux_bindings(act, config)
-end
 
 local is_darwin = string.find(wezterm.target_triple, "darwin")
 local is_linux = string.find(wezterm.target_triple, "linux")
@@ -93,7 +58,7 @@ end
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
   local pane = tab.active_pane
   return {
-    { Text = " " .. tab.tab_index + 1 .. ": " .. basename(pane.foreground_process_name) .. " "},
+    { Text = " " .. tab.tab_index + 1 .. ": " .. basename(pane.foreground_process_name) .. " " },
   }
 end)
 
@@ -101,5 +66,10 @@ wezterm.on("update-right-status", function(window, pane)
   window:set_right_status(window:active_workspace())
 end)
 smart_splits.apply_to_config(config)
+leader_binds.apply_to_config(config, {
+  navigation = { vim = true },
+  split = { vim = true },
+  resize = { vim = true },
+})
 
 return config
