@@ -1,0 +1,17 @@
+build-essential
+coreutils
+gcc
+curl
+wget
+unzip
+clang
+rofi
+copyq
+redshift
+maim
+kdiff3
+variety
+sshfs
+pass
+wezterm-nightly
+pgcli

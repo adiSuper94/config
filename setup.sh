@@ -75,24 +75,16 @@ os_specific_setup(){
     "linux")
       case $flavour in
         "ubuntu")
-          sudo apt update -y
-          sudo apt install build-essential
-          sudo apt install coreutils gcc curl wget unzip clang
-          sudo apt install rofi copyq redshift maim kdiff3 variety sshfs pass
           curl -fsSL https://apt.fury.io/wez/gpg.key | sudo gpg --yes --dearmor -o /usr/share/keyrings/wezterm-fury.gpg
           echo 'deb [signed-by=/usr/share/keyrings/wezterm-fury.gpg] https://apt.fury.io/wez/ * *' | sudo tee /etc/apt/sources.list.d/wezterm.list
           sudo chmod 644 /usr/share/keyrings/wezterm-fury.gpg
           sudo apt update -y
-          sudo apt install -y wezterm-nightly
+          sudo apt install -y $(cat "$SCRIPT_DIR"/apt_pkglist.txt)
           ;;
         "fedora")
           sudo dnf update
-          sudo dnf group install development-tools c-development
-          sudo dnf install coreutils gcc curl wget unzip clang
-          sudo dnf install rofi-wayland gammastep copyq maim kdiff3 sshfs pass
-          sudo dnf install variety yaru-gtk4-theme yaru-icon-theme foot
           sudo dnf copr enable wezfurlong/wezterm-nightly
-          sudo dnf install wezterm
+          sudo dnf install $(cat "$SCRIPT_DIR"/dnf_pkglist.txt)
           ;;
         *)
           printf "No OS specific setup for %s:%s\n" "$os" "$flavour"
@@ -150,7 +142,6 @@ setup() {
   curl -fsS https://dl.brave.com/install.sh | sh
   curl https://mise.run | sh
   sym_link
-  printf "Basic setup complete\n. Use Bob to install more packages\n"
   exit 0
 }
 os_info "true"
