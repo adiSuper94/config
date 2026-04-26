@@ -9,7 +9,7 @@ if test -d /opt/homebrew
 end
 
 function tat --description "tmux all the time"
-  if test $TERM != "alacritty"; and test $TERM != "foot"
+  if test ! -z "$TERM_PROGRAM"; and test "$TERM_PROGRAM" = "WezTerm"
     return
   end
   if test ! -z "$TMUX"
@@ -34,12 +34,7 @@ function tat --description "tmux all the time"
 end
 
 if status is-interactive
-  if test "$os" = "Darwin"
-    abbr top htop
-  else
-    abbr top btop
-  end
-
+  abbr top btop
   abbr vim nvim
   abbr man batman
   abbr cat bat
@@ -52,7 +47,7 @@ if status is-interactive
 
   setenv XDG_CONFIG_HOME $HOME/.config
   setenv EDITOR nvim
-  setenv SUDO_EDITOR "$(mise which nvim)"
+  setenv SUDO_EDITOR nvim
   setenv FZF_DEFAULT_COMMAND 'fd --type file --follow'
   setenv FZF_CTRL_T_COMMAND 'fd --type file --follow'
   setenv FZF_DEFAULT_OPTS '--height 20% --ansi'
@@ -74,7 +69,4 @@ if status is-interactive
   fzf --fish | source
   zoxide init fish | source
   tat
-
-else
-  $HOME/.local/bin/mise activate fish --shims | source
 end

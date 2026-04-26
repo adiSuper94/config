@@ -1,9 +1,3 @@
-brew "unzip"
-brew "htop"
-brew "wget"
-brew "pass"
-brew "pgcli"
-
 cask "nikitabobko/tap/aerospace"
 cask "kdiff3"
 cask "copyq"

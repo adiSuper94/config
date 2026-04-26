@@ -1,4 +1,9 @@
 function fish_prompt
+  if set -q DEVENV_STATE
+    set_color blue
+    echo -n "(devenv) "
+    set_color normal
+  end
   set_color cyan
   set -l curr_dir (string replace -- "$HOME" "~" "$PWD")
   echo -n $curr_dir
