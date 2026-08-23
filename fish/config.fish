@@ -5,7 +5,7 @@ fish_add_path $HOME/.local/bin
 fish_add_path $HOME/go/bin
 
 if test -d /opt/homebrew
-  /opt/homebrew/bin/brew shellenv | source
+  eval (/opt/homebrew/bin/brew shellenv fish)
 end
 
 function tat --description "tmux all the time"
@@ -48,8 +48,10 @@ if status is-interactive
   setenv XDG_CONFIG_HOME $HOME/.config
   setenv EDITOR nvim
   setenv SUDO_EDITOR nvim
-  setenv FZF_DEFAULT_COMMAND 'fd --type file --follow'
-  setenv FZF_CTRL_T_COMMAND 'fd --type file --follow'
+  setenv FZF_DEFAULT_COMMAND  'fd --type file --follow --hidden --exclude .git'
+  setenv FZF_CTRL_T_COMMAND  $FZF_DEFAULT_COMMAND
+  setenv FZF_ALT_C_COMMAND  'fd --type directory --follow --hidden --exclude .git'
+  setenv FZF_CTRL_R_OPTS   '--with-nth 3..'
   setenv FZF_DEFAULT_OPTS '--height 20% --ansi'
 
   # Fish git prompt config
