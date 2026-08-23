@@ -27,5 +27,5 @@ return {
     typeAware = true,
     -- disableNestedConfig = false,
     fixKind = "safe_fix_or_suggestion",
-  }
+  },
 }

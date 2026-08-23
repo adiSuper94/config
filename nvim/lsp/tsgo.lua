@@ -31,8 +31,8 @@ return {
     },
   },
   cmd = function(dispatchers, config)
-    local cmd = "tsgo"
-    local local_cmd = (config or {}).root_dir and config.root_dir .. "/node_modules/.bin/tsgo"
+    local cmd = "tsc"
+    local local_cmd = (config or {}).root_dir and config.root_dir .. "/node_modules/.bin/tsc"
     if local_cmd and vim.fn.executable(local_cmd) == 1 then
       cmd = local_cmd
     end

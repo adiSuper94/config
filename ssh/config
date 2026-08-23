@@ -6,7 +6,7 @@ Host *
 Host hpg
   HostName hpg.rc.ufl.edu
   User aditya.subramani
-  port 2222
+  port 22
   ControlPath ~/.ssh/cm_-%h:%p
   ControlMaster auto
   ControlPersist 8h

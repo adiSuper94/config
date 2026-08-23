@@ -1,4 +1,14 @@
 function fish_prompt
+  if set -q IN_NIX_SHELL
+    set_color blue
+    echo -n " "
+    set_color normal
+  end
+  if set -q DIRENV_DIR
+    set_color green
+    echo -n " "
+    set_color normal
+  end
   set_color cyan
   set -l curr_dir (string replace -- "$HOME" "~" "$PWD")
   echo -n $curr_dir
