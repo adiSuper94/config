@@ -73,6 +73,16 @@ function Fmt(opts)
     local v = vim.fn.winsaveview()
     vim.cmd.normal({ "gggqG", bang = true, mods = { silent = true } })
     vim.fn.winrestview(v)
+  else
+    vim.lsp.buf.format({
+      async = opts.async,
+      filter = function(client)
+        if not client or not client:supports_method("textDocument/formatting") then
+          return false
+        end
+        return true
+      end,
+    })
   end
 end
 

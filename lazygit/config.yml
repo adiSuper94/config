@@ -1,17 +1,18 @@
 gui:
   theme:
     activeBorderColor:
-      - '#00ff00'
+      - "#00ff00"
     inactiveBorderColor:
-      - '#2d5a27'
+      - "#2d5a27"
     optionsTextColor:
-      - '#CC8C3C'
+      - "#CC8C3C"
     selectedLineBgColor:
-      - '#644319'
+      - "#644319"
     cherryPickedCommitBgColor:
-      - '#458588'
+      - "#458588"
 git:
   overrideGpg: true
+  ignoreWhitespaceInDiffView: true
 os:
   editPreset: nvim
-notARepository: 'quit'
+notARepository: "quit"
