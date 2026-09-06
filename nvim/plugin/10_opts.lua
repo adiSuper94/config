@@ -1,5 +1,5 @@
 -- Disable unnecessary plugins
-vim.g.loaded_zipPlugin = 1
+vim.g.loaded_zip_plugin = 1
 vim.g.loaded_zip = 1
 vim.g.loaded_gzip = 1
 vim.g.loaded_tarPlugin = 1
@@ -36,7 +36,7 @@ vim.opt.shiftwidth = 2 -- width used for indentation commands (<<, >>)
 vim.opt.undofile = true
 vim.opt.listchars = { tab = "▸ ", eol = "¬", trail = "·", nbsp = "␣", space = "·" }
 vim.opt.diffopt:append("iwhite") -- ignore whitespace when diffing
-vim.opt.autocomplete = true      -- autotriggers completions
+vim.opt.autocomplete = true -- autotriggers completions
 vim.opt.completeopt = { "menu", "menuone", "noselect", "fuzzy", "popup" }
 vim.opt.pumheight = 15
 vim.opt.pummaxwidth = 60
@@ -53,5 +53,7 @@ vim.opt.splitbelow = true -- open new split windows below the current window
 vim.opt.splitright = true -- open new split windows to the right of the current wind
 
 -- Netrw opts
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3

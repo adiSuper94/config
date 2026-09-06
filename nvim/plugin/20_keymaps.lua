@@ -1,4 +1,3 @@
-vim.keymap.set("n", "-", "<CMD>Explore<CR>", { desc = "raw-dog: Toggle Netrw" })
 vim.keymap.set("n", "<leader>l", "<cmd>set list! <CR>", { desc = "Toggle blank line chars" })
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlights" })
 vim.keymap.set("n", "<A-x>", "<cmd>bd <CR>", { desc = "Close buffer and window" })
