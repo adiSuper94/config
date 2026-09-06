@@ -4,12 +4,14 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
   outputs =
     {
       self,
       nixpkgs,
       nixpkgs-unstable,
+      neovim-nightly-overlay,
     }:
     let
       systems = [
@@ -18,12 +20,17 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
+
+      unstablePkgsFor =
+        system:
+        import nixpkgs-unstable {
+          inherit system;
+          overlays = [ neovim-nightly-overlay.overlays.default ];
+        };
+
       forEachSystem =
         fn:
-        nixpkgs.lib.genAttrs systems (
-          system: fn nixpkgs.legacyPackages.${system} nixpkgs-unstable.legacyPackages.${system}
-        );
-
+        nixpkgs.lib.genAttrs systems (system: fn nixpkgs.legacyPackages.${system} (unstablePkgsFor system));
     in
     {
       packages = forEachSystem (
@@ -34,6 +41,7 @@
             pkgs.tailwindcss-language-server
             pkgs.gopls
             pkgs.bash-language-server
+            pkgs.shellcheck
             pkgs.vscode-langservers-extracted
             pkgs.yaml-language-server
             pkgs.lua-language-server
@@ -73,7 +81,6 @@
             pkgs.lazygit
             pkgs.direnv
             pkgs.tmux
-            pkgs.shellcheck
             pkgs.ijq
             pkgs.ncdu
             pkgs.pkgconf

@@ -1,7 +1,7 @@
 vim.api.nvim_create_autocmd("VimResized", { command = "wincmd =" })
 vim.api.nvim_create_autocmd("TextYankPost", {
   callback = function()
-    vim.hl.on_yank({ timeout = 500 })
+    vim.hl.hl_op({ timeout = 500 })
   end,
 })
 
