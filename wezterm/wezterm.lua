@@ -2,7 +2,6 @@ local wezterm = require("wezterm")
 
 local config = wezterm.config_builder()
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
-local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 local leader_binds = wezterm.plugin.require("https://gitlab.com/adiSuper94/leader_binds.wezterm")
 config = {
   window_background_opacity = 0.95,
@@ -65,7 +64,6 @@ end)
 wezterm.on("update-right-status", function(window, pane)
   window:set_right_status(window:active_workspace())
 end)
-smart_splits.apply_to_config(config)
 leader_binds.apply_to_config(config, {
   navigation = { vim = true },
   split = { vim = true },
