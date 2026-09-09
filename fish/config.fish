@@ -4,6 +4,13 @@ fish_add_path $HOME/nutter-tools/bin
 fish_add_path $HOME/.local/bin
 fish_add_path $HOME/go/bin
 
+for dir in (string split : -- $XDG_DATA_DIRS)
+  set -l completion_dir "$dir/fish/vendor_completions.d"
+  if test -d $completion_dir; and not contains $completion_dir $fish_complete_path
+    set -a fish_complete_path $completion_dir
+  end
+end
+
 if test -d /opt/homebrew
   eval (/opt/homebrew/bin/brew shellenv fish)
 end
