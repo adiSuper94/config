@@ -9,7 +9,7 @@ function fish_prompt
     echo -n " "
     set_color normal
   end
-  set_color cyan
+  set_color yellow
   set -l curr_dir (string replace -- "$HOME" "~" "$PWD")
   echo -n $curr_dir
   set_color normal

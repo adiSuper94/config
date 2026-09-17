@@ -52,6 +52,7 @@
             pkgs.ruff
             pkgs.tsgolint
             pkgs.nil
+            pkgs.tofu-ls
             stable_pkgs.oxfmt
             stable_pkgs.oxlint
             # Languages
@@ -59,6 +60,7 @@
             pkgs.pnpm
             pkgs.nodejs
             # Tools
+            pkgs.mise
             pkgs.gnupg
             pkgs.pass-nodmenu
             pkgs.wget2

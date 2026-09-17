@@ -77,5 +77,6 @@ if status is-interactive
   command -q direnv; and direnv hook fish | source
   fzf --fish | source
   zoxide init fish | source
+  mise activate fish | source
   tat
 end

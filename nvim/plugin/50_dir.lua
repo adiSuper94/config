@@ -37,6 +37,7 @@ vim.api.nvim_create_autocmd("User", {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "directory",
   callback = function(a)
+    vim.bo[a.buf].bufhidden = "delete"
     vim.wo.signcolumn = "no"
     vim.keymap.set("n", "dd", function()
       local name = vim.api.nvim_get_current_line()

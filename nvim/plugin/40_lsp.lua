@@ -36,8 +36,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 
 vim.lsp.enable({
-  "denols",
-  "tsgo",
+  "tsc",
   "oxlint",
   "tailwindcss",
   "cssls",
@@ -51,4 +50,5 @@ vim.lsp.enable({
   "taplo",
   "yamlls",
   "nil",
+  "tofu_ls",
 })
