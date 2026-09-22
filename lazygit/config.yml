@@ -13,6 +13,8 @@ gui:
 git:
   overrideGpg: true
   ignoreWhitespaceInDiffView: true
+  diffRenderers:
+    - command: diff-so-fancy
 os:
   editPreset: nvim
 notARepository: "quit"

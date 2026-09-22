@@ -8,6 +8,7 @@
   format = ssh
 [core]
   editor = nvim
+	pager = diff-so-fancy | less
 [diff]
   tool = kdiff3
 [merge]
@@ -23,3 +24,5 @@
   rem = !git checkout --quiet main && git pull --quiet && git checkout - && git rebase main
 [init]
   defaultBranch = main
+[interactive]
+	diffFilter = diff-so-fancy --patch

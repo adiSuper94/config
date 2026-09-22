@@ -81,6 +81,7 @@
             pkgs.jq
             pkgs.zoxide
             pkgs.lazygit
+            pkgs.diff-so-fancy
             pkgs.direnv
             pkgs.tmux
             pkgs.ijq
