@@ -1,5 +1,5 @@
 local function get_formatprg(filename)
-  local js_formatter = { "oxfmt", "deno_fmt", "prettier" }
+  local js_formatter = { "oxfmt", "prettier" }
   local formatters_by_ft = {
     javascript = js_formatter,
     typescript = js_formatter,
@@ -13,7 +13,6 @@ local function get_formatprg(filename)
   }
   local formatter_config = {
     oxfmt = { ".oxfmtrc.json" },
-    deno_fmt = { "deno.json", "deno.jsonc" },
     prettier = {
       "prettier.config.js",
       ".prettierrc",
@@ -26,7 +25,6 @@ local function get_formatprg(filename)
   }
   local formatprgs = {
     oxfmt = "oxfmt --stdin-filepath=" .. filename,
-    deno_fmt = "deno fmt -",
     prettier = "prettier",
     stylua = "stylua -",
     ruff_format = "ruff format -",
