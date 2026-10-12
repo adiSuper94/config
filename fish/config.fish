@@ -80,3 +80,4 @@ if status is-interactive
   mise activate fish | source
   tat
 end
+set -gx VIRTUAL_ENV_DISABLE_PROMPT 1

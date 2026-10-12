@@ -1,14 +1,17 @@
+# Icon glyphs and their codepoints (as \uXXXX / \UXXXXXXXX escapes):
+#    = \uF313   (nix)
+#    = \uF07B   (folder, direnv)
+#   󰌠 = \UF0320 (python)
+function __prompt_segment --argument-names color
+  set_color $color
+  echo -n $argv[2..]
+  set_color normal
+end
+
 function fish_prompt
-  if set -q IN_NIX_SHELL
-    set_color blue
-    echo -n " "
-    set_color normal
-  end
-  if set -q DIRENV_DIR
-    set_color green
-    echo -n " "
-    set_color normal
-  end
+  set -q IN_NIX_SHELL; and __prompt_segment blue \uF313" "
+  set -q DIRENV_DIR; and __prompt_segment green \uF07B" "
+  set -q VIRTUAL_ENV; and __prompt_segment cyan \UF0320" "
   set_color yellow
   set -l curr_dir (string replace -- "$HOME" "~" "$PWD")
   echo -n $curr_dir

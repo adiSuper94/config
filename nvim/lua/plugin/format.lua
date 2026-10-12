@@ -27,7 +27,7 @@ local function get_formatprg(filename)
     oxfmt = "oxfmt --stdin-filepath=" .. filename,
     prettier = "prettier",
     stylua = "stylua -",
-    ruff_format = "ruff format -",
+    ruff_format = require("venv").bin("ruff", vim.fs.dirname(vim.api.nvim_buf_get_name(0))) .. " format -",
   }
   local ft = vim.bo.filetype
   local formatters = formatters_by_ft[ft] or {}
