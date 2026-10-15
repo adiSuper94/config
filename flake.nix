@@ -104,6 +104,7 @@
             pkgs.legcord
             pkgs.waybar
             pkgs.sway
+            pkgs.gf
           ];
         in
         {

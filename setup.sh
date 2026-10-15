@@ -42,7 +42,7 @@ os_specific_setup(){
 }
 
 sym_link(){
-  for pkg_config in fish nvim wezterm foot tmux sway aerospace rofi waybar git lazygit zed direnv; do
+  for pkg_config in fish nvim wezterm foot tmux sway aerospace rofi waybar git lazygit zed direnv containers; do
     if [[ -d "$HOME"/.config/$pkg_config ]]; then
       if [[ -L "$HOME"/.config/$pkg_config ]]; then
         rm -rf "$HOME"/.config/$pkg_config
@@ -53,6 +53,7 @@ sym_link(){
     ln -s "$DOTFILES/$pkg_config" "$HOME/.config/$pkg_config"
   done
   ln -s "$DOTFILES/ssh/config" "$HOME/.ssh/config"
+  ln -s "$DOTFILES/gf2_config.ini" "$HOME/.config/gf2_config"
   rm -f "$HOME/nutter-tools/bin/irg" 2> /dev/null
   rm -f "$HOME/nutter-tools/bin/hpg" 2> /dev/null
   ln -s "$DOTFILES/kutti-scripts/irg" "$HOME/nutter-tools/bin/"
