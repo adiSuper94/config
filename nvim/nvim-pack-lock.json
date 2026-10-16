@@ -17,6 +17,14 @@
       "rev": "e3f2349a65143ff062f0b70ee9d68d8ce35c7059",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
+    "nvim-dap": {
+      "rev": "cfa2d58f4537aca6ca83e2de1a0d9f1491121264",
+      "src": "https://github.com/mfussenegger/nvim-dap"
+    },
+    "nvim-dap-view": {
+      "rev": "e766b3d8acef97e7e8b29f7f421aa4977b9978e1",
+      "src": "https://github.com/igorlfs/nvim-dap-view"
+    },
     "nvim-treesitter": {
       "rev": "ca581c3436fc2b236847f5b739ebc263739e5ca6",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
