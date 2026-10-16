@@ -1,44 +1,40 @@
 vim.pack.add({
   "https://github.com/mfussenegger/nvim-dap",
   "https://github.com/igorlfs/nvim-dap-view",
-});
+})
 
 local dap = require("dap")
 local dap_view = require("dap-view").setup({
   winbar = {
     default_section = "scopes",
+    show_keymap_hints = false,
   },
   auto_toggle = true,
 })
-dap.adapters.lldb = {
+
+dap.adapters.gdb = {
   type = "executable",
-  command = "/usr/bin/lldb-vscode-17", -- adjust as needed, must be absolute path
-  name = "lldb",
+  name = "gdb",
+  command = "gdb",
+  args = { "--interpreter=dap" },
 }
+local last_args = ""
+
 dap.configurations.cpp = {
   {
     name = "Launch",
-    type = "lldb",
+    type = "gdb",
     request = "launch",
     program = function()
       return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
     end,
-    cwd = "${workspaceFolder}",
-    stopOnEntry = false,
-    args = {},
-
-    -- 💀
-    -- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-    --
-    --    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-    --
-    -- Otherwise you might get the following error:
-    --
-    --    Error on launch: Failed to attach to the target process
-    --
-    -- But you should be aware of the implications:
-    -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-    runInTerminal = true,
+    cwd = function()
+      return vim.fn.input("Path to cwd: ", vim.fn.getcwd() .. "/", "file")
+    end,
+    args = function()
+      last_args = vim.fn.input("Args: ", last_args)
+      return vim.split(last_args, " ", { trimempty = true })
+    end,
   },
 }
 dap.configurations.c = dap.configurations.cpp
@@ -111,24 +107,11 @@ dap.configurations.typescript = dap.configurations.javascript
 
 -- Debug shortcuts
 
-vim.keymap.set("n", "<leader>br", function()
-  dap.restart()
-end, { desc = "DAP: Restart" })
-vim.keymap.set("n", "<leader>bc", function()
-  dap.continue()
-end, { desc = "DAP: Continue" })
-vim.keymap.set("n", "<leader>bp", function()
-  dap.pause()
-end, { desc = "DAP: Pause" })
-vim.keymap.set("n", "<leader>bb", function()
-  dap.toggle_breakpoint()
-end, { desc = "DAP: Toggle Breakpoint" })
-vim.keymap.set("n", "<A-j>", function()
-  dap.step_over()
-end, { desc = "DAP: Step Over" })
-vim.keymap.set("n", "<A-l>", function()
-  dap.step_into()
-end, { desc = "DAP: Step Into" })
-vim.keymap.set("n", "<A-h>", function()
-  dap.step_out()
-end, { desc = "DAP: Step Out" })
+vim.keymap.set("n", "<leader>br", dap.restart, { desc = "DAP: Restart" })
+vim.keymap.set("n", "<leader>bc", dap.continue, { desc = "DAP: Continue" })
+vim.keymap.set("n", "<leader>bp", dap.pause, { desc = "DAP: Pause" })
+vim.keymap.set("n", "<leader>bb", dap.toggle_breakpoint, { desc = "DAP: Toggle Breakpoint" })
+vim.keymap.set("n", "<F10>", dap.step_over, { desc = "DAP: Step Over" })
+vim.keymap.set("n", "<F11>", dap.step_into, { desc = "DAP: Step Into" })
+vim.keymap.set("n", "<F23>", dap.step_out, { desc = "DAP: Step Out" })
+vim.keymap.set({ "n", "v" }, "<C-k>", "<cmd>DapViewHover<cr>", { desc = "DAP: Hover" })

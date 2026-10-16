@@ -9,7 +9,6 @@ return {
     -- css
     "css",
     "less",
-    "postcss",
     "sass",
     "scss",
     -- js
