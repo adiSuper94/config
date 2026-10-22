@@ -91,6 +91,7 @@
             pkgs.podman-compose
             pkgs.postgresql
             pkgs.lazysql
+            pkgs.tuxedo
           ];
 
           linux_pkgs = [
