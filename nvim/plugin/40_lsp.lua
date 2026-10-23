@@ -12,7 +12,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
       mode = mode or "n"
       vim.keymap.set(mode, keys, func, { buffer = ev.buf, desc = "LSP: " .. desc })
     end
-    if client:supports_method("textDocument/foldingRange") then
+    -- prefer treesitter folds;
+    local lang = vim.treesitter.language.get_lang(vim.bo[ev.buf].filetype)
+    local ts_folds = lang and vim.treesitter.query.get(lang, "folds") ~= nil
+    if client:supports_method("textDocument/foldingRange") and not ts_folds then
       local win = vim.api.nvim_get_current_win()
       vim.wo[win][0].foldexpr = "v:lua.vim.lsp.foldexpr()"
     end
