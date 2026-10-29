@@ -92,6 +92,7 @@
             pkgs.postgresql
             pkgs.lazysql
             pkgs.tuxedo
+            pkgs.csvlens
           ];
 
           linux_pkgs = [

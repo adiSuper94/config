@@ -14,7 +14,6 @@
 [merge]
   tool = kdiff3
 [alias]
-  fsck = fuck
   b = branch
   cc = commit
   ca = commit --amend
