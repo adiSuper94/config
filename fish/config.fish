@@ -54,7 +54,7 @@ if status is-interactive
 
   setenv XDG_CONFIG_HOME $HOME/.config
   setenv EDITOR nvim
-  setenv SUDO_EDITOR nvim
+  setenv SUDO_EDITOR $(which nvim)
   setenv FZF_DEFAULT_COMMAND  'fd --type file --follow --hidden --exclude .git'
   setenv FZF_CTRL_T_COMMAND  $FZF_DEFAULT_COMMAND
   setenv FZF_ALT_C_COMMAND  'fd --type directory --follow --hidden --exclude .git'
