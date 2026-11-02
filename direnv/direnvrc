@@ -1,0 +1,5 @@
+# nix-direnv: caches `use nix` / `use flake` results so entering a dir faster
+nix_direnv_rc="$HOME/.nix-profile/share/nix-direnv/direnvrc"
+if [ -f "$nix_direnv_rc" ]; then
+  source "$nix_direnv_rc"
+fi

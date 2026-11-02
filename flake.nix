@@ -83,6 +83,7 @@
             pkgs.lazygit
             pkgs.diff-so-fancy
             pkgs.direnv
+            pkgs.nix-direnv
             pkgs.tmux
             pkgs.ijq
             pkgs.ncdu
