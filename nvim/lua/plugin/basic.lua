@@ -3,6 +3,7 @@ vim.pack.add({
   "https://github.com/stevearc/dressing.nvim",
   -- "https://github.com/github/copilot.vim",
   { src = "https://github.com/felpafel/inlay-hint.nvim", version = "nightly" },
+  "https://github.com/folke/which-key.nvim",
 })
 
 -- vim.api.nvim_set_keymap("i", "<C-;>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
@@ -12,6 +13,9 @@ vim.pack.add({
 
 -- have to wait for https://github.com/neovim/neovim/issues/28261 to be resolved
 require("inlay-hint").setup()
+require("which-key").setup({
+  preset = "helix",
+})
 
 -- I hate this. But this is an AI fix. I don't understand this, but it works.
 do
