@@ -1,0 +1,4 @@
+theme = "sundarban"
+
+[editor]
+color-modes = true

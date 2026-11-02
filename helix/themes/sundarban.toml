@@ -1,0 +1,139 @@
+# Sundarban — ported from nvim/colors/sundarban.lua
+# Transparent background, neon-green keywords, brown comments.
+
+# ---------- Syntax ----------
+"comment" = { fg = "brown" }
+"comment.block.documentation" = { fg = "green_pale" }
+"comment.line.documentation" = { fg = "green_pale" }
+
+"keyword" = { fg = "neon" }
+"keyword.directive" = { fg = "teal" }          # PreProc
+"keyword.control.import" = { fg = "teal" }     # Include
+"keyword.storage.type" = { fg = "neon" }       # Typedef
+"operator" = { fg = "fg" }
+
+"function" = { fg = "teal" }
+"function.macro" = { fg = "teal" }             # Macro -> PreProc
+"constructor" = { fg = "teal" }
+
+"type" = { fg = "sage" }
+"type.builtin" = { fg = "sage" }
+"namespace" = { fg = "sage" }
+
+"constant" = { fg = "sage" }
+"constant.numeric" = { fg = "white" }
+"constant.builtin.boolean" = { fg = "white" }
+"constant.character" = { fg = "green_pale" }
+"constant.character.escape" = { fg = "green_pale" }
+
+"string" = { fg = "green_pale" }
+"string.special" = { fg = "green_pale" }
+
+"variable" = { fg = "moss" }                   # Identifier
+"variable.builtin" = { fg = "moss", modifiers = ["italic"] }
+"variable.parameter" = { fg = "moss" }
+"variable.other.member" = { fg = "moss" }
+"label" = { fg = "neon" }
+"attribute" = { fg = "teal" }
+"tag" = { fg = "neon" }
+"punctuation" = { fg = "fg" }
+"special" = { fg = "magenta" }
+
+# ---------- Markup ----------
+"markup.heading" = { fg = "neon", modifiers = ["bold"] }
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.strikethrough" = { modifiers = ["crossed_out"] }
+"markup.link.url" = { fg = "teal", underline = { style = "line" } }
+"markup.link.text" = { fg = "green_pale" }
+"markup.quote" = { fg = "brown" }
+"markup.raw" = { fg = "green_pale" }
+"markup.list" = { fg = "neon" }
+
+# ---------- Diff ----------
+"diff.plus" = { fg = "green_pale" }
+"diff.minus" = { fg = "red" }
+"diff.delta" = { fg = "yellow" }
+
+# ---------- Diagnostics ----------
+"error" = { fg = "red" }
+"warning" = { fg = "yellow" }
+"info" = { fg = "green_pale" }
+"hint" = { fg = "sage" }
+"diagnostic.error" = { underline = { color = "red", style = "curl" } }
+"diagnostic.warning" = { underline = { color = "yellow", style = "curl" } }
+"diagnostic.info" = { underline = { color = "green_pale", style = "curl" } }
+"diagnostic.hint" = { underline = { color = "sage", style = "curl" } }
+"diagnostic.unnecessary" = { modifiers = ["dim"] }
+"diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+
+# ---------- UI ----------
+"ui.background" = { fg = "fg" }                # no bg = transparent, like nvim's "NONE"
+"ui.text" = { fg = "fg" }
+"ui.text.focus" = { fg = "neon", modifiers = ["bold"] }
+"ui.text.inactive" = { fg = "gray" }
+"ui.text.directory" = { fg = "teal" }
+
+"ui.cursor" = { fg = "black", bg = "sage" }
+"ui.cursor.primary" = { fg = "black", bg = "neon" }
+"ui.cursor.primary.insert" = { fg = "black", bg = "teal" }
+"ui.cursor.primary.select" = { fg = "black", bg = "brown" }
+"ui.cursor.match" = { fg = "neon", modifiers = ["bold", "underlined"] }
+"ui.cursorline.primary" = { bg = "bg_soft" }
+
+"ui.selection" = { bg = "bg_sel" }
+"ui.selection.primary" = { bg = "bg_sel_primary" }
+
+"ui.linenr" = { fg = "gray" }
+"ui.linenr.selected" = { fg = "neon", modifiers = ["bold"] }
+"ui.gutter" = {}
+
+"ui.statusline" = { fg = "fg", bg = "brightblack" }
+"ui.statusline.inactive" = { fg = "sage", bg = "bg_soft" }
+"ui.statusline.normal" = { fg = "black", bg = "neon", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "black", bg = "teal", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "black", bg = "brown", modifiers = ["bold"] }
+
+"ui.bufferline" = { fg = "sage", bg = "bg_soft" }
+"ui.bufferline.active" = { fg = "black", bg = "teal", modifiers = ["bold"] }
+"ui.bufferline.background" = { bg = "bg_soft" }
+
+# Floating UI gets bg_soft: "black" equals the terminal background (#181818), so popups blended in.
+"ui.popup" = { fg = "fg", bg = "bg_soft" }
+"ui.popup.info" = { fg = "fg", bg = "bg_soft" }
+"ui.window" = { fg = "brightblack" }
+"ui.help" = { fg = "fg", bg = "bg_soft" }
+"ui.menu" = { fg = "fg", bg = "bg_soft" }
+"ui.menu.selected" = { fg = "black", bg = "teal" }
+"ui.menu.scroll" = { fg = "sage", bg = "bg_sel" }
+"ui.picker.header" = { fg = "neon", modifiers = ["bold"] }
+
+"ui.virtual" = { fg = "brightblack" }
+"ui.virtual.whitespace" = { fg = "brightblack" }
+"ui.virtual.indent-guide" = { fg = "bg_sel" }
+"ui.virtual.ruler" = { bg = "bg_soft" }
+"ui.virtual.inlay-hint" = { fg = "brightblack" }
+"ui.virtual.jump-label" = { fg = "yellow", modifiers = ["bold"] }
+
+"ui.highlight" = { bg = "bg_sel" }
+
+[palette]
+fg = "#E4E4E4"
+white = "#E4E4E4"
+black = "#181818"
+neon = "#39FF14"        # color_1
+teal = "#00CC98"        # color_2
+green_pale = "#C7F9AC"  # color_3
+sage = "#9AA999"        # color_4
+moss = "#A3C585"        # color_5
+magenta = "#9E95C7"
+brown = "#cc8c3c"
+red = "#FC6767"
+yellow = "#FFF150"
+blue = "#00a1ff"
+orange = "#FFB86C"
+brightblack = "#52494E"
+gray = "#6E6A6C"
+bg_soft = "#222622"
+bg_sel = "#2E3A2E"
+bg_sel_primary = "#3A4D3A"

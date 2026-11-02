@@ -42,7 +42,7 @@ os_specific_setup(){
 }
 
 sym_link(){
-  for pkg_config in fish nvim wezterm foot tmux sway aerospace rofi waybar git lazygit zed direnv containers; do
+  for pkg_config in fish nvim wezterm foot tmux sway aerospace rofi waybar git lazygit zed direnv containers helix; do
     if [[ -d "$HOME"/.config/$pkg_config ]]; then
       if [[ -L "$HOME"/.config/$pkg_config ]]; then
         rm -rf "$HOME"/.config/$pkg_config

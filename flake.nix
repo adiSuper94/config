@@ -59,7 +59,9 @@
             pkgs.go
             pkgs.pnpm
             pkgs.nodejs
+            pkgs.rustup
             # Tools
+            pkgs.sccache
             pkgs.mise
             pkgs.gnupg
             pkgs.pass-nodmenu
@@ -69,6 +71,7 @@
             pkgs.pgcli
             pkgs.opencode
             pkgs.neovim
+            pkgs.helix
             pkgs.tree-sitter
             pkgs.tuicr
             pkgs.gh
