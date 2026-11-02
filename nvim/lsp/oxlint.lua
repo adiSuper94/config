@@ -20,12 +20,7 @@ return {
   root_markers = { ".oxlintrc.json", "oxlint.config.ts" },
   workspace_required = true,
   settings = {
-    -- run = 'onType',
-    -- configPath = nil,
-    -- tsConfigPath = './tsconfig.json',
-    -- unusedDisableDirectives = 'allow',
-    typeAware = true,
-    -- disableNestedConfig = false,
+    typeAware = false,
     fixKind = "safe_fix_or_suggestion",
   },
 }
