@@ -84,7 +84,7 @@
             pkgs.jq
             pkgs.zoxide
             pkgs.lazygit
-            pkgs.diff-so-fancy
+            pkgs.delta
             pkgs.direnv
             pkgs.nix-direnv
             pkgs.tmux
@@ -97,6 +97,7 @@
             pkgs.lazysql
             pkgs.tuxedo
             pkgs.csvlens
+            pkgs.pi-coding-agent
           ];
 
           linux_pkgs = [

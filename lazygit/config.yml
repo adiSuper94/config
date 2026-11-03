@@ -14,7 +14,7 @@ git:
   overrideGpg: true
   ignoreWhitespaceInDiffView: true
   diffRenderers:
-    - command: diff-so-fancy
+    - command: delta --paging=never
 os:
   editPreset: nvim
 notARepository: "quit"

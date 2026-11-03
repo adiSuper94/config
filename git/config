@@ -8,11 +8,14 @@
   format = ssh
 [core]
   editor = nvim
-	pager = diff-so-fancy | less
+  pager = delta
 [diff]
   tool = kdiff3
 [merge]
   tool = kdiff3
+  conflictStyle = zdiff3
+[delta]
+  navigate = true  # use n and N to move between diff sections
 [alias]
   b = branch
   cc = commit
@@ -24,4 +27,4 @@
 [init]
   defaultBranch = main
 [interactive]
-	diffFilter = diff-so-fancy --patch
+  diffFilter = delta --color-only
