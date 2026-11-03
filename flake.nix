@@ -14,6 +14,7 @@
       neovim-nightly-overlay,
     }:
     let
+    inherit (nixpkgs) lib;
       systems = [
         "aarch64-linux"
         "x86_64-linux"
@@ -25,12 +26,14 @@
         system:
         import nixpkgs-unstable {
           inherit system;
-          overlays = [ neovim-nightly-overlay.overlays.default ];
+          overlays = [
+            neovim-nightly-overlay.overlays.default
+          ];
         };
 
       forEachSystem =
         fn:
-        nixpkgs.lib.genAttrs systems (system: fn nixpkgs.legacyPackages.${system} (unstablePkgsFor system));
+        lib.genAttrs systems (system: fn nixpkgs.legacyPackages.${system} (unstablePkgsFor system));
     in
     {
       packages = forEachSystem (
@@ -51,7 +54,7 @@
             pkgs.ty
             pkgs.ruff
             pkgs.tsgolint
-            pkgs.nil
+            pkgs.nixd
             pkgs.tofu-ls
             stable_pkgs.oxfmt
             stable_pkgs.oxlint

@@ -9,3 +9,4 @@ yaru-gtk4-theme
 yaru-icon-theme
 foot
 wezterm
+inotify-tools

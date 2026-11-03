@@ -53,6 +53,6 @@ vim.lsp.enable({
   "jsonls",
   "taplo",
   "yamlls",
-  "nil",
+  "nixd",
   "tofu_ls",
 })
