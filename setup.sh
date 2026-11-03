@@ -54,6 +54,7 @@ sym_link(){
     ln -s "$DOTFILES/$pkg_config" "$HOME/.config/$pkg_config"
   done
   ln -s "$DOTFILES/ssh/config" "$HOME/.ssh/config"
+  ln -s "$DOTFILES/pi" "$HOME/.pi"
   ln -s "$DOTFILES/gf2_config.ini" "$HOME/.config/gf2_config"
   rm -f "$HOME/nutter-tools/bin/irg" 2> /dev/null
   rm -f "$HOME/nutter-tools/bin/hpg" 2> /dev/null

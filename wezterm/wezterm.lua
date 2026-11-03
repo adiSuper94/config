@@ -7,7 +7,7 @@ local leader_binds = wezterm.plugin.require("https://gitlab.com/adiSuper94/leade
 -- Ported from nvim's sundarban colorscheme (nvim/colors/sundarban.lua)
 local sundarban_scheme = {
   foreground = "#E4E4E4",
-  background = "#181818",
+  background = "#151515",
   cursor_bg = "#39FF14",
   cursor_border = "#39FF14",
   cursor_fg = "#181818",
