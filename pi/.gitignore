@@ -2,4 +2,4 @@
 /agent/auth.json
 /agent/models-store.json
 /agent/trust.json
-/node_modules/
+node_modules/
