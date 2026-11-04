@@ -10,3 +10,4 @@ yaru-icon-theme
 foot
 wezterm
 inotify-tools
+btop

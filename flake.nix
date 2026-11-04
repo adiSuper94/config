@@ -70,7 +70,6 @@
             pkgs.pass-nodmenu
             pkgs.wget2
             pkgs.unzip
-            pkgs.btop
             pkgs.pgcli
             pkgs.opencode
             pkgs.neovim

@@ -20,6 +20,7 @@ os_specific_setup(){
           sudo dnf update
           sudo dnf copr enable wezfurlong/wezterm-nightly
           sudo dnf install $(cat "$SCRIPT_DIR"/dnf_pkglist.txt)
+          printf "\nFor Setting up nvidia drivers on fedora: please refer this [guide](https://github.com/fady-saied/Nvidia-Fedora-Guide)\n\n"
           ;;
         *)
           printf "No OS specific setup for %s:%s\n" "$os" "$flavour"
