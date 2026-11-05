@@ -55,5 +55,5 @@ vim.api.nvim_create_autocmd("TermOpen", {
   pattern = "*",
   command = "startinsert",
 })
-vim.keymap.set("t", "<esc><esc>", "<C-\\><C-n>")
+vim.keymap.set("t", "<esc><esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set({ "t", "n" }, "<leader>tt", "<CMD>:Floaterminal<CR>", { desc = "Toggle Floating Terminal" })

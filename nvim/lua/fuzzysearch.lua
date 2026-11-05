@@ -63,21 +63,23 @@ function M.select(step)
 end
 
 -- Keys that move through the list while it is shown, and behave as usual otherwise.
-local function map_list_key(lhs, step, after)
+local function map_list_key(lhs, step, desc, after)
   vim.keymap.set("c", lhs, function()
     if #list.items == 0 then
       return lhs
     end
     return ("<Cmd>lua require('fuzzysearch').select(%d)<CR>%s"):format(step, after or "")
-  end, { expr = true })
+  end, { expr = true, desc = desc })
 end
 
 vim.o.wildcharm = vim.keycode("<Tab>"):byte()
-map_list_key("<Tab>", 1)
-map_list_key("<S-Tab>", -1)
-map_list_key("<C-n>", 1)
-map_list_key("<C-p>", -1)
-map_list_key("<C-y>", 0, "<CR>")
+map_list_key("<Tab>", 1, "Fuzzy search: next item")
+map_list_key("<S-Tab>", -1, "Fuzzy search: previous item")
+map_list_key("<C-n>", 1, "Fuzzy search: next item")
+map_list_key("<C-p>", -1, "Fuzzy search: previous item")
+map_list_key("<Down>", 1, "Fuzzy search: next item")
+map_list_key("<Up>", -1, "Fuzzy search: previous item")
+map_list_key("<C-y>", 0, "Fuzzy search: accept item", "<CR>")
 
 local group = vim.api.nvim_create_augroup("CmdlineAutocompletion", { clear = true })
 

@@ -42,10 +42,10 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "dd", function()
       local name = vim.api.nvim_get_current_line()
       vim.api.nvim_feedkeys(":!rm -rf " .. name .. " ", "n", true)
-    end, { buffer = a.buf, silent = true })
+    end, { buffer = a.buf, silent = true, desc = "Prompt to delete entry under cursor" })
 
     vim.keymap.set("n", "%", function()
       vim.api.nvim_feedkeys(":!touch ", "n", true)
-    end, { buffer = a.buf, silent = true })
+    end, { buffer = a.buf, silent = true, desc = "Prompt to create a file" })
   end,
 })
