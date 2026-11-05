@@ -26,6 +26,7 @@ local highlights = {
   StatusLineModeInsert = { bg = "#00a1ff", fg = colors.black, bold = true },
   StatusLineModeVisual = { bg = "#FFB86C", fg = colors.black, bold = true },
   StatusLine = { bg = colors.brightblack, fg = colors.foreground },
+  StatusLineNC = { bg = "#222622", fg = colors.color_4 },
   StatusLineModeNormal = { bg = colors.color_1, fg = colors.black, bold = true },
   StatusLineModeReplace = { bg = colors.white, fg = colors.black, bold = true },
   StatusLineGit = { bg = colors.color_2, fg = colors.black },
