@@ -110,6 +110,7 @@
             stable_pkgs.calibre
             stable_pkgs.variety
             stable_pkgs.gammastep
+            pkgs.rclone
             pkgs.legcord
             pkgs.waybar
             pkgs.sway
