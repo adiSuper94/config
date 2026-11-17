@@ -1,7 +1,7 @@
 function Rg()
   local pattern = vim.fn.input("rg: ")
   if pattern ~= "" then
-    vim.cmd('silent grep! "' .. pattern .. '"')
+    vim.cmd("silent grep! " .. vim.fn.shellescape(pattern, true))
     vim.cmd("copen")
   end
 end

@@ -21,6 +21,7 @@ return {
   workspace_required = true,
   settings = {
     typeAware = false,
+    run = "onSave",
     fixKind = "safe_fix_or_suggestion",
   },
 }
