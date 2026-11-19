@@ -24,6 +24,7 @@ fonts=(
   # SpaceMono
   # Gohu
   "JetBrainsMono=jetbrains-mono"
+  "ZedMono=zed-mono"
   # "FiraCode=fira-code"
   # "FiraMono=fira-mono"
   # "GeistMono=geist-mono"

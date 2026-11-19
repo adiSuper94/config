@@ -67,14 +67,14 @@ local is_linux = string.find(wezterm.target_triple, "linux")
 local os_specific_config = {}
 if is_darwin then
   os_specific_config = {
-    font_size = 15,
-    font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Medium" }),
+    font_size = 16,
+    font = wezterm.font("ZedMono Nerd Font Mono", { weight = "Bold" }),
     window_decorations = "RESIZE",
   }
 elseif is_linux then
   os_specific_config = {
-    font_size = 11,
-    font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular" }),
+    font_size = 12,
+    font = wezterm.font("ZedMono Nerd Font", { weight = "Medium" }),
     window_decorations = "NONE",
     front_end = "WebGpu",
   }
